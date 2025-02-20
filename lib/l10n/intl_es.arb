@@ -18,6 +18,8 @@
   "log_out": "Log out",
   "mail": "Mail",
   "password": "Password",
-  "sign_in": "Sign In",
-  "xmartlabs_projects": "Xmartlabs' projects"
+  "xmartlabs_projects": "Xmartlabs' projects",
+  "game_title": "Mission: Motion",
+  "play_as_guest": "Jugar como invitado",
+  "sign_in": "Ingresar"
 }

@@ -30,6 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -41,16 +43,27 @@ dependencies:
   web: ^1.0.0
   flutter_dotenv: 5.1.0
   flutter_native_splash: 2.4.0
-  flutter_screenutil: 5.9.3
+  flutter_screenutil: ^5.9.3
   flutter_secure_storage: 9.2.2
   freezed_annotation: 2.4.1
-  intl: 0.19.0
+  intl: ^0.19.0
   json_annotation: 4.9.0
   dartx: 1.2.0
   dio: 5.4.3+1
   math_expressions: ^2.6.0
   logger: ^2.4.0
   stack_trace: ^1.11.1
+  math_parser: 1.5.1
+  flame_bloc: ^1.12.5
+  rxdart: ^0.28.0
+  stock: ^1.1.2
+  equatable: ^2.0.7
+  hive: ^2.2.3
+  mutex: ^3.1.0
+  shared_preferences: ^2.5.2
+  get_it: ^8.0.3
+  google_fonts: ^6.2.1
+  path_provider: ^2.1.5
 
 
 dev_dependencies:
@@ -80,14 +93,11 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
-  uses-material-design: true
   generate: true
+  uses-material-design: true
   assets:
       - assets/
+      - assets/images/sparky.png
       - environments/
 
 flutter_gen:
