@@ -14,5 +14,5 @@ class PauseButton extends SimpleButton with HasGameReference<SimonGame> {
           position: Vector2(60, 10),
         );
   @override
-  void action() => game.router.pushNamed('pause');
+  void action() {}
 }

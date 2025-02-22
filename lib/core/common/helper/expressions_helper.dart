@@ -217,17 +217,34 @@ extension ExpressionExtensions on Expression {
   double evaluateAt(double t) {
     final context = ContextModel()..bindVariable(Variable('t'), Number(t));
     final result = evaluate(EvaluationType.REAL, context);
-    Logger.d('Result: $result');
     return result.toDouble();
   }
 
-  double getDistance(List<Pair<double, double>> samples) {
+  double getDistance(List<Pair<double, double>> samples) =>
+      sqrt(getDistanceSqr(samples) / samples.length);
+
+  double getDistanceSqr(List<Pair<double, double>> samples) {
     final error = samples.map((sample) {
       final t = sample.first;
       final p = sample.second;
       final result = evaluateAt(t);
       return pow(result - p, 2);
-    }).reduce((a, b) => a + b);
-    return sqrt(error.toDouble() / samples.length);
+    }).sum();
+    return error / samples.length;
+  }
+}
+
+extension ExpressionListExtensions on List<Expression> {
+  double getDistance(List<Pair<double, double>> samples) {
+    final secondsDuration = samples.last.first;
+    final errors = <double>[];
+    forEachIndexed((expression, index) {
+      final expressionSamples = samples
+          .filter((sample) =>
+              sample.first <= (index + 1) * secondsDuration / length)
+          .toList();
+      errors.add(expression.getDistanceSqr(expressionSamples));
+    });
+    return sqrt(errors.sum());
   }
 }

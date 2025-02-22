@@ -21,7 +21,6 @@ abstract class _$AppRouter extends RootStackRouter {
         routeData: routeData,
         child: LevelScreen(
           level: args.level,
-          onFinishedWithResult: args.onFinishedWithResult,
           key: args.key,
         ),
       );
@@ -39,9 +38,14 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     ResultsRoute.name: (routeData) {
+      final args = routeData.argsAs<ResultsRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const ResultsScreen(),
+        child: ResultsScreen(
+          samples: args.samples,
+          level: args.level,
+          key: args.key,
+        ),
       );
     },
     SettingsRoute.name: (routeData) {
@@ -76,14 +80,12 @@ abstract class _$AppRouter extends RootStackRouter {
 class LevelRoute extends PageRouteInfo<LevelRouteArgs> {
   LevelRoute({
     required Level level,
-    required void Function(Pair<double, double>) onFinishedWithResult,
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
           LevelRoute.name,
           args: LevelRouteArgs(
             level: level,
-            onFinishedWithResult: onFinishedWithResult,
             key: key,
           ),
           initialChildren: children,
@@ -97,19 +99,16 @@ class LevelRoute extends PageRouteInfo<LevelRouteArgs> {
 class LevelRouteArgs {
   const LevelRouteArgs({
     required this.level,
-    required this.onFinishedWithResult,
     this.key,
   });
 
   final Level level;
 
-  final void Function(Pair<double, double>) onFinishedWithResult;
-
   final Key? key;
 
   @override
   String toString() {
-    return 'LevelRouteArgs{level: $level, onFinishedWithResult: $onFinishedWithResult, key: $key}';
+    return 'LevelRouteArgs{level: $level, key: $key}';
   }
 }
 
@@ -143,16 +142,45 @@ class LogInRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [ResultsScreen]
-class ResultsRoute extends PageRouteInfo<void> {
-  const ResultsRoute({List<PageRouteInfo>? children})
-      : super(
+class ResultsRoute extends PageRouteInfo<ResultsRouteArgs> {
+  ResultsRoute({
+    required List<Pair<double, double>> samples,
+    required Level level,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
           ResultsRoute.name,
+          args: ResultsRouteArgs(
+            samples: samples,
+            level: level,
+            key: key,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'ResultsRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<ResultsRouteArgs> page =
+      PageInfo<ResultsRouteArgs>(name);
+}
+
+class ResultsRouteArgs {
+  const ResultsRouteArgs({
+    required this.samples,
+    required this.level,
+    this.key,
+  });
+
+  final List<Pair<double, double>> samples;
+
+  final Level level;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'ResultsRouteArgs{samples: $samples, level: $level, key: $key}';
+  }
 }
 
 /// generated route for

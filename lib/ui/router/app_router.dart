@@ -10,6 +10,7 @@ import 'package:imitador/ui/screens/sign_up/sign_up_screen.dart';
 import 'package:imitador/ui/section/section_router.dart';
 import 'package:imitador/ui/screens/welcome/welcome_screen.dart';
 import 'package:imitador/ui/screens/results/results_screen.dart';
+import 'package:math_expressions/math_expressions.dart';
 import 'package:dartx/dartx.dart';
 
 part 'app_router.gr.dart';
@@ -56,6 +57,10 @@ class AppRouter extends _$AppRouter {
               AutoRoute(
                 page: SettingsRoute.page,
                 path: "settings",
+              ),
+              AutoRoute(
+                page: ResultsRoute.page,
+                path: "results",
               ),
             ],
           ),

@@ -16,5 +16,5 @@ class BackButton extends SimpleButton with HasGameReference<SimonGame> {
         );
 
   @override
-  void action() => game.router.pop();
+  void action() {}
 }

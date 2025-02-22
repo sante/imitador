@@ -16,18 +16,26 @@ final dummyLevels = [
   Level.random(
     name: 'Fácil',
     difficulty: Difficulty.easy,
+    secondsDuration: 10,
+    range: Pair(0, 10),
   ),
   Level.random(
     name: 'Medio',
     difficulty: Difficulty.medium,
+    secondsDuration: 10,
+    range: Pair(0, 10),
   ),
   Level.random(
     name: 'Difícil',
     difficulty: Difficulty.hard,
+    secondsDuration: 10,
+    range: Pair(0, 10),
   ),
   Level.activity(
     name: "Se mueve se mueve",
     expressions: [],
+    secondsDuration: 10,
+    range: Pair(0, 10),
   ),
 ];
 
@@ -162,7 +170,6 @@ class _LevelsRow extends StatelessWidget {
               context.router.push(
                 LevelRoute(
                   level: levels[index],
-                  onFinishedWithResult: (_) {},
                 ),
               );
             },

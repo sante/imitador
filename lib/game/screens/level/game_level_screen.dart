@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dartx/dartx.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flutter/material.dart' hide PointerMoveEvent;
@@ -23,9 +24,13 @@ class GameLevelPage extends Component
   late final Sparky _sparky;
   late final TextComponent _helperText;
   late final RoundedButton _playButton;
+  bool finishedSampling = false;
+  void Function(List<Pair<double, double>>)
+      onFinishedWithResult;
 
   GameLevelPage({
     this.difficulty,
+    required this.onFinishedWithResult,
   });
 
   @override
@@ -108,12 +113,18 @@ class GameLevelPage extends Component
         _graph.startSampling();
         _helperText.text = 'Muestreando...';
         break;
+      case LogicalKeyboardKey.enter:
+        if (finishedSampling) {
+          onFinishedWithResult(_graph.distances);
+        }
+        break;
     }
     return super.onKeyEvent(event, keysPressed);
   }
 
   void finishSampling() {
     _helperText.text =
-        'Muestreo finalizado, presiona espacio para comenzar de nuevo';
+        'Muestreo finalizado, presiona espacio para comenzar de nuevo o enter para continuar';
+    finishedSampling = true;
   }
 }

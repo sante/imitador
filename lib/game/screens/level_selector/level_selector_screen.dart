@@ -28,19 +28,19 @@ class LevelSelectorPage extends Component with HasGameReference<SimonGame> {
       _backButton = BackButton(),
       _randomEasy = RoundedButton(
         text: 'Random Easy',
-        action: () => game.router.pushNamed('level'),
+        action: (){}, // => game.router.pushNamed('level'),
         color: const Color(0xffadde6c),
         borderColor: const Color(0xffedffab),
       ),
       _randomMedium = RoundedButton(
         text: 'Random Medium',
-        action: () => game.router.pushNamed('level'),
+        action: (){}, // => game.router.pushNamed('level'),
         color: const Color(0xffdebe6c),
         borderColor: const Color(0xfffff4c7),
       ),
       _randomHard = RoundedButton(
         text: 'Random Hard',
-        action: () => game.router.pushNamed('level'),
+        action: (){}, // => game.router.pushNamed('level'),
         color: const Color(0xffde6c6c),
         borderColor: const Color(0xffffc7c7),
       ),

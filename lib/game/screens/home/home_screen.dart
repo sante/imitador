@@ -24,7 +24,7 @@ class HomePage extends Component with HasGameReference<SimonGame> {
 
     _playButton = RoundedButton(
       text: 'Jugar',
-      action: () => game.router.pushNamed('levelSelector'),
+      action: () {}, // game.router.pushNamed('levelSelector'),
       color: const Color(0xffadde6c),
       borderColor: const Color(0xffedffab),
     );
