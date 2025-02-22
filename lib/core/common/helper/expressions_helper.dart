@@ -220,4 +220,14 @@ extension ExpressionExtensions on Expression {
     Logger.d('Result: $result');
     return result.toDouble();
   }
+
+  double getDistance(List<Pair<double, double>> samples) {
+    final error = samples.map((sample) {
+      final t = sample.first;
+      final p = sample.second;
+      final result = evaluateAt(t);
+      return pow(result - p, 2);
+    }).reduce((a, b) => a + b);
+    return sqrt(error.toDouble() / samples.length);
+  }
 }
