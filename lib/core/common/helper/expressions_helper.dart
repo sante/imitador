@@ -10,19 +10,23 @@ Expression generatePositionExpression({
   required Pair<double, double> range,
   required double secondsDuration,
   required GraphTypes type,
-  double? initialVelocity,
   double? initialPosition,
+  required initialTime,
 }) {
   switch (type) {
     case GraphTypes.constantVelocity:
       return generateConstantSpeed(
         range: range,
         secondsDuration: secondsDuration,
+        initialTime: initialTime,
+        initialPosition: initialPosition,
       );
     case GraphTypes.constantAcceleration:
       return generateUniformlyAccelerated(
         range: range,
         secondsDuration: secondsDuration,
+        initialTime: initialTime,
+        initialPosition: initialPosition,
       );
     case GraphTypes.constant:
       return generateConstant(range: range, value: initialPosition);
@@ -40,20 +44,24 @@ Expression generateConstant({
 Expression generateConstantSpeed({
   required Pair<double, double> range,
   required double secondsDuration,
-  double? initialVelocity,
+  required double initialTime,
   double? initialPosition,
 }) {
   assert(range.first < range.second, 'Range must be in ascending order');
   final random = Random();
   final rangeSize = range.second - range.first;
 
+  Logger.d("Passed initial position: $initialPosition");
+
   initialPosition ??= range.first + random.nextDouble() * rangeSize;
+
+  Logger.d("Randomized initial position: $initialPosition");
   late final double finalPosition;
-  if (initialPosition < rangeSize / 2) {
+  if (initialPosition < range.first + rangeSize / 2) {
     finalPosition = range.second -
         random.nextDouble() * rangeSize / 4; // Valor en el último cuarto
   } else {
-    finalPosition = initialPosition +
+    finalPosition = range.first +
         random.nextDouble() * rangeSize / 4; // Valor en el primer cuarto
   }
   final speed = (finalPosition - initialPosition) / secondsDuration;
@@ -61,43 +69,79 @@ Expression generateConstantSpeed({
   final p0 = Number(initialPosition);
   final t = Variable('t');
   final v = Number(speed);
-  final expression = p0 + v * t;
-  Logger.d('Final position: $finalPosition');
+  final expression = p0 + v * (t - Number(initialTime));
   Logger.d('Expression: $expression');
+  Logger.d('Initial position: $initialPosition');
+  Logger.d('Final position: $finalPosition');
   return expression;
 }
 
 Expression generateUniformlyAccelerated({
   required Pair<double, double> range,
   required double secondsDuration,
-  double? initialVelocity,
+  required double initialTime,
   double? initialPosition,
 }) {
-  assert(range.first < range.second,
-      'Range must be in ascending order'); // TODO: Remove
+  assert(range.first < range.second, 'Range must be in ascending order');
   final random = Random();
   final rangeSize = range.second - range.first;
+  final ableToChangeInitial = initialPosition == null;
 
   initialPosition ??= range.first + random.nextDouble() * rangeSize;
-  late final double finalPosition;
-  if (initialPosition < rangeSize / 2) {
-    finalPosition = range.second -
-        random.nextDouble() * rangeSize / 4; // Valor en el último cuarto
-  } else {
-    finalPosition = initialPosition +
-        random.nextDouble() * rangeSize / 4; // Valor en el primer cuarto
-  }
-  const initialVelocity = 0.0; // m/s TODO: Randomize
-  final acceleration = 2 *
-      (finalPosition - initialPosition - (initialVelocity * secondsDuration)) /
-      pow(secondsDuration, 2); // m/s^2 TODO: Randomize
 
-  final t = Variable('t');
+  late final double finalPosition;
+  final positiveAcceleration = random.nextBool();
+  bool positiveVelocity = random.nextBool();
+
+  if (initialPosition < range.first + rangeSize / 2) {
+    positiveVelocity = true;
+  } else {
+    positiveVelocity = false;
+  }
+
+  double initialVelocity = 0;
+  double acceleration = 0;
+
+  if (positiveVelocity && positiveAcceleration) {
+    finalPosition = initialPosition +
+        (range.second - initialPosition) *
+            random
+                .nextDouble(); // Random position greater than initial position
+    acceleration =
+        (finalPosition - initialPosition) * 2 / pow(secondsDuration, 2);
+  } else if (!positiveVelocity && !positiveAcceleration) {
+    finalPosition = initialPosition -
+        (initialPosition - range.first) *
+            random.nextDouble(); // Random position less than initial position
+    acceleration =
+        (finalPosition - initialPosition) * 2 / pow(secondsDuration, 2);
+  } else if (!positiveVelocity) {
+    initialVelocity = -random.nextDouble() - 2;
+    acceleration =
+        -2 * initialVelocity / secondsDuration; // Para hacer v=0 en t_f/2
+  } else {
+    initialVelocity = random.nextDouble() + 2;
+    acceleration =
+        -2 * initialVelocity / secondsDuration; // Para hacer v=0 en t_f/2
+  }
+
+  Logger.d("Initial Velocity: $initialVelocity");
+  Logger.d("Acceleration: $acceleration");
+
+  final t = Variable('t') - Number(initialTime);
   final a = Number(acceleration);
   final v0 = Number(initialVelocity);
   final p0 = Number(initialPosition);
-  final expression = p0 + v0 * t + (Number(0.5) * a * t * t);
-  Logger.d('Expression: $expression');
+  Expression expression = p0 + v0 * (t) + (Number(0.5) * a * t * t);
+  final valueAtvO = expression.evaluateAt((initialTime + secondsDuration) / 2);
+  if (valueAtvO > range.second && ableToChangeInitial) {
+    final difference = valueAtvO - range.second;
+    expression = expression - Number(difference);
+  } else if (valueAtvO < range.first && ableToChangeInitial) {
+    final difference = range.first - valueAtvO;
+    expression = expression + Number(difference);
+  }
+
   return expression;
 }
 
@@ -106,42 +150,26 @@ List<Expression> generateSectioned({
   required double secondsDuration,
   required int sections,
 }) {
-  assert(range.first < range.second,
-      'Range must be in ascending order'); // TODO: Remove
+  assert(range.first < range.second, 'Range must be in ascending order');
   assert(sections > 0, 'Sections must be greater than 0');
-  final mathContext = ContextModel();
 
   final sectionDuration = secondsDuration / sections;
-  final initialPosition = range.first; // m TODO: Randomize
-  final finalPosition = range.second; // m TODO: Randomize
+  var initialPosition = range.first; // Randomized in generators
 
   final expressions = <Expression>[];
-
-  var latestPosition = initialPosition;
+  final randomizedTypes = [...GraphTypes.values]..shuffle();
 
   for (var i = 0; i < sections; i++) {
-    final initialPos = latestPosition; // TODO: Randomize
-    final finalPos = finalPosition; // TODO: Randomize
-    final graphType =
-        GraphTypes.values[Random().nextInt(GraphTypes.values.length - 1)];
-    switch (graphType) {
-      case GraphTypes.constantAcceleration:
-      case GraphTypes.constantVelocity:
-        latestPosition = finalPos;
-        break;
-      case GraphTypes.constant:
-        latestPosition = initialPos;
-        break;
-    }
+    final graphType = randomizedTypes[i];
     final expression = generatePositionExpression(
       range: range,
       secondsDuration: sectionDuration,
       type: graphType,
-      initialPosition: i != 0 ? initialPos : null,
+      initialPosition: i != 0 ? initialPosition : null,
+      initialTime: i * sectionDuration,
     );
     expressions.add(expression);
-    mathContext.bindVariable(Variable('t'), Number((i + 1) * sectionDuration));
-    latestPosition = expression.evaluate(EvaluationType.REAL, mathContext);
+    initialPosition = expression.evaluateAt((i + 1) * sectionDuration);
   }
   Logger.d('Expressions: $expressions');
   return expressions;
@@ -158,6 +186,7 @@ List<Expression> generateByDifficulty({
         generateConstantSpeed(
           range: range,
           secondsDuration: secondsDuration,
+          initialTime: 0,
         )
       ];
     case Difficulty.medium:
@@ -165,6 +194,7 @@ List<Expression> generateByDifficulty({
         generateUniformlyAccelerated(
           range: range,
           secondsDuration: secondsDuration,
+          initialTime: 0,
         )
       ];
     case Difficulty.hard:

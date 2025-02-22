@@ -21,6 +21,7 @@ abstract class _$AppRouter extends RootStackRouter {
         routeData: routeData,
         child: LevelScreen(
           level: args.level,
+          onFinishedWithResult: args.onFinishedWithResult,
           key: args.key,
         ),
       );
@@ -35,6 +36,12 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const LogInScreen(),
+      );
+    },
+    ResultsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ResultsScreen(),
       );
     },
     SettingsRoute.name: (routeData) {
@@ -69,12 +76,14 @@ abstract class _$AppRouter extends RootStackRouter {
 class LevelRoute extends PageRouteInfo<LevelRouteArgs> {
   LevelRoute({
     required Level level,
+    required void Function(Pair<double, double>) onFinishedWithResult,
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
           LevelRoute.name,
           args: LevelRouteArgs(
             level: level,
+            onFinishedWithResult: onFinishedWithResult,
             key: key,
           ),
           initialChildren: children,
@@ -88,16 +97,19 @@ class LevelRoute extends PageRouteInfo<LevelRouteArgs> {
 class LevelRouteArgs {
   const LevelRouteArgs({
     required this.level,
+    required this.onFinishedWithResult,
     this.key,
   });
 
   final Level level;
 
+  final void Function(Pair<double, double>) onFinishedWithResult;
+
   final Key? key;
 
   @override
   String toString() {
-    return 'LevelRouteArgs{level: $level, key: $key}';
+    return 'LevelRouteArgs{level: $level, onFinishedWithResult: $onFinishedWithResult, key: $key}';
   }
 }
 
@@ -125,6 +137,20 @@ class LogInRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'LogInRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ResultsScreen]
+class ResultsRoute extends PageRouteInfo<void> {
+  const ResultsRoute({List<PageRouteInfo>? children})
+      : super(
+          ResultsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ResultsRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

@@ -2,7 +2,7 @@ import 'package:dartx/dartx.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:imitador/core/common/constants.dart';
-import 'package:imitador/core/common/helper/functions.dart';
+import 'package:imitador/core/common/helper/expressions_helper.dart';
 import 'package:imitador/game/router/simon_router.dart';
 import 'package:imitador/game/screens/level/game_level_screen.dart';
 import 'package:imitador/model/level/level.dart';

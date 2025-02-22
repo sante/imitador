@@ -159,7 +159,12 @@ class _LevelsRow extends StatelessWidget {
           itemBuilder: (context, index) => LevelCard(
             label: levels[index].name,
             onPressed: () {
-              context.router.push(LevelRoute(level: levels[index]));
+              context.router.push(
+                LevelRoute(
+                  level: levels[index],
+                  onFinishedWithResult: (_) {},
+                ),
+              );
             },
           ),
         ),
