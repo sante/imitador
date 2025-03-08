@@ -29,24 +29,25 @@ User _$UserFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$User {
-  String get username => throw _privateConstructorUsedError;
-  String? get photoUrl => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  String get email => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String username, String? photoUrl) student,
-    required TResult Function(String username, String? photoUrl) teacher,
+    required TResult Function(String id, String email, String name) student,
+    required TResult Function(String id, String email, String name) teacher,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String username, String? photoUrl)? student,
-    TResult? Function(String username, String? photoUrl)? teacher,
+    TResult? Function(String id, String email, String name)? student,
+    TResult? Function(String id, String email, String name)? teacher,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String username, String? photoUrl)? student,
-    TResult Function(String username, String? photoUrl)? teacher,
+    TResult Function(String id, String email, String name)? student,
+    TResult Function(String id, String email, String name)? teacher,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -79,7 +80,7 @@ abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res, User>;
   @useResult
-  $Res call({String username, String? photoUrl});
+  $Res call({String id, String email, String name});
 }
 
 /// @nodoc
@@ -95,18 +96,23 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? username = null,
-    Object? photoUrl = freezed,
+    Object? id = null,
+    Object? email = null,
+    Object? name = null,
   }) {
     return _then(_value.copyWith(
-      username: null == username
-          ? _value.username
-          : username // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
-      photoUrl: freezed == photoUrl
-          ? _value.photoUrl
-          : photoUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -118,7 +124,7 @@ abstract class _$$StudentImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       __$$StudentImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String username, String? photoUrl});
+  $Res call({String id, String email, String name});
 }
 
 /// @nodoc
@@ -132,43 +138,53 @@ class __$$StudentImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? username = null,
-    Object? photoUrl = freezed,
+    Object? id = null,
+    Object? email = null,
+    Object? name = null,
   }) {
     return _then(_$StudentImpl(
-      username: null == username
-          ? _value.username
-          : username // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
-      photoUrl: freezed == photoUrl
-          ? _value.photoUrl
-          : photoUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
-
 @JsonSerializable()
 class _$StudentImpl implements Student {
-  _$StudentImpl({required this.username, this.photoUrl, final String? $type})
+  _$StudentImpl(
+      {required this.id,
+      required this.email,
+      required this.name,
+      final String? $type})
       : $type = $type ?? 'student';
 
   factory _$StudentImpl.fromJson(Map<String, dynamic> json) =>
       _$$StudentImplFromJson(json);
 
   @override
-  final String username;
+  final String id;
   @override
-  final String? photoUrl;
+  final String email;
+  @override
+  final String name;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
 
   @override
   String toString() {
-    return 'User.student(username: $username, photoUrl: $photoUrl)';
+    return 'User.student(id: $id, email: $email, name: $name)';
   }
 
   @override
@@ -176,15 +192,14 @@ class _$StudentImpl implements Student {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$StudentImpl &&
-            (identical(other.username, username) ||
-                other.username == username) &&
-            (identical(other.photoUrl, photoUrl) ||
-                other.photoUrl == photoUrl));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.name, name) || other.name == name));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, username, photoUrl);
+  int get hashCode => Object.hash(runtimeType, id, email, name);
 
   @JsonKey(ignore: true)
   @override
@@ -195,30 +210,30 @@ class _$StudentImpl implements Student {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String username, String? photoUrl) student,
-    required TResult Function(String username, String? photoUrl) teacher,
+    required TResult Function(String id, String email, String name) student,
+    required TResult Function(String id, String email, String name) teacher,
   }) {
-    return student(username, photoUrl);
+    return student(id, email, name);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String username, String? photoUrl)? student,
-    TResult? Function(String username, String? photoUrl)? teacher,
+    TResult? Function(String id, String email, String name)? student,
+    TResult? Function(String id, String email, String name)? teacher,
   }) {
-    return student?.call(username, photoUrl);
+    return student?.call(id, email, name);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String username, String? photoUrl)? student,
-    TResult Function(String username, String? photoUrl)? teacher,
+    TResult Function(String id, String email, String name)? student,
+    TResult Function(String id, String email, String name)? teacher,
     required TResult orElse(),
   }) {
     if (student != null) {
-      return student(username, photoUrl);
+      return student(id, email, name);
     }
     return orElse();
   }
@@ -263,15 +278,19 @@ class _$StudentImpl implements Student {
 }
 
 abstract class Student implements User {
-  factory Student({required final String username, final String? photoUrl}) =
-      _$StudentImpl;
+  factory Student(
+      {required final String id,
+      required final String email,
+      required final String name}) = _$StudentImpl;
 
   factory Student.fromJson(Map<String, dynamic> json) = _$StudentImpl.fromJson;
 
   @override
-  String get username;
+  String get id;
   @override
-  String? get photoUrl;
+  String get email;
+  @override
+  String get name;
   @override
   @JsonKey(ignore: true)
   _$$StudentImplCopyWith<_$StudentImpl> get copyWith =>
@@ -285,7 +304,7 @@ abstract class _$$TeacherImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       __$$TeacherImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String username, String? photoUrl});
+  $Res call({String id, String email, String name});
 }
 
 /// @nodoc
@@ -299,43 +318,53 @@ class __$$TeacherImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? username = null,
-    Object? photoUrl = freezed,
+    Object? id = null,
+    Object? email = null,
+    Object? name = null,
   }) {
     return _then(_$TeacherImpl(
-      username: null == username
-          ? _value.username
-          : username // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
-      photoUrl: freezed == photoUrl
-          ? _value.photoUrl
-          : photoUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
-
 @JsonSerializable()
 class _$TeacherImpl implements Teacher {
-  _$TeacherImpl({required this.username, this.photoUrl, final String? $type})
+  _$TeacherImpl(
+      {required this.id,
+      required this.email,
+      required this.name,
+      final String? $type})
       : $type = $type ?? 'teacher';
 
   factory _$TeacherImpl.fromJson(Map<String, dynamic> json) =>
       _$$TeacherImplFromJson(json);
 
   @override
-  final String username;
+  final String id;
   @override
-  final String? photoUrl;
+  final String email;
+  @override
+  final String name;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
 
   @override
   String toString() {
-    return 'User.teacher(username: $username, photoUrl: $photoUrl)';
+    return 'User.teacher(id: $id, email: $email, name: $name)';
   }
 
   @override
@@ -343,15 +372,14 @@ class _$TeacherImpl implements Teacher {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TeacherImpl &&
-            (identical(other.username, username) ||
-                other.username == username) &&
-            (identical(other.photoUrl, photoUrl) ||
-                other.photoUrl == photoUrl));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.name, name) || other.name == name));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, username, photoUrl);
+  int get hashCode => Object.hash(runtimeType, id, email, name);
 
   @JsonKey(ignore: true)
   @override
@@ -362,30 +390,30 @@ class _$TeacherImpl implements Teacher {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String username, String? photoUrl) student,
-    required TResult Function(String username, String? photoUrl) teacher,
+    required TResult Function(String id, String email, String name) student,
+    required TResult Function(String id, String email, String name) teacher,
   }) {
-    return teacher(username, photoUrl);
+    return teacher(id, email, name);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String username, String? photoUrl)? student,
-    TResult? Function(String username, String? photoUrl)? teacher,
+    TResult? Function(String id, String email, String name)? student,
+    TResult? Function(String id, String email, String name)? teacher,
   }) {
-    return teacher?.call(username, photoUrl);
+    return teacher?.call(id, email, name);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String username, String? photoUrl)? student,
-    TResult Function(String username, String? photoUrl)? teacher,
+    TResult Function(String id, String email, String name)? student,
+    TResult Function(String id, String email, String name)? teacher,
     required TResult orElse(),
   }) {
     if (teacher != null) {
-      return teacher(username, photoUrl);
+      return teacher(id, email, name);
     }
     return orElse();
   }
@@ -430,15 +458,19 @@ class _$TeacherImpl implements Teacher {
 }
 
 abstract class Teacher implements User {
-  factory Teacher({required final String username, final String? photoUrl}) =
-      _$TeacherImpl;
+  factory Teacher(
+      {required final String id,
+      required final String email,
+      required final String name}) = _$TeacherImpl;
 
   factory Teacher.fromJson(Map<String, dynamic> json) = _$TeacherImpl.fromJson;
 
   @override
-  String get username;
+  String get id;
   @override
-  String? get photoUrl;
+  String get email;
+  @override
+  String get name;
   @override
   @JsonKey(ignore: true)
   _$$TeacherImplCopyWith<_$TeacherImpl> get copyWith =>

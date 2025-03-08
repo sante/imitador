@@ -7,7 +7,6 @@ part 'auth_models.g.dart';
 
 @freezed
 class SignInResponse with _$SignInResponse {
-  @JsonSerializable()
   factory SignInResponse({
     required String accessToken,
     required User user,

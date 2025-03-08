@@ -119,7 +119,6 @@ class __$$SignInResponseImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
 @JsonSerializable()
 class _$SignInResponseImpl implements _SignInResponse {
   _$SignInResponseImpl({required this.accessToken, required this.user});

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'level_cubit.dart';
+part of 'global_section_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$LevelState {
+mixin _$GlobalSectionState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() state,
@@ -34,33 +34,33 @@ mixin _$LevelState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_LevelState value) state,
+    required TResult Function(_GlobalSectionState value) state,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_LevelState value)? state,
+    TResult? Function(_GlobalSectionState value)? state,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_LevelState value)? state,
+    TResult Function(_GlobalSectionState value)? state,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $LevelStateCopyWith<$Res> {
-  factory $LevelStateCopyWith(
-          LevelState value, $Res Function(LevelState) then) =
-      _$LevelStateCopyWithImpl<$Res, LevelState>;
+abstract class $GlobalSectionStateCopyWith<$Res> {
+  factory $GlobalSectionStateCopyWith(
+          GlobalSectionState value, $Res Function(GlobalSectionState) then) =
+      _$GlobalSectionStateCopyWithImpl<$Res, GlobalSectionState>;
 }
 
 /// @nodoc
-class _$LevelStateCopyWithImpl<$Res, $Val extends LevelState>
-    implements $LevelStateCopyWith<$Res> {
-  _$LevelStateCopyWithImpl(this._value, this._then);
+class _$GlobalSectionStateCopyWithImpl<$Res, $Val extends GlobalSectionState>
+    implements $GlobalSectionStateCopyWith<$Res> {
+  _$GlobalSectionStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -69,35 +69,35 @@ class _$LevelStateCopyWithImpl<$Res, $Val extends LevelState>
 }
 
 /// @nodoc
-abstract class _$$LevelStateImplCopyWith<$Res> {
-  factory _$$LevelStateImplCopyWith(
-          _$LevelStateImpl value, $Res Function(_$LevelStateImpl) then) =
-      __$$LevelStateImplCopyWithImpl<$Res>;
+abstract class _$$GlobalSectionStateImplCopyWith<$Res> {
+  factory _$$GlobalSectionStateImplCopyWith(_$GlobalSectionStateImpl value,
+          $Res Function(_$GlobalSectionStateImpl) then) =
+      __$$GlobalSectionStateImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$LevelStateImplCopyWithImpl<$Res>
-    extends _$LevelStateCopyWithImpl<$Res, _$LevelStateImpl>
-    implements _$$LevelStateImplCopyWith<$Res> {
-  __$$LevelStateImplCopyWithImpl(
-      _$LevelStateImpl _value, $Res Function(_$LevelStateImpl) _then)
+class __$$GlobalSectionStateImplCopyWithImpl<$Res>
+    extends _$GlobalSectionStateCopyWithImpl<$Res, _$GlobalSectionStateImpl>
+    implements _$$GlobalSectionStateImplCopyWith<$Res> {
+  __$$GlobalSectionStateImplCopyWithImpl(_$GlobalSectionStateImpl _value,
+      $Res Function(_$GlobalSectionStateImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$LevelStateImpl implements _LevelState {
-  const _$LevelStateImpl();
+class _$GlobalSectionStateImpl implements _GlobalSectionState {
+  const _$GlobalSectionStateImpl();
 
   @override
   String toString() {
-    return 'LevelState.state()';
+    return 'GlobalSectionState.state()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LevelStateImpl);
+        (other.runtimeType == runtimeType && other is _$GlobalSectionStateImpl);
   }
 
   @override
@@ -134,7 +134,7 @@ class _$LevelStateImpl implements _LevelState {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_LevelState value) state,
+    required TResult Function(_GlobalSectionState value) state,
   }) {
     return state(this);
   }
@@ -142,7 +142,7 @@ class _$LevelStateImpl implements _LevelState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_LevelState value)? state,
+    TResult? Function(_GlobalSectionState value)? state,
   }) {
     return state?.call(this);
   }
@@ -150,7 +150,7 @@ class _$LevelStateImpl implements _LevelState {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_LevelState value)? state,
+    TResult Function(_GlobalSectionState value)? state,
     required TResult orElse(),
   }) {
     if (state != null) {
@@ -160,6 +160,6 @@ class _$LevelStateImpl implements _LevelState {
   }
 }
 
-abstract class _LevelState implements LevelState {
-  const factory _LevelState() = _$LevelStateImpl;
+abstract class _GlobalSectionState implements GlobalSectionState {
+  const factory _GlobalSectionState() = _$GlobalSectionStateImpl;
 }

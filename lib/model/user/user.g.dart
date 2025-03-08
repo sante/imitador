@@ -8,28 +8,32 @@ part of 'user.dart';
 
 _$StudentImpl _$$StudentImplFromJson(Map<String, dynamic> json) =>
     _$StudentImpl(
-      username: json['username'] as String,
-      photoUrl: json['photoUrl'] as String?,
+      id: json['id'] as String,
+      email: json['email'] as String,
+      name: json['name'] as String,
       $type: json['runtimeType'] as String?,
     );
 
 Map<String, dynamic> _$$StudentImplToJson(_$StudentImpl instance) =>
     <String, dynamic>{
-      'username': instance.username,
-      'photoUrl': instance.photoUrl,
+      'id': instance.id,
+      'email': instance.email,
+      'name': instance.name,
       'runtimeType': instance.$type,
     };
 
 _$TeacherImpl _$$TeacherImplFromJson(Map<String, dynamic> json) =>
     _$TeacherImpl(
-      username: json['username'] as String,
-      photoUrl: json['photoUrl'] as String?,
+      id: json['id'] as String,
+      email: json['email'] as String,
+      name: json['name'] as String,
       $type: json['runtimeType'] as String?,
     );
 
 Map<String, dynamic> _$$TeacherImplToJson(_$TeacherImpl instance) =>
     <String, dynamic>{
-      'username': instance.username,
-      'photoUrl': instance.photoUrl,
+      'id': instance.id,
+      'email': instance.email,
+      'name': instance.name,
       'runtimeType': instance.$type,
     };

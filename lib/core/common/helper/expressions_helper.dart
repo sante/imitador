@@ -230,7 +230,7 @@ extension ExpressionExtensions on Expression {
       final result = evaluateAt(t);
       return pow(result - p, 2);
     }).sum();
-    return error / samples.length;
+    return error.toDouble();
   }
 }
 
@@ -245,6 +245,6 @@ extension ExpressionListExtensions on List<Expression> {
           .toList();
       errors.add(expression.getDistanceSqr(expressionSamples));
     });
-    return sqrt(errors.sum());
+    return sqrt(errors.sum() / samples.length);
   }
 }

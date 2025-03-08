@@ -1,16 +1,21 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:imitador/core/repository/session_repository.dart';
+import 'package:imitador/model/activity/activity.dart';
+import 'package:imitador/model/enum/play_session_type.dart';
+import 'package:imitador/model/game_session/game_session.dart';
 import 'package:imitador/model/level/level.dart';
 import 'package:imitador/ui/screens/level/level_screen.dart';
 import 'package:imitador/ui/screens/level_selector/level_selector_screen.dart';
 import 'package:imitador/ui/screens/log_in/log_in_screen.dart';
 import 'package:imitador/ui/screens/settings/settings_screen.dart';
 import 'package:imitador/ui/screens/sign_up/sign_up_screen.dart';
-import 'package:imitador/ui/section/section_router.dart';
+import 'package:imitador/ui/section/activity/activity_section.dart';
+import 'package:imitador/ui/section/game_session/game_session_section.dart';
+import 'package:imitador/ui/section/global/global_section.dart';
+import 'package:imitador/ui/section/level/level_section.dart';
 import 'package:imitador/ui/screens/welcome/welcome_screen.dart';
 import 'package:imitador/ui/screens/results/results_screen.dart';
-import 'package:math_expressions/math_expressions.dart';
 import 'package:dartx/dartx.dart';
 
 part 'app_router.gr.dart';
@@ -31,7 +36,7 @@ class AppRouter extends _$AppRouter {
         routes = [
           AutoRoute(
             path: '/',
-            page: UnauthenticatedSectionRoute.page,
+            page: GlobalSectionRoute.page,
             children: [
               AutoRoute(
                 path: 'welcome',
@@ -47,10 +52,6 @@ class AppRouter extends _$AppRouter {
                 path: "levelSelector",
               ),
               AutoRoute(
-                page: LevelRoute.page,
-                path: "level",
-              ),
-              AutoRoute(
                 page: LogInRoute.page,
                 path: "login",
               ),
@@ -59,8 +60,33 @@ class AppRouter extends _$AppRouter {
                 path: "settings",
               ),
               AutoRoute(
-                page: ResultsRoute.page,
-                path: "results",
+                page: LevelSectionRoute.page,
+                path: "level",
+                children: [
+                  AutoRoute(
+                    page: LevelRoute.page,
+                    initial: true,
+                  ),
+                  AutoRoute(
+                    page: ResultsRoute.page,
+                    path: "results",
+                  ),
+                ],
+              ),
+              AutoRoute(
+                page: ActivitySectionRoute.page,
+                path: "activity",
+                children: [
+                  AutoRoute(page: LevelSelectorRoute.page, initial: true),
+                  AutoRoute(
+                    page: LevelRoute.page,
+                    path: "level",
+                  ),
+                  AutoRoute(
+                    page: ResultsRoute.page,
+                    path: "levelResults",
+                  ),
+                ],
               ),
             ],
           ),

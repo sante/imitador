@@ -5,17 +5,18 @@ part 'user.freezed.dart';
 part 'user.g.dart';
 
 @freezed
-class User with _$User {
-  @JsonSerializable()
+sealed class User with _$User {
+
   factory User.student({
-    required String username,
-    String? photoUrl,
+    required String id,
+    required String email,
+    required String name,
   }) = Student;
 
-  @JsonSerializable()
   factory User.teacher({
-    required String username,
-    String? photoUrl,
+    required String id,
+    required String email,
+    required String name,
   }) = Teacher;
 
   factory User.fromJson(Map<String, dynamic> json) =>

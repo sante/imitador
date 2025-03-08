@@ -5,8 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imitador/core/common/extension/context_extensions.dart';
 import 'package:imitador/model/enum/difficulty.dart';
+import 'package:imitador/model/enum/play_session_type.dart';
 import 'package:imitador/model/level/level.dart';
 import 'package:imitador/ui/router/app_router.dart';
+import 'package:imitador/ui/section/activity/activity_section_cubit.dart';
+import 'package:imitador/ui/section/game_session/game_session_section_cubit.dart';
 import 'package:imitador/ui/theme/app_theme.dart';
 import 'package:imitador/ui/theme/level_card.dart';
 
@@ -14,28 +17,32 @@ import 'level_selector_cubit.dart';
 
 final dummyLevels = [
   Level.random(
+    id: '1',
     name: 'Fácil',
     difficulty: Difficulty.easy,
     secondsDuration: 10,
-    range: Pair(0, 10),
+    range: const Pair(0, 10),
   ),
   Level.random(
+    id: '2',
     name: 'Medio',
     difficulty: Difficulty.medium,
     secondsDuration: 10,
-    range: Pair(0, 10),
+    range: const Pair(0, 10),
   ),
   Level.random(
+    id: '3',
     name: 'Difícil',
     difficulty: Difficulty.hard,
     secondsDuration: 10,
-    range: Pair(0, 10),
+    range: const Pair(0, 10),
   ),
-  Level.activity(
+  Level.fixed(
+    id: '4',
     name: "Se mueve se mueve",
     expressions: [],
     secondsDuration: 10,
-    range: Pair(0, 10),
+    range: const Pair(0, 10),
   ),
 ];
 
@@ -46,11 +53,45 @@ class LevelSelectorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => BlocProvider(
         create: (_) => LevelSelectorCubit(),
-        child: _LevelSelectorContentScreen(),
+        child: _LevelSelectorContentScreen(
+          levels: dummyLevels,
+        ),
       );
 }
 
+@RoutePage()
+class SessionLevelSelectorScreen extends StatelessWidget {
+  final PlaySessionType sessionType;
+
+  const SessionLevelSelectorScreen({
+    required this.sessionType,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) => switch (sessionType) {
+        PlaySessionType.gameSession => BlocBuilder<ActivitySectionCubit, ActivitySectionState>(
+          builder: (context, state) => _LevelSelectorContentScreen(
+            levels: state.activity.levels,
+          ),
+        ),
+        PlaySessionType.activity => BlocBuilder<GameSessionSectionCubit, GameSessionSectionState>(
+          builder: (context, state) => _LevelSelectorContentScreen(
+            levels: state.session.activity.levels,
+          ),
+        ),
+        PlaySessionType.level => Container(), // We shouldn't arrive here
+      };
+}
+
 class _LevelSelectorContentScreen extends StatelessWidget {
+  final List<Level> levels;
+
+  const _LevelSelectorContentScreen({
+    required this.levels,
+    super.key,
+  });
+
   @override
   Widget build(BuildContext context) => Padding(
         padding: EdgeInsets.symmetric(vertical: 60.h, horizontal: 104.w),
@@ -87,7 +128,7 @@ class _LevelSelectorContentScreen extends StatelessWidget {
                     spacing: 24.h,
                     children: [
                       Text(
-                        'Actividades',
+                        'Niveles',
                         style: context.theme.textStyles.titleLarge!.copyWith(
                           fontSize: 32.sp,
                           fontWeight: FontWeight.bold,
@@ -96,7 +137,7 @@ class _LevelSelectorContentScreen extends StatelessWidget {
                       ),
                       _LevelsRow(
                           levels: dummyLevels
-                              .filter((it) => it is Activity)
+                              .filter((it) => it is FixedLevel)
                               .toList()),
                     ],
                   ),
@@ -168,7 +209,7 @@ class _LevelsRow extends StatelessWidget {
             label: levels[index].name,
             onPressed: () {
               context.router.push(
-                LevelRoute(
+                LevelSectionRoute(
                   level: levels[index],
                 ),
               );
