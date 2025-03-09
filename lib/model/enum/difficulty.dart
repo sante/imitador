@@ -1,5 +1,7 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 enum Difficulty {
-  easy,
-  medium,
-  hard
+  @JsonValue("EASY") easy,
+  @JsonValue("MEDIUM") medium,
+  @JsonValue("HARD") hard,
 }

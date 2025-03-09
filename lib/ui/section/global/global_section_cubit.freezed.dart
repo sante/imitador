@@ -17,19 +17,20 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$GlobalSectionState {
   User? get user => throw _privateConstructorUsedError;
+  List<Level>? get levels => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(User? user) state,
+    required TResult Function(User? user, List<Level>? levels) state,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(User? user)? state,
+    TResult? Function(User? user, List<Level>? levels)? state,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(User? user)? state,
+    TResult Function(User? user, List<Level>? levels)? state,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -61,7 +62,7 @@ abstract class $GlobalSectionStateCopyWith<$Res> {
           GlobalSectionState value, $Res Function(GlobalSectionState) then) =
       _$GlobalSectionStateCopyWithImpl<$Res, GlobalSectionState>;
   @useResult
-  $Res call({User? user});
+  $Res call({User? user, List<Level>? levels});
 
   $UserCopyWith<$Res>? get user;
 }
@@ -80,12 +81,17 @@ class _$GlobalSectionStateCopyWithImpl<$Res, $Val extends GlobalSectionState>
   @override
   $Res call({
     Object? user = freezed,
+    Object? levels = freezed,
   }) {
     return _then(_value.copyWith(
       user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User?,
+      levels: freezed == levels
+          ? _value.levels
+          : levels // ignore: cast_nullable_to_non_nullable
+              as List<Level>?,
     ) as $Val);
   }
 
@@ -111,7 +117,7 @@ abstract class _$$GlobalSectionStateStateImplCopyWith<$Res>
       __$$GlobalSectionStateStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({User? user});
+  $Res call({User? user, List<Level>? levels});
 
   @override
   $UserCopyWith<$Res>? get user;
@@ -131,12 +137,17 @@ class __$$GlobalSectionStateStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? user = freezed,
+    Object? levels = freezed,
   }) {
     return _then(_$GlobalSectionStateStateImpl(
       user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User?,
+      levels: freezed == levels
+          ? _value._levels
+          : levels // ignore: cast_nullable_to_non_nullable
+              as List<Level>?,
     ));
   }
 }
@@ -144,15 +155,27 @@ class __$$GlobalSectionStateStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$GlobalSectionStateStateImpl implements _GlobalSectionStateState {
-  const _$GlobalSectionStateStateImpl({this.user = null});
+  const _$GlobalSectionStateStateImpl(
+      {this.user = null, final List<Level>? levels = null})
+      : _levels = levels;
 
   @override
   @JsonKey()
   final User? user;
+  final List<Level>? _levels;
+  @override
+  @JsonKey()
+  List<Level>? get levels {
+    final value = _levels;
+    if (value == null) return null;
+    if (_levels is EqualUnmodifiableListView) return _levels;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'GlobalSectionState.state(user: $user)';
+    return 'GlobalSectionState.state(user: $user, levels: $levels)';
   }
 
   @override
@@ -160,11 +183,13 @@ class _$GlobalSectionStateStateImpl implements _GlobalSectionStateState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GlobalSectionStateStateImpl &&
-            (identical(other.user, user) || other.user == user));
+            (identical(other.user, user) || other.user == user) &&
+            const DeepCollectionEquality().equals(other._levels, _levels));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, user);
+  int get hashCode => Object.hash(
+      runtimeType, user, const DeepCollectionEquality().hash(_levels));
 
   @JsonKey(ignore: true)
   @override
@@ -176,27 +201,27 @@ class _$GlobalSectionStateStateImpl implements _GlobalSectionStateState {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(User? user) state,
+    required TResult Function(User? user, List<Level>? levels) state,
   }) {
-    return state(user);
+    return state(user, levels);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(User? user)? state,
+    TResult? Function(User? user, List<Level>? levels)? state,
   }) {
-    return state?.call(user);
+    return state?.call(user, levels);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(User? user)? state,
+    TResult Function(User? user, List<Level>? levels)? state,
     required TResult orElse(),
   }) {
     if (state != null) {
-      return state(user);
+      return state(user, levels);
     }
     return orElse();
   }
@@ -231,11 +256,14 @@ class _$GlobalSectionStateStateImpl implements _GlobalSectionStateState {
 }
 
 abstract class _GlobalSectionStateState implements GlobalSectionState {
-  const factory _GlobalSectionStateState({final User? user}) =
-      _$GlobalSectionStateStateImpl;
+  const factory _GlobalSectionStateState(
+      {final User? user,
+      final List<Level>? levels}) = _$GlobalSectionStateStateImpl;
 
   @override
   User? get user;
+  @override
+  List<Level>? get levels;
   @override
   @JsonKey(ignore: true)
   _$$GlobalSectionStateStateImplCopyWith<_$GlobalSectionStateStateImpl>

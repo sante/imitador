@@ -8,42 +8,52 @@ import 'package:imitador/model/activity/activity.dart';
 import 'package:imitador/model/enum/difficulty.dart';
 import 'package:imitador/model/enum/play_session_type.dart';
 import 'package:imitador/model/level/level.dart';
+import 'package:imitador/model/user/user.dart';
 import 'package:imitador/ui/router/app_router.dart';
 import 'package:imitador/ui/section/activity/activity_section_cubit.dart';
 import 'package:imitador/ui/section/game_session/game_session_section_cubit.dart';
+import 'package:imitador/ui/section/global/global_section_cubit.dart';
 import 'package:imitador/ui/theme/app_theme.dart';
 import 'package:imitador/ui/theme/level_card.dart';
 
 import 'level_selector_cubit.dart';
 
 final dummyLevels = [
-  Level.random(
+  Level(
     id: '1',
     name: 'Fácil',
     difficulty: Difficulty.easy,
     secondsDuration: 10,
-    range: const Pair(0, 10),
+    minPosition: 0,
+    maxPosition: 10,
+    expressions: [],
   ),
-  Level.random(
+  Level(
     id: '2',
     name: 'Medio',
     difficulty: Difficulty.medium,
     secondsDuration: 10,
-    range: const Pair(0, 10),
+    minPosition: 0,
+    maxPosition: 10,
+    expressions: [],
   ),
-  Level.random(
+  Level(
     id: '3',
     name: 'Difícil',
     difficulty: Difficulty.hard,
     secondsDuration: 10,
-    range: const Pair(0, 10),
+    minPosition: 0,
+    maxPosition: 10,
+    expressions: [],
   ),
-  Level.fixed(
+  Level(
     id: '4',
     name: "Se mueve se mueve",
+    difficulty: null,
     expressions: [],
     secondsDuration: 10,
-    range: const Pair(0, 10),
+    minPosition: 0,
+    maxPosition: 10,
   ),
 ];
 
@@ -52,10 +62,11 @@ class LevelSelectorScreen extends StatelessWidget {
   const LevelSelectorScreen({super.key});
 
   @override
-  Widget build(BuildContext context) => BlocProvider(
-        create: (_) => LevelSelectorCubit(),
-        child: _LevelSelectorContentScreen(
-          levels: dummyLevels,
+  Widget build(BuildContext context) =>
+      BlocBuilder<GlobalSectionCubit, GlobalSectionState>(
+        builder: (context, state) => _LevelSelectorContentScreen(
+          levels: state.levels ?? [],
+          user: state.user,
         ),
       );
 }
@@ -71,16 +82,20 @@ class SessionLevelSelectorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => switch (sessionType) {
-        PlaySessionType.gameSession => BlocBuilder<ActivitySectionCubit, ActivitySectionState>(
-          builder: (context, state) => _LevelSelectorContentScreen(
-            levels: state.activity.levels,
+        PlaySessionType.gameSession =>
+          BlocBuilder<ActivitySectionCubit, ActivitySectionState>(
+            builder: (context, state) => _LevelSelectorContentScreen(
+              levels: state.activity.levels,
+              user: state.user,
+            ),
           ),
-        ),
-        PlaySessionType.activity => BlocBuilder<GameSessionSectionCubit, GameSessionSectionState>(
-          builder: (context, state) => _LevelSelectorContentScreen(
-            levels: state.session.activity.levels,
+        PlaySessionType.activity =>
+          BlocBuilder<GameSessionSectionCubit, GameSessionSectionState>(
+            builder: (context, state) => _LevelSelectorContentScreen(
+              levels: state.session.activity.levels,
+              user: state.user,
+            ),
           ),
-        ),
         PlaySessionType.level => Container(), // We shouldn't arrive here
       };
 }
@@ -88,9 +103,11 @@ class SessionLevelSelectorScreen extends StatelessWidget {
 class _LevelSelectorContentScreen extends StatelessWidget {
   final List<Level> levels;
   final List<Activity> activities;
+  final User? user;
 
   const _LevelSelectorContentScreen({
     required this.levels,
+    required this.user,
     this.activities = const [],
     super.key,
   });
@@ -120,8 +137,8 @@ class _LevelSelectorContentScreen extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ),
                       _LevelsRow(
-                          levels: dummyLevels
-                              .filter((it) => it is RandomLevel)
+                          levels: levels
+                              .filter((it) => it.difficulty != null)
                               .toList()),
                     ],
                   ),
@@ -139,8 +156,8 @@ class _LevelSelectorContentScreen extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ),
                       _LevelsRow(
-                          levels: dummyLevels
-                              .filter((it) => it is FixedLevel)
+                          levels: levels
+                              .filter((it) => it.difficulty == null)
                               .toList()),
                     ],
                   ),
@@ -160,7 +177,7 @@ class _LevelSelectorContentScreen extends StatelessWidget {
                     spacing: 24.w,
                     children: [
                       Text(
-                        "¡Hola, invitado!",
+                        "¡Hola, ${user?.name ?? "invitado"}!",
                         style: context.theme.textStyles.titleLarge!.copyWith(),
                       ),
                       ElevatedButton(
