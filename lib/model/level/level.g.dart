@@ -47,8 +47,9 @@ _$RandomLevelImpl _$$RandomLevelImplFromJson(Map<String, dynamic> json) =>
       range: const PairConverter().fromJson(json['range'] as String),
       secondsDuration: (json['secondsDuration'] as num).toDouble(),
       expressions: (json['expressions'] as List<dynamic>?)
-          ?.map((e) => const ExpressionConverter().fromJson(e as String))
-          .toList(),
+              ?.map((e) => const ExpressionConverter().fromJson(e as String))
+              .toList() ??
+          const [],
       $type: json['runtimeType'] as String?,
     );
 
@@ -60,9 +61,8 @@ Map<String, dynamic> _$$RandomLevelImplToJson(_$RandomLevelImpl instance) =>
       'type': _$LevelTypeEnumMap[instance.type]!,
       'range': const PairConverter().toJson(instance.range),
       'secondsDuration': instance.secondsDuration,
-      'expressions': instance.expressions
-          ?.map(const ExpressionConverter().toJson)
-          .toList(),
+      'expressions':
+          instance.expressions.map(const ExpressionConverter().toJson).toList(),
       'runtimeType': instance.$type,
     };
 

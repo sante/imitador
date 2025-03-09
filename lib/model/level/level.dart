@@ -28,7 +28,8 @@ sealed class Level with _$Level {
     @PairConverter() required Pair<double, double> range,
     required double secondsDuration,
     @ExpressionConverter()
-    LevelExpressions?
+    @Default([])
+    LevelExpressions
         expressions, // Maybe we need this to keep historic records
   }) = RandomLevel;
 

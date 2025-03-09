@@ -24,7 +24,7 @@ class LevelSectionCubit extends Cubit<LevelSectionState> {
     required Level level,
   }) : super(LevelSectionState.state(
           level: level.copyWith(
-            expressions: level.expressions ??
+            expressions: level.expressions.isNotEmpty ? level.expressions :
                 generateByDifficulty(
                   range: level.range,
                   secondsDuration: level.secondsDuration,

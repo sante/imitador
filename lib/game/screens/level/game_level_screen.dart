@@ -40,7 +40,7 @@ class GameLevelPage extends Component
     final gameInitialSize = game.size;
     addAll([
       _graph = GraphComponent(
-        fixedExpressions: game.level.expressions!,
+        fixedExpressions: game.level.expressions,
         onFinishedSampling: finishSampling,
       )
         ..size = Vector2(gameInitialSize.x, gameInitialSize.y / 2)
