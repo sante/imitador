@@ -11,27 +11,16 @@ part 'level.g.dart';
 
 @freezed
 sealed class Level with _$Level {
-  factory Level.fixed({
+  factory Level({
     required String id,
     required String name,
-    @PairConverter() required Pair<double, double> range,
-    required double secondsDuration,
+    required Difficulty? difficulty,
+    required double minPosition,
+    required double maxPosition,
+    @JsonKey(name: "duration") required double secondsDuration,
     @Default(LevelType.position) LevelType type,
     @ExpressionConverter() required LevelExpressions expressions,
-  }) = FixedLevel;
-
-  factory Level.random({
-    required String id,
-    required String name,
-    required Difficulty difficulty,
-    @Default(LevelType.position) LevelType type,
-    @PairConverter() required Pair<double, double> range,
-    required double secondsDuration,
-    @ExpressionConverter()
-    @Default([])
-    LevelExpressions
-        expressions, // Maybe we need this to keep historic records
-  }) = RandomLevel;
+  }) = _Level;
 
   factory Level.fromJson(Map<String, dynamic> json) => _$LevelFromJson(json);
 }

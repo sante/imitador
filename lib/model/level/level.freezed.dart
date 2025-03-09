@@ -15,111 +15,22 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 Level _$LevelFromJson(Map<String, dynamic> json) {
-  switch (json['runtimeType']) {
-    case 'fixed':
-      return FixedLevel.fromJson(json);
-    case 'random':
-      return RandomLevel.fromJson(json);
-
-    default:
-      throw CheckedFromJsonException(json, 'runtimeType', 'Level',
-          'Invalid union type "${json['runtimeType']}"!');
-  }
+  return _Level.fromJson(json);
 }
 
 /// @nodoc
 mixin _$Level {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  @PairConverter()
-  Pair<double, double> get range => throw _privateConstructorUsedError;
+  Difficulty? get difficulty => throw _privateConstructorUsedError;
+  double get minPosition => throw _privateConstructorUsedError;
+  double get maxPosition => throw _privateConstructorUsedError;
+  @JsonKey(name: "duration")
   double get secondsDuration => throw _privateConstructorUsedError;
   LevelType get type => throw _privateConstructorUsedError;
   @ExpressionConverter()
   List<Expression> get expressions => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(
-            String id,
-            String name,
-            @PairConverter() Pair<double, double> range,
-            double secondsDuration,
-            LevelType type,
-            @ExpressionConverter() List<Expression> expressions)
-        fixed,
-    required TResult Function(
-            String id,
-            String name,
-            Difficulty difficulty,
-            LevelType type,
-            @PairConverter() Pair<double, double> range,
-            double secondsDuration,
-            @ExpressionConverter() List<Expression> expressions)
-        random,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            String id,
-            String name,
-            @PairConverter() Pair<double, double> range,
-            double secondsDuration,
-            LevelType type,
-            @ExpressionConverter() List<Expression> expressions)?
-        fixed,
-    TResult? Function(
-            String id,
-            String name,
-            Difficulty difficulty,
-            LevelType type,
-            @PairConverter() Pair<double, double> range,
-            double secondsDuration,
-            @ExpressionConverter() List<Expression> expressions)?
-        random,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            String id,
-            String name,
-            @PairConverter() Pair<double, double> range,
-            double secondsDuration,
-            LevelType type,
-            @ExpressionConverter() List<Expression> expressions)?
-        fixed,
-    TResult Function(
-            String id,
-            String name,
-            Difficulty difficulty,
-            LevelType type,
-            @PairConverter() Pair<double, double> range,
-            double secondsDuration,
-            @ExpressionConverter() List<Expression> expressions)?
-        random,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(FixedLevel value) fixed,
-    required TResult Function(RandomLevel value) random,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(FixedLevel value)? fixed,
-    TResult? Function(RandomLevel value)? random,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(FixedLevel value)? fixed,
-    TResult Function(RandomLevel value)? random,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $LevelCopyWith<Level> get copyWith => throw _privateConstructorUsedError;
@@ -133,8 +44,10 @@ abstract class $LevelCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
-      @PairConverter() Pair<double, double> range,
-      double secondsDuration,
+      Difficulty? difficulty,
+      double minPosition,
+      double maxPosition,
+      @JsonKey(name: "duration") double secondsDuration,
       LevelType type,
       @ExpressionConverter() List<Expression> expressions});
 }
@@ -154,7 +67,9 @@ class _$LevelCopyWithImpl<$Res, $Val extends Level>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? range = null,
+    Object? difficulty = freezed,
+    Object? minPosition = null,
+    Object? maxPosition = null,
     Object? secondsDuration = null,
     Object? type = null,
     Object? expressions = null,
@@ -168,10 +83,18 @@ class _$LevelCopyWithImpl<$Res, $Val extends Level>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      range: null == range
-          ? _value.range
-          : range // ignore: cast_nullable_to_non_nullable
-              as Pair<double, double>,
+      difficulty: freezed == difficulty
+          ? _value.difficulty
+          : difficulty // ignore: cast_nullable_to_non_nullable
+              as Difficulty?,
+      minPosition: null == minPosition
+          ? _value.minPosition
+          : minPosition // ignore: cast_nullable_to_non_nullable
+              as double,
+      maxPosition: null == maxPosition
+          ? _value.maxPosition
+          : maxPosition // ignore: cast_nullable_to_non_nullable
+              as double,
       secondsDuration: null == secondsDuration
           ? _value.secondsDuration
           : secondsDuration // ignore: cast_nullable_to_non_nullable
@@ -189,27 +112,29 @@ class _$LevelCopyWithImpl<$Res, $Val extends Level>
 }
 
 /// @nodoc
-abstract class _$$FixedLevelImplCopyWith<$Res> implements $LevelCopyWith<$Res> {
-  factory _$$FixedLevelImplCopyWith(
-          _$FixedLevelImpl value, $Res Function(_$FixedLevelImpl) then) =
-      __$$FixedLevelImplCopyWithImpl<$Res>;
+abstract class _$$LevelImplCopyWith<$Res> implements $LevelCopyWith<$Res> {
+  factory _$$LevelImplCopyWith(
+          _$LevelImpl value, $Res Function(_$LevelImpl) then) =
+      __$$LevelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {String id,
       String name,
-      @PairConverter() Pair<double, double> range,
-      double secondsDuration,
+      Difficulty? difficulty,
+      double minPosition,
+      double maxPosition,
+      @JsonKey(name: "duration") double secondsDuration,
       LevelType type,
       @ExpressionConverter() List<Expression> expressions});
 }
 
 /// @nodoc
-class __$$FixedLevelImplCopyWithImpl<$Res>
-    extends _$LevelCopyWithImpl<$Res, _$FixedLevelImpl>
-    implements _$$FixedLevelImplCopyWith<$Res> {
-  __$$FixedLevelImplCopyWithImpl(
-      _$FixedLevelImpl _value, $Res Function(_$FixedLevelImpl) _then)
+class __$$LevelImplCopyWithImpl<$Res>
+    extends _$LevelCopyWithImpl<$Res, _$LevelImpl>
+    implements _$$LevelImplCopyWith<$Res> {
+  __$$LevelImplCopyWithImpl(
+      _$LevelImpl _value, $Res Function(_$LevelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -217,12 +142,14 @@ class __$$FixedLevelImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? range = null,
+    Object? difficulty = freezed,
+    Object? minPosition = null,
+    Object? maxPosition = null,
     Object? secondsDuration = null,
     Object? type = null,
     Object? expressions = null,
   }) {
-    return _then(_$FixedLevelImpl(
+    return _then(_$LevelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -231,308 +158,26 @@ class __$$FixedLevelImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      range: null == range
-          ? _value.range
-          : range // ignore: cast_nullable_to_non_nullable
-              as Pair<double, double>,
-      secondsDuration: null == secondsDuration
-          ? _value.secondsDuration
-          : secondsDuration // ignore: cast_nullable_to_non_nullable
-              as double,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as LevelType,
-      expressions: null == expressions
-          ? _value._expressions
-          : expressions // ignore: cast_nullable_to_non_nullable
-              as List<Expression>,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$FixedLevelImpl implements FixedLevel {
-  _$FixedLevelImpl(
-      {required this.id,
-      required this.name,
-      @PairConverter() required this.range,
-      required this.secondsDuration,
-      this.type = LevelType.position,
-      @ExpressionConverter() required final List<Expression> expressions,
-      final String? $type})
-      : _expressions = expressions,
-        $type = $type ?? 'fixed';
-
-  factory _$FixedLevelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$FixedLevelImplFromJson(json);
-
-  @override
-  final String id;
-  @override
-  final String name;
-  @override
-  @PairConverter()
-  final Pair<double, double> range;
-  @override
-  final double secondsDuration;
-  @override
-  @JsonKey()
-  final LevelType type;
-  final List<Expression> _expressions;
-  @override
-  @ExpressionConverter()
-  List<Expression> get expressions {
-    if (_expressions is EqualUnmodifiableListView) return _expressions;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_expressions);
-  }
-
-  @JsonKey(name: 'runtimeType')
-  final String $type;
-
-  @override
-  String toString() {
-    return 'Level.fixed(id: $id, name: $name, range: $range, secondsDuration: $secondsDuration, type: $type, expressions: $expressions)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$FixedLevelImpl &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.range, range) || other.range == range) &&
-            (identical(other.secondsDuration, secondsDuration) ||
-                other.secondsDuration == secondsDuration) &&
-            (identical(other.type, type) || other.type == type) &&
-            const DeepCollectionEquality()
-                .equals(other._expressions, _expressions));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(runtimeType, id, name, range, secondsDuration,
-      type, const DeepCollectionEquality().hash(_expressions));
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$FixedLevelImplCopyWith<_$FixedLevelImpl> get copyWith =>
-      __$$FixedLevelImplCopyWithImpl<_$FixedLevelImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(
-            String id,
-            String name,
-            @PairConverter() Pair<double, double> range,
-            double secondsDuration,
-            LevelType type,
-            @ExpressionConverter() List<Expression> expressions)
-        fixed,
-    required TResult Function(
-            String id,
-            String name,
-            Difficulty difficulty,
-            LevelType type,
-            @PairConverter() Pair<double, double> range,
-            double secondsDuration,
-            @ExpressionConverter() List<Expression> expressions)
-        random,
-  }) {
-    return fixed(id, name, range, secondsDuration, type, expressions);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            String id,
-            String name,
-            @PairConverter() Pair<double, double> range,
-            double secondsDuration,
-            LevelType type,
-            @ExpressionConverter() List<Expression> expressions)?
-        fixed,
-    TResult? Function(
-            String id,
-            String name,
-            Difficulty difficulty,
-            LevelType type,
-            @PairConverter() Pair<double, double> range,
-            double secondsDuration,
-            @ExpressionConverter() List<Expression> expressions)?
-        random,
-  }) {
-    return fixed?.call(id, name, range, secondsDuration, type, expressions);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            String id,
-            String name,
-            @PairConverter() Pair<double, double> range,
-            double secondsDuration,
-            LevelType type,
-            @ExpressionConverter() List<Expression> expressions)?
-        fixed,
-    TResult Function(
-            String id,
-            String name,
-            Difficulty difficulty,
-            LevelType type,
-            @PairConverter() Pair<double, double> range,
-            double secondsDuration,
-            @ExpressionConverter() List<Expression> expressions)?
-        random,
-    required TResult orElse(),
-  }) {
-    if (fixed != null) {
-      return fixed(id, name, range, secondsDuration, type, expressions);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(FixedLevel value) fixed,
-    required TResult Function(RandomLevel value) random,
-  }) {
-    return fixed(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(FixedLevel value)? fixed,
-    TResult? Function(RandomLevel value)? random,
-  }) {
-    return fixed?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(FixedLevel value)? fixed,
-    TResult Function(RandomLevel value)? random,
-    required TResult orElse(),
-  }) {
-    if (fixed != null) {
-      return fixed(this);
-    }
-    return orElse();
-  }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$FixedLevelImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class FixedLevel implements Level {
-  factory FixedLevel(
-          {required final String id,
-          required final String name,
-          @PairConverter() required final Pair<double, double> range,
-          required final double secondsDuration,
-          final LevelType type,
-          @ExpressionConverter() required final List<Expression> expressions}) =
-      _$FixedLevelImpl;
-
-  factory FixedLevel.fromJson(Map<String, dynamic> json) =
-      _$FixedLevelImpl.fromJson;
-
-  @override
-  String get id;
-  @override
-  String get name;
-  @override
-  @PairConverter()
-  Pair<double, double> get range;
-  @override
-  double get secondsDuration;
-  @override
-  LevelType get type;
-  @override
-  @ExpressionConverter()
-  List<Expression> get expressions;
-  @override
-  @JsonKey(ignore: true)
-  _$$FixedLevelImplCopyWith<_$FixedLevelImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$RandomLevelImplCopyWith<$Res>
-    implements $LevelCopyWith<$Res> {
-  factory _$$RandomLevelImplCopyWith(
-          _$RandomLevelImpl value, $Res Function(_$RandomLevelImpl) then) =
-      __$$RandomLevelImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {String id,
-      String name,
-      Difficulty difficulty,
-      LevelType type,
-      @PairConverter() Pair<double, double> range,
-      double secondsDuration,
-      @ExpressionConverter() List<Expression> expressions});
-}
-
-/// @nodoc
-class __$$RandomLevelImplCopyWithImpl<$Res>
-    extends _$LevelCopyWithImpl<$Res, _$RandomLevelImpl>
-    implements _$$RandomLevelImplCopyWith<$Res> {
-  __$$RandomLevelImplCopyWithImpl(
-      _$RandomLevelImpl _value, $Res Function(_$RandomLevelImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? difficulty = null,
-    Object? type = null,
-    Object? range = null,
-    Object? secondsDuration = null,
-    Object? expressions = null,
-  }) {
-    return _then(_$RandomLevelImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      difficulty: null == difficulty
+      difficulty: freezed == difficulty
           ? _value.difficulty
           : difficulty // ignore: cast_nullable_to_non_nullable
-              as Difficulty,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as LevelType,
-      range: null == range
-          ? _value.range
-          : range // ignore: cast_nullable_to_non_nullable
-              as Pair<double, double>,
+              as Difficulty?,
+      minPosition: null == minPosition
+          ? _value.minPosition
+          : minPosition // ignore: cast_nullable_to_non_nullable
+              as double,
+      maxPosition: null == maxPosition
+          ? _value.maxPosition
+          : maxPosition // ignore: cast_nullable_to_non_nullable
+              as double,
       secondsDuration: null == secondsDuration
           ? _value.secondsDuration
           : secondsDuration // ignore: cast_nullable_to_non_nullable
               as double,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as LevelType,
       expressions: null == expressions
           ? _value._expressions
           : expressions // ignore: cast_nullable_to_non_nullable
@@ -543,39 +188,39 @@ class __$$RandomLevelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$RandomLevelImpl implements RandomLevel {
-  _$RandomLevelImpl(
+class _$LevelImpl implements _Level {
+  _$LevelImpl(
       {required this.id,
       required this.name,
       required this.difficulty,
+      required this.minPosition,
+      required this.maxPosition,
+      @JsonKey(name: "duration") required this.secondsDuration,
       this.type = LevelType.position,
-      @PairConverter() required this.range,
-      required this.secondsDuration,
-      @ExpressionConverter() final List<Expression> expressions = const [],
-      final String? $type})
-      : _expressions = expressions,
-        $type = $type ?? 'random';
+      @ExpressionConverter() required final List<Expression> expressions})
+      : _expressions = expressions;
 
-  factory _$RandomLevelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$RandomLevelImplFromJson(json);
+  factory _$LevelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$LevelImplFromJson(json);
 
   @override
   final String id;
   @override
   final String name;
   @override
-  final Difficulty difficulty;
+  final Difficulty? difficulty;
+  @override
+  final double minPosition;
+  @override
+  final double maxPosition;
+  @override
+  @JsonKey(name: "duration")
+  final double secondsDuration;
   @override
   @JsonKey()
   final LevelType type;
-  @override
-  @PairConverter()
-  final Pair<double, double> range;
-  @override
-  final double secondsDuration;
   final List<Expression> _expressions;
   @override
-  @JsonKey()
   @ExpressionConverter()
   List<Expression> get expressions {
     if (_expressions is EqualUnmodifiableListView) return _expressions;
@@ -583,27 +228,27 @@ class _$RandomLevelImpl implements RandomLevel {
     return EqualUnmodifiableListView(_expressions);
   }
 
-  @JsonKey(name: 'runtimeType')
-  final String $type;
-
   @override
   String toString() {
-    return 'Level.random(id: $id, name: $name, difficulty: $difficulty, type: $type, range: $range, secondsDuration: $secondsDuration, expressions: $expressions)';
+    return 'Level(id: $id, name: $name, difficulty: $difficulty, minPosition: $minPosition, maxPosition: $maxPosition, secondsDuration: $secondsDuration, type: $type, expressions: $expressions)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$RandomLevelImpl &&
+            other is _$LevelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.difficulty, difficulty) ||
                 other.difficulty == difficulty) &&
-            (identical(other.type, type) || other.type == type) &&
-            (identical(other.range, range) || other.range == range) &&
+            (identical(other.minPosition, minPosition) ||
+                other.minPosition == minPosition) &&
+            (identical(other.maxPosition, maxPosition) ||
+                other.maxPosition == maxPosition) &&
             (identical(other.secondsDuration, secondsDuration) ||
                 other.secondsDuration == secondsDuration) &&
+            (identical(other.type, type) || other.type == type) &&
             const DeepCollectionEquality()
                 .equals(other._expressions, _expressions));
   }
@@ -615,166 +260,60 @@ class _$RandomLevelImpl implements RandomLevel {
       id,
       name,
       difficulty,
-      type,
-      range,
+      minPosition,
+      maxPosition,
       secondsDuration,
+      type,
       const DeepCollectionEquality().hash(_expressions));
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$RandomLevelImplCopyWith<_$RandomLevelImpl> get copyWith =>
-      __$$RandomLevelImplCopyWithImpl<_$RandomLevelImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(
-            String id,
-            String name,
-            @PairConverter() Pair<double, double> range,
-            double secondsDuration,
-            LevelType type,
-            @ExpressionConverter() List<Expression> expressions)
-        fixed,
-    required TResult Function(
-            String id,
-            String name,
-            Difficulty difficulty,
-            LevelType type,
-            @PairConverter() Pair<double, double> range,
-            double secondsDuration,
-            @ExpressionConverter() List<Expression> expressions)
-        random,
-  }) {
-    return random(
-        id, name, difficulty, type, range, secondsDuration, expressions);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            String id,
-            String name,
-            @PairConverter() Pair<double, double> range,
-            double secondsDuration,
-            LevelType type,
-            @ExpressionConverter() List<Expression> expressions)?
-        fixed,
-    TResult? Function(
-            String id,
-            String name,
-            Difficulty difficulty,
-            LevelType type,
-            @PairConverter() Pair<double, double> range,
-            double secondsDuration,
-            @ExpressionConverter() List<Expression> expressions)?
-        random,
-  }) {
-    return random?.call(
-        id, name, difficulty, type, range, secondsDuration, expressions);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            String id,
-            String name,
-            @PairConverter() Pair<double, double> range,
-            double secondsDuration,
-            LevelType type,
-            @ExpressionConverter() List<Expression> expressions)?
-        fixed,
-    TResult Function(
-            String id,
-            String name,
-            Difficulty difficulty,
-            LevelType type,
-            @PairConverter() Pair<double, double> range,
-            double secondsDuration,
-            @ExpressionConverter() List<Expression> expressions)?
-        random,
-    required TResult orElse(),
-  }) {
-    if (random != null) {
-      return random(
-          id, name, difficulty, type, range, secondsDuration, expressions);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(FixedLevel value) fixed,
-    required TResult Function(RandomLevel value) random,
-  }) {
-    return random(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(FixedLevel value)? fixed,
-    TResult? Function(RandomLevel value)? random,
-  }) {
-    return random?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(FixedLevel value)? fixed,
-    TResult Function(RandomLevel value)? random,
-    required TResult orElse(),
-  }) {
-    if (random != null) {
-      return random(this);
-    }
-    return orElse();
-  }
+  _$$LevelImplCopyWith<_$LevelImpl> get copyWith =>
+      __$$LevelImplCopyWithImpl<_$LevelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$RandomLevelImplToJson(
+    return _$$LevelImplToJson(
       this,
     );
   }
 }
 
-abstract class RandomLevel implements Level {
-  factory RandomLevel(
+abstract class _Level implements Level {
+  factory _Level(
           {required final String id,
           required final String name,
-          required final Difficulty difficulty,
+          required final Difficulty? difficulty,
+          required final double minPosition,
+          required final double maxPosition,
+          @JsonKey(name: "duration") required final double secondsDuration,
           final LevelType type,
-          @PairConverter() required final Pair<double, double> range,
-          required final double secondsDuration,
-          @ExpressionConverter() final List<Expression> expressions}) =
-      _$RandomLevelImpl;
+          @ExpressionConverter() required final List<Expression> expressions}) =
+      _$LevelImpl;
 
-  factory RandomLevel.fromJson(Map<String, dynamic> json) =
-      _$RandomLevelImpl.fromJson;
+  factory _Level.fromJson(Map<String, dynamic> json) = _$LevelImpl.fromJson;
 
   @override
   String get id;
   @override
   String get name;
-  Difficulty get difficulty;
+  @override
+  Difficulty? get difficulty;
+  @override
+  double get minPosition;
+  @override
+  double get maxPosition;
+  @override
+  @JsonKey(name: "duration")
+  double get secondsDuration;
   @override
   LevelType get type;
-  @override
-  @PairConverter()
-  Pair<double, double> get range;
-  @override
-  double get secondsDuration;
   @override
   @ExpressionConverter()
   List<Expression> get expressions;
   @override
   @JsonKey(ignore: true)
-  _$$RandomLevelImplCopyWith<_$RandomLevelImpl> get copyWith =>
+  _$$LevelImplCopyWith<_$LevelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
