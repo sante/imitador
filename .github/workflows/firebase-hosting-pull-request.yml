@@ -8,15 +8,20 @@ permissions:
   contents: read
   pull-requests: write
 jobs:
-  build_and_preview:
+  build_and_deploy_preview:
     if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
     steps:
-      - run: flutter build web
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          flutter-version: "3.27.0"
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MISSION_MOTION }}
           projectId: mission-motion
+          expires: 15d
         env:
           FIREBASE_CLI_EXPERIMENTS: webframeworks
