@@ -38,11 +38,9 @@ interface class Config {
 
 abstract class _EnvConfig {
   static const ENV_KEY_API_BASE_URL = 'API_BASE_URL';
-  static const ENV_KEY_SUPABASE_API_KEY = 'SUPABASE_API_KEY';
 
   static const systemEnv = {
     ENV_KEY_API_BASE_URL: String.fromEnvironment(ENV_KEY_API_BASE_URL),
-    ENV_KEY_SUPABASE_API_KEY: String.fromEnvironment(ENV_KEY_SUPABASE_API_KEY),
   };
 
   static final Map<String, String> _envFileEnv = {};

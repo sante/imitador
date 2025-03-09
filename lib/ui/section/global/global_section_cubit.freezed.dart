@@ -16,37 +16,42 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$GlobalSectionState {
+  User? get user => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() state,
+    required TResult Function(User? user) state,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? state,
+    TResult? Function(User? user)? state,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? state,
+    TResult Function(User? user)? state,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_GlobalSectionState value) state,
+    required TResult Function(_GlobalSectionStateState value) state,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_GlobalSectionState value)? state,
+    TResult? Function(_GlobalSectionStateState value)? state,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_GlobalSectionState value)? state,
+    TResult Function(_GlobalSectionStateState value)? state,
     required TResult orElse(),
   }) =>
+      throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $GlobalSectionStateCopyWith<GlobalSectionState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -55,6 +60,10 @@ abstract class $GlobalSectionStateCopyWith<$Res> {
   factory $GlobalSectionStateCopyWith(
           GlobalSectionState value, $Res Function(GlobalSectionState) then) =
       _$GlobalSectionStateCopyWithImpl<$Res, GlobalSectionState>;
+  @useResult
+  $Res call({User? user});
+
+  $UserCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -66,67 +75,128 @@ class _$GlobalSectionStateCopyWithImpl<$Res, $Val extends GlobalSectionState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user = freezed,
+  }) {
+    return _then(_value.copyWith(
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User?,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserCopyWith<$Res>? get user {
+    if (_value.user == null) {
+      return null;
+    }
+
+    return $UserCopyWith<$Res>(_value.user!, (value) {
+      return _then(_value.copyWith(user: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
-abstract class _$$GlobalSectionStateImplCopyWith<$Res> {
-  factory _$$GlobalSectionStateImplCopyWith(_$GlobalSectionStateImpl value,
-          $Res Function(_$GlobalSectionStateImpl) then) =
-      __$$GlobalSectionStateImplCopyWithImpl<$Res>;
+abstract class _$$GlobalSectionStateStateImplCopyWith<$Res>
+    implements $GlobalSectionStateCopyWith<$Res> {
+  factory _$$GlobalSectionStateStateImplCopyWith(
+          _$GlobalSectionStateStateImpl value,
+          $Res Function(_$GlobalSectionStateStateImpl) then) =
+      __$$GlobalSectionStateStateImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({User? user});
+
+  @override
+  $UserCopyWith<$Res>? get user;
 }
 
 /// @nodoc
-class __$$GlobalSectionStateImplCopyWithImpl<$Res>
-    extends _$GlobalSectionStateCopyWithImpl<$Res, _$GlobalSectionStateImpl>
-    implements _$$GlobalSectionStateImplCopyWith<$Res> {
-  __$$GlobalSectionStateImplCopyWithImpl(_$GlobalSectionStateImpl _value,
-      $Res Function(_$GlobalSectionStateImpl) _then)
+class __$$GlobalSectionStateStateImplCopyWithImpl<$Res>
+    extends _$GlobalSectionStateCopyWithImpl<$Res,
+        _$GlobalSectionStateStateImpl>
+    implements _$$GlobalSectionStateStateImplCopyWith<$Res> {
+  __$$GlobalSectionStateStateImplCopyWithImpl(
+      _$GlobalSectionStateStateImpl _value,
+      $Res Function(_$GlobalSectionStateStateImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user = freezed,
+  }) {
+    return _then(_$GlobalSectionStateStateImpl(
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User?,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$GlobalSectionStateImpl implements _GlobalSectionState {
-  const _$GlobalSectionStateImpl();
+class _$GlobalSectionStateStateImpl implements _GlobalSectionStateState {
+  const _$GlobalSectionStateStateImpl({this.user = null});
+
+  @override
+  @JsonKey()
+  final User? user;
 
   @override
   String toString() {
-    return 'GlobalSectionState.state()';
+    return 'GlobalSectionState.state(user: $user)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$GlobalSectionStateImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$GlobalSectionStateStateImpl &&
+            (identical(other.user, user) || other.user == user));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, user);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GlobalSectionStateStateImplCopyWith<_$GlobalSectionStateStateImpl>
+      get copyWith => __$$GlobalSectionStateStateImplCopyWithImpl<
+          _$GlobalSectionStateStateImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() state,
+    required TResult Function(User? user) state,
   }) {
-    return state();
+    return state(user);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? state,
+    TResult? Function(User? user)? state,
   }) {
-    return state?.call();
+    return state?.call(user);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? state,
+    TResult Function(User? user)? state,
     required TResult orElse(),
   }) {
     if (state != null) {
-      return state();
+      return state(user);
     }
     return orElse();
   }
@@ -134,7 +204,7 @@ class _$GlobalSectionStateImpl implements _GlobalSectionState {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_GlobalSectionState value) state,
+    required TResult Function(_GlobalSectionStateState value) state,
   }) {
     return state(this);
   }
@@ -142,7 +212,7 @@ class _$GlobalSectionStateImpl implements _GlobalSectionState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_GlobalSectionState value)? state,
+    TResult? Function(_GlobalSectionStateState value)? state,
   }) {
     return state?.call(this);
   }
@@ -150,7 +220,7 @@ class _$GlobalSectionStateImpl implements _GlobalSectionState {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_GlobalSectionState value)? state,
+    TResult Function(_GlobalSectionStateState value)? state,
     required TResult orElse(),
   }) {
     if (state != null) {
@@ -160,6 +230,14 @@ class _$GlobalSectionStateImpl implements _GlobalSectionState {
   }
 }
 
-abstract class _GlobalSectionState implements GlobalSectionState {
-  const factory _GlobalSectionState() = _$GlobalSectionStateImpl;
+abstract class _GlobalSectionStateState implements GlobalSectionState {
+  const factory _GlobalSectionStateState({final User? user}) =
+      _$GlobalSectionStateStateImpl;
+
+  @override
+  User? get user;
+  @override
+  @JsonKey(ignore: true)
+  _$$GlobalSectionStateStateImplCopyWith<_$GlobalSectionStateStateImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

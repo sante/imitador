@@ -11,7 +11,7 @@ _$StudentImpl _$$StudentImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       email: json['email'] as String,
       name: json['name'] as String,
-      $type: json['runtimeType'] as String?,
+      $type: json['type'] as String?,
     );
 
 Map<String, dynamic> _$$StudentImplToJson(_$StudentImpl instance) =>
@@ -19,7 +19,7 @@ Map<String, dynamic> _$$StudentImplToJson(_$StudentImpl instance) =>
       'id': instance.id,
       'email': instance.email,
       'name': instance.name,
-      'runtimeType': instance.$type,
+      'type': instance.$type,
     };
 
 _$TeacherImpl _$$TeacherImplFromJson(Map<String, dynamic> json) =>
@@ -27,7 +27,7 @@ _$TeacherImpl _$$TeacherImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       email: json['email'] as String,
       name: json['name'] as String,
-      $type: json['runtimeType'] as String?,
+      $type: json['type'] as String?,
     );
 
 Map<String, dynamic> _$$TeacherImplToJson(_$TeacherImpl instance) =>
@@ -35,5 +35,5 @@ Map<String, dynamic> _$$TeacherImplToJson(_$TeacherImpl instance) =>
       'id': instance.id,
       'email': instance.email,
       'name': instance.name,
-      'runtimeType': instance.$type,
+      'type': instance.$type,
     };

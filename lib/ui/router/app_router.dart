@@ -16,7 +16,6 @@ import 'package:imitador/ui/section/global/global_section.dart';
 import 'package:imitador/ui/section/level/level_section.dart';
 import 'package:imitador/ui/screens/welcome/welcome_screen.dart';
 import 'package:imitador/ui/screens/results/results_screen.dart';
-import 'package:dartx/dartx.dart';
 
 part 'app_router.gr.dart';
 

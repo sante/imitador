@@ -4,8 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imitador/core/common/extension/context_extensions.dart';
 import 'package:imitador/ui/router/app_router.dart';
-import 'package:imitador/ui/screens/welcome/welcome_cubit.dart';
-import 'package:imitador/ui/section/error_handler/global_event_handler_cubit.dart';
+import 'package:imitador/ui/section/global/global_section_cubit.dart';
 import 'package:imitador/ui/theme/app_theme.dart';
 
 @RoutePage()
@@ -13,17 +12,13 @@ class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) => BlocProvider(
-        create: (context) =>
-            WelcomeCubit(context.read<GlobalEventHandlerCubit>()),
-        child: _WelcomeContentScreen(),
-      );
+  Widget build(BuildContext context) => _WelcomeContentScreen();
 }
 
 class _WelcomeContentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
-      BlocBuilder<WelcomeCubit, WelcomeBaseState>(
+      BlocBuilder<GlobalSectionCubit, GlobalSectionState>(
         builder: (context, state) => Scaffold(
           body: Padding(
             padding: EdgeInsets.symmetric(vertical: 200.h, horizontal: 104.w),
@@ -62,16 +57,20 @@ class _WelcomeContentScreen extends StatelessWidget {
                             ),
                           ),
                           ElevatedButton(
-                            onPressed: () {
-                              context.router.push(const LogInRoute());
-                            },
+                            onPressed: state.user != null
+                                ? () {}
+                                : () {
+                                    context.router.push(const LogInRoute());
+                                  },
                             style: context.theme.buttonsStyle.outlineButton
                                 .copyWith(
                               fixedSize:
                                   WidgetStatePropertyAll(Size(268.w, 68.h)),
                             ),
                             child: Text(
-                              context.localizations.sign_in,
+                              state.user != null
+                                  ? state.user!.name
+                                  : context.localizations.sign_in,
                             ),
                           ),
                         ],

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imitador/core/common/extension/color_extensions.dart';
 import 'package:imitador/core/common/extension/context_extensions.dart';
+import 'package:imitador/ui/router/app_router.dart';
 import 'package:imitador/ui/theme/app_text_field.dart';
 import 'package:imitador/ui/theme/app_theme.dart';
 
@@ -27,11 +28,15 @@ class _LogInContentScreen extends StatefulWidget {
 
 class _LogInContentScreenState extends State<_LogInContentScreen> {
   late final TextEditingController emailController;
+  late final TextEditingController codeController;
+  late LogInCubit _cubit;
 
   @override
   void initState() {
     super.initState();
+    _cubit = context.read<LogInCubit>();
     emailController = TextEditingController();
+    codeController = TextEditingController();
   }
 
   @override
@@ -72,12 +77,24 @@ class _LogInContentScreenState extends State<_LogInContentScreen> {
                           AppTextField(
                             controller: emailController,
                             label: "Email",
-                            onChanged: (_) {},
+                            onChanged: (email) {
+                              _cubit.setEmail(email);
+                            },
+                          ),
+                          AppTextField(
+                            controller: codeController,
+                            label: "Código",
+                            onChanged: (code) {
+                              _cubit.setCode(code);
+                            },
                           ),
                           Align(
                             alignment: Alignment.centerRight,
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () async {
+                                await _cubit.login();
+                                context.router.replace(const WelcomeRoute());
+                              },
                               style: context.theme.buttonsStyle.filledButton
                                   .copyWith(
                                 fixedSize: WidgetStatePropertyAll(

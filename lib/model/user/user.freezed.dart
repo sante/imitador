@@ -15,15 +15,15 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 User _$UserFromJson(Map<String, dynamic> json) {
-  switch (json['runtimeType']) {
-    case 'student':
+  switch (json['type']) {
+    case 'STUDENT':
       return Student.fromJson(json);
-    case 'teacher':
+    case 'TEACHER':
       return Teacher.fromJson(json);
 
     default:
-      throw CheckedFromJsonException(json, 'runtimeType', 'User',
-          'Invalid union type "${json['runtimeType']}"!');
+      throw CheckedFromJsonException(
+          json, 'type', 'User', 'Invalid union type "${json['type']}"!');
   }
 }
 
@@ -167,7 +167,7 @@ class _$StudentImpl implements Student {
       required this.email,
       required this.name,
       final String? $type})
-      : $type = $type ?? 'student';
+      : $type = $type ?? 'STUDENT';
 
   factory _$StudentImpl.fromJson(Map<String, dynamic> json) =>
       _$$StudentImplFromJson(json);
@@ -179,7 +179,7 @@ class _$StudentImpl implements Student {
   @override
   final String name;
 
-  @JsonKey(name: 'runtimeType')
+  @JsonKey(name: 'type')
   final String $type;
 
   @override
@@ -347,7 +347,7 @@ class _$TeacherImpl implements Teacher {
       required this.email,
       required this.name,
       final String? $type})
-      : $type = $type ?? 'teacher';
+      : $type = $type ?? 'TEACHER';
 
   factory _$TeacherImpl.fromJson(Map<String, dynamic> json) =>
       _$$TeacherImplFromJson(json);
@@ -359,7 +359,7 @@ class _$TeacherImpl implements Teacher {
   @override
   final String name;
 
-  @JsonKey(name: 'runtimeType')
+  @JsonKey(name: 'type')
   final String $type;
 
   @override

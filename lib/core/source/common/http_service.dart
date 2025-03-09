@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:imitador/core/common/config.dart';
 import 'package:imitador/core/common/model/service/service_response.dart';
 import 'package:imitador/core/common/network_exceptions.dart';
+import 'package:imitador/core/source/common/auth_interceptor.dart';
 
 abstract interface class HttpService {
   Future<Response> get(
@@ -56,6 +57,9 @@ class HttpServiceDio implements HttpService {
     );
     _dio = Dio(options);
     _dio.interceptors.addAll(interceptors);
+    (_dio.interceptors.firstWhere((it) => it is AuthInterceptor)
+            as AuthInterceptor?)
+        ?.setDio(_dio);
   }
 
   @override

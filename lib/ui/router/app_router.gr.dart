@@ -85,6 +85,16 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
+    SessionLevelSelectorRoute.name: (routeData) {
+      final args = routeData.argsAs<SessionLevelSelectorRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: SessionLevelSelectorScreen(
+          sessionType: args.sessionType,
+          key: args.key,
+        ),
+      );
+    },
     SettingsRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -335,6 +345,45 @@ class ResultsRouteArgs {
   @override
   String toString() {
     return 'ResultsRouteArgs{sessionType: $sessionType, key: $key}';
+  }
+}
+
+/// generated route for
+/// [SessionLevelSelectorScreen]
+class SessionLevelSelectorRoute
+    extends PageRouteInfo<SessionLevelSelectorRouteArgs> {
+  SessionLevelSelectorRoute({
+    required PlaySessionType sessionType,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          SessionLevelSelectorRoute.name,
+          args: SessionLevelSelectorRouteArgs(
+            sessionType: sessionType,
+            key: key,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'SessionLevelSelectorRoute';
+
+  static const PageInfo<SessionLevelSelectorRouteArgs> page =
+      PageInfo<SessionLevelSelectorRouteArgs>(name);
+}
+
+class SessionLevelSelectorRouteArgs {
+  const SessionLevelSelectorRouteArgs({
+    required this.sessionType,
+    this.key,
+  });
+
+  final PlaySessionType sessionType;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'SessionLevelSelectorRouteArgs{sessionType: $sessionType, key: $key}';
   }
 }
 

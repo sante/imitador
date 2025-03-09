@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imitador/core/common/extension/context_extensions.dart';
+import 'package:imitador/model/activity/activity.dart';
 import 'package:imitador/model/enum/difficulty.dart';
 import 'package:imitador/model/enum/play_session_type.dart';
 import 'package:imitador/model/level/level.dart';
@@ -86,9 +87,11 @@ class SessionLevelSelectorScreen extends StatelessWidget {
 
 class _LevelSelectorContentScreen extends StatelessWidget {
   final List<Level> levels;
+  final List<Activity> activities;
 
   const _LevelSelectorContentScreen({
     required this.levels,
+    this.activities = const [],
     super.key,
   });
 

@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:imitador/model/user/user.dart';
 
 part 'auth_models.freezed.dart';
 
@@ -9,7 +8,7 @@ part 'auth_models.g.dart';
 class SignInResponse with _$SignInResponse {
   factory SignInResponse({
     required String accessToken,
-    required User user,
+    required String refreshToken,
   }) = _SignInResponse;
 
   factory SignInResponse.fromJson(Map<String, dynamic> json) =>
@@ -17,12 +16,20 @@ class SignInResponse with _$SignInResponse {
 }
 
 @freezed
-class SignInRequest with _$SignInRequest {
+sealed class SignInRequest with _$SignInRequest {
   @JsonSerializable()
   factory SignInRequest({
     @JsonKey(name: 'email') required String email,
-    @JsonKey(name: 'password') required String password,
+    @JsonKey(name: 'code') required String code,
   }) = _SignInRequest;
+
+  factory SignInRequest.code({
+    @JsonKey(name: 'email') required String email,
+  }) = _SignInRequestCode;
+
+  factory SignInRequest.refresh({
+    @JsonKey(name: 'refreshToken') required String token,
+  }) = _SignInRefresh;
 
   factory SignInRequest.fromJson(Map<String, dynamic> json) =>
       _$SignInRequestFromJson(json);
