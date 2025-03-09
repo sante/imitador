@@ -11,6 +11,7 @@ class AppTextField extends StatelessWidget {
   final String? hint;
   final bool obscureText;
   final TextInputType? keyboardType;
+  final bool enabled;
 
   const AppTextField({
     required this.controller,
@@ -19,6 +20,7 @@ class AppTextField extends StatelessWidget {
     this.hint,
     this.obscureText = false,
     this.keyboardType,
+    this.enabled = true,
     super.key,
   });
 
@@ -42,6 +44,7 @@ class AppTextField extends StatelessWidget {
             onChanged: onChanged,
             obscureText: obscureText,
             keyboardType: keyboardType,
+            enabled: enabled,
             decoration: InputDecoration(
               hintText: hint,
               hintStyle: context.theme.textStyles.bodyMedium,

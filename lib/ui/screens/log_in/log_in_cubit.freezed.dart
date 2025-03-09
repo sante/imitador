@@ -19,19 +19,27 @@ mixin _$LogInState {
   String get email => throw _privateConstructorUsedError;
   String get code => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
+  bool get codeSent => throw _privateConstructorUsedError;
+  String? get error => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String email, String code, bool isLoading) state,
+    required TResult Function(String email, String code, bool isLoading,
+            bool codeSent, String? error)
+        state,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String email, String code, bool isLoading)? state,
+    TResult? Function(String email, String code, bool isLoading, bool codeSent,
+            String? error)?
+        state,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String email, String code, bool isLoading)? state,
+    TResult Function(String email, String code, bool isLoading, bool codeSent,
+            String? error)?
+        state,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -63,7 +71,12 @@ abstract class $LogInStateCopyWith<$Res> {
           LogInState value, $Res Function(LogInState) then) =
       _$LogInStateCopyWithImpl<$Res, LogInState>;
   @useResult
-  $Res call({String email, String code, bool isLoading});
+  $Res call(
+      {String email,
+      String code,
+      bool isLoading,
+      bool codeSent,
+      String? error});
 }
 
 /// @nodoc
@@ -82,6 +95,8 @@ class _$LogInStateCopyWithImpl<$Res, $Val extends LogInState>
     Object? email = null,
     Object? code = null,
     Object? isLoading = null,
+    Object? codeSent = null,
+    Object? error = freezed,
   }) {
     return _then(_value.copyWith(
       email: null == email
@@ -96,6 +111,14 @@ class _$LogInStateCopyWithImpl<$Res, $Val extends LogInState>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      codeSent: null == codeSent
+          ? _value.codeSent
+          : codeSent // ignore: cast_nullable_to_non_nullable
+              as bool,
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -108,7 +131,12 @@ abstract class _$$LogInStateImplCopyWith<$Res>
       __$$LogInStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String email, String code, bool isLoading});
+  $Res call(
+      {String email,
+      String code,
+      bool isLoading,
+      bool codeSent,
+      String? error});
 }
 
 /// @nodoc
@@ -125,6 +153,8 @@ class __$$LogInStateImplCopyWithImpl<$Res>
     Object? email = null,
     Object? code = null,
     Object? isLoading = null,
+    Object? codeSent = null,
+    Object? error = freezed,
   }) {
     return _then(_$LogInStateImpl(
       email: null == email
@@ -139,6 +169,14 @@ class __$$LogInStateImplCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      codeSent: null == codeSent
+          ? _value.codeSent
+          : codeSent // ignore: cast_nullable_to_non_nullable
+              as bool,
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -147,7 +185,11 @@ class __$$LogInStateImplCopyWithImpl<$Res>
 
 class _$LogInStateImpl implements _LogInState {
   const _$LogInStateImpl(
-      {this.email = '', this.code = '', this.isLoading = false});
+      {this.email = '',
+      this.code = '',
+      this.isLoading = false,
+      this.codeSent = false,
+      this.error});
 
   @override
   @JsonKey()
@@ -158,10 +200,15 @@ class _$LogInStateImpl implements _LogInState {
   @override
   @JsonKey()
   final bool isLoading;
+  @override
+  @JsonKey()
+  final bool codeSent;
+  @override
+  final String? error;
 
   @override
   String toString() {
-    return 'LogInState.state(email: $email, code: $code, isLoading: $isLoading)';
+    return 'LogInState.state(email: $email, code: $code, isLoading: $isLoading, codeSent: $codeSent, error: $error)';
   }
 
   @override
@@ -172,11 +219,15 @@ class _$LogInStateImpl implements _LogInState {
             (identical(other.email, email) || other.email == email) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading));
+                other.isLoading == isLoading) &&
+            (identical(other.codeSent, codeSent) ||
+                other.codeSent == codeSent) &&
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, email, code, isLoading);
+  int get hashCode =>
+      Object.hash(runtimeType, email, code, isLoading, codeSent, error);
 
   @JsonKey(ignore: true)
   @override
@@ -187,27 +238,33 @@ class _$LogInStateImpl implements _LogInState {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String email, String code, bool isLoading) state,
+    required TResult Function(String email, String code, bool isLoading,
+            bool codeSent, String? error)
+        state,
   }) {
-    return state(email, code, isLoading);
+    return state(email, code, isLoading, codeSent, error);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String email, String code, bool isLoading)? state,
+    TResult? Function(String email, String code, bool isLoading, bool codeSent,
+            String? error)?
+        state,
   }) {
-    return state?.call(email, code, isLoading);
+    return state?.call(email, code, isLoading, codeSent, error);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String email, String code, bool isLoading)? state,
+    TResult Function(String email, String code, bool isLoading, bool codeSent,
+            String? error)?
+        state,
     required TResult orElse(),
   }) {
     if (state != null) {
-      return state(email, code, isLoading);
+      return state(email, code, isLoading, codeSent, error);
     }
     return orElse();
   }
@@ -245,7 +302,9 @@ abstract class _LogInState implements LogInState {
   const factory _LogInState(
       {final String email,
       final String code,
-      final bool isLoading}) = _$LogInStateImpl;
+      final bool isLoading,
+      final bool codeSent,
+      final String? error}) = _$LogInStateImpl;
 
   @override
   String get email;
@@ -253,6 +312,10 @@ abstract class _LogInState implements LogInState {
   String get code;
   @override
   bool get isLoading;
+  @override
+  bool get codeSent;
+  @override
+  String? get error;
   @override
   @JsonKey(ignore: true)
   _$$LogInStateImplCopyWith<_$LogInStateImpl> get copyWith =>

@@ -20,12 +20,26 @@ class LogInCubit extends Cubit<LogInState> {
     emit(state.copyWith(code: code));
   }
 
+  Future<void> requestCode() async {
+    emit(state.copyWith(isLoading: true));
+    try {
+      await _sessionRepository.requestSignInCode(state.email);
+      emit(state.copyWith(isLoading: false, codeSent: true));
+    } catch (e) {
+      emit(state.copyWith(isLoading: false, error: e.toString()));
+    }
+  }
+
   Future<void> login() async {
     emit(state.copyWith(isLoading: true));
-    await _sessionRepository.signInUser(
-      email: state.email,
-      code: state.code,
-    );
-    emit(state.copyWith(isLoading: false));
+    try {
+      await _sessionRepository.signInUser(
+        email: state.email,
+        code: state.code,
+      );
+      emit(state.copyWith(isLoading: false, error: null));
+    } catch (e) {
+      emit(state.copyWith(isLoading: false, error: e.toString()));
+    }
   }
 }
