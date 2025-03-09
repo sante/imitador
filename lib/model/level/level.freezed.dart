@@ -36,7 +36,7 @@ mixin _$Level {
   double get secondsDuration => throw _privateConstructorUsedError;
   LevelType get type => throw _privateConstructorUsedError;
   @ExpressionConverter()
-  List<Expression>? get expressions => throw _privateConstructorUsedError;
+  List<Expression> get expressions => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
@@ -54,7 +54,7 @@ mixin _$Level {
             LevelType type,
             @PairConverter() Pair<double, double> range,
             double secondsDuration,
-            @ExpressionConverter() List<Expression>? expressions)
+            @ExpressionConverter() List<Expression> expressions)
         random,
   }) =>
       throw _privateConstructorUsedError;
@@ -75,7 +75,7 @@ mixin _$Level {
             LevelType type,
             @PairConverter() Pair<double, double> range,
             double secondsDuration,
-            @ExpressionConverter() List<Expression>? expressions)?
+            @ExpressionConverter() List<Expression> expressions)?
         random,
   }) =>
       throw _privateConstructorUsedError;
@@ -96,7 +96,7 @@ mixin _$Level {
             LevelType type,
             @PairConverter() Pair<double, double> range,
             double secondsDuration,
-            @ExpressionConverter() List<Expression>? expressions)?
+            @ExpressionConverter() List<Expression> expressions)?
         random,
     required TResult orElse(),
   }) =>
@@ -181,7 +181,7 @@ class _$LevelCopyWithImpl<$Res, $Val extends Level>
           : type // ignore: cast_nullable_to_non_nullable
               as LevelType,
       expressions: null == expressions
-          ? _value.expressions!
+          ? _value.expressions
           : expressions // ignore: cast_nullable_to_non_nullable
               as List<Expression>,
     ) as $Val);
@@ -341,7 +341,7 @@ class _$FixedLevelImpl implements FixedLevel {
             LevelType type,
             @PairConverter() Pair<double, double> range,
             double secondsDuration,
-            @ExpressionConverter() List<Expression>? expressions)
+            @ExpressionConverter() List<Expression> expressions)
         random,
   }) {
     return fixed(id, name, range, secondsDuration, type, expressions);
@@ -365,7 +365,7 @@ class _$FixedLevelImpl implements FixedLevel {
             LevelType type,
             @PairConverter() Pair<double, double> range,
             double secondsDuration,
-            @ExpressionConverter() List<Expression>? expressions)?
+            @ExpressionConverter() List<Expression> expressions)?
         random,
   }) {
     return fixed?.call(id, name, range, secondsDuration, type, expressions);
@@ -389,7 +389,7 @@ class _$FixedLevelImpl implements FixedLevel {
             LevelType type,
             @PairConverter() Pair<double, double> range,
             double secondsDuration,
-            @ExpressionConverter() List<Expression>? expressions)?
+            @ExpressionConverter() List<Expression> expressions)?
         random,
     required TResult orElse(),
   }) {
@@ -486,7 +486,7 @@ abstract class _$$RandomLevelImplCopyWith<$Res>
       LevelType type,
       @PairConverter() Pair<double, double> range,
       double secondsDuration,
-      @ExpressionConverter() List<Expression>? expressions});
+      @ExpressionConverter() List<Expression> expressions});
 }
 
 /// @nodoc
@@ -506,7 +506,7 @@ class __$$RandomLevelImplCopyWithImpl<$Res>
     Object? type = null,
     Object? range = null,
     Object? secondsDuration = null,
-    Object? expressions = freezed,
+    Object? expressions = null,
   }) {
     return _then(_$RandomLevelImpl(
       id: null == id
@@ -533,10 +533,10 @@ class __$$RandomLevelImplCopyWithImpl<$Res>
           ? _value.secondsDuration
           : secondsDuration // ignore: cast_nullable_to_non_nullable
               as double,
-      expressions: freezed == expressions
+      expressions: null == expressions
           ? _value._expressions
           : expressions // ignore: cast_nullable_to_non_nullable
-              as List<Expression>?,
+              as List<Expression>,
     ));
   }
 }
@@ -551,7 +551,7 @@ class _$RandomLevelImpl implements RandomLevel {
       this.type = LevelType.position,
       @PairConverter() required this.range,
       required this.secondsDuration,
-      @ExpressionConverter() final List<Expression>? expressions,
+      @ExpressionConverter() final List<Expression> expressions = const [],
       final String? $type})
       : _expressions = expressions,
         $type = $type ?? 'random';
@@ -573,15 +573,14 @@ class _$RandomLevelImpl implements RandomLevel {
   final Pair<double, double> range;
   @override
   final double secondsDuration;
-  final List<Expression>? _expressions;
+  final List<Expression> _expressions;
   @override
+  @JsonKey()
   @ExpressionConverter()
-  List<Expression>? get expressions {
-    final value = _expressions;
-    if (value == null) return null;
+  List<Expression> get expressions {
     if (_expressions is EqualUnmodifiableListView) return _expressions;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
+    return EqualUnmodifiableListView(_expressions);
   }
 
   @JsonKey(name: 'runtimeType')
@@ -645,7 +644,7 @@ class _$RandomLevelImpl implements RandomLevel {
             LevelType type,
             @PairConverter() Pair<double, double> range,
             double secondsDuration,
-            @ExpressionConverter() List<Expression>? expressions)
+            @ExpressionConverter() List<Expression> expressions)
         random,
   }) {
     return random(
@@ -670,7 +669,7 @@ class _$RandomLevelImpl implements RandomLevel {
             LevelType type,
             @PairConverter() Pair<double, double> range,
             double secondsDuration,
-            @ExpressionConverter() List<Expression>? expressions)?
+            @ExpressionConverter() List<Expression> expressions)?
         random,
   }) {
     return random?.call(
@@ -695,7 +694,7 @@ class _$RandomLevelImpl implements RandomLevel {
             LevelType type,
             @PairConverter() Pair<double, double> range,
             double secondsDuration,
-            @ExpressionConverter() List<Expression>? expressions)?
+            @ExpressionConverter() List<Expression> expressions)?
         random,
     required TResult orElse(),
   }) {
@@ -753,7 +752,7 @@ abstract class RandomLevel implements Level {
           final LevelType type,
           @PairConverter() required final Pair<double, double> range,
           required final double secondsDuration,
-          @ExpressionConverter() final List<Expression>? expressions}) =
+          @ExpressionConverter() final List<Expression> expressions}) =
       _$RandomLevelImpl;
 
   factory RandomLevel.fromJson(Map<String, dynamic> json) =
@@ -773,7 +772,7 @@ abstract class RandomLevel implements Level {
   double get secondsDuration;
   @override
   @ExpressionConverter()
-  List<Expression>? get expressions;
+  List<Expression> get expressions;
   @override
   @JsonKey(ignore: true)
   _$$RandomLevelImplCopyWith<_$RandomLevelImpl> get copyWith =>

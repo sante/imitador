@@ -10,7 +10,7 @@ Attempt attemptFromSamples({
       required Level level,
       required User? player,
 }) {
-  final distance = level.expressions!.getDistance(samples);
+  final distance = level.expressions.getDistance(samples);
   final score = distance;
   final stars = getScore(score);
   final attempt = Attempt(
@@ -19,7 +19,7 @@ Attempt attemptFromSamples({
     plotPointsX: samples.map((it) => it.first).toList(),
     plotPointsY: samples.map((it) => it.second).toList(),
     interfaceType: InterfaceType.mouse,
-    expressions: level.expressions!,
+    expressions: level.expressions,
     levelId: level.id,
     level: level,
     playerId: player?.id,
