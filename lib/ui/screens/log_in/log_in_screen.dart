@@ -71,49 +71,99 @@ class _LogInContentScreenState extends State<_LogInContentScreen> {
                     ),
                     SizedBox(
                       width: 394.w,
-                      child: Column(
-                        spacing: 52.h,
-                        children: [
-                          AppTextField(
-                            controller: emailController,
-                            label: "Email",
-                            onChanged: (email) {
-                              _cubit.setEmail(email);
-                            },
-                          ),
-                          AppTextField(
-                            controller: codeController,
-                            label: "Código",
-                            onChanged: (code) {
-                              _cubit.setCode(code);
-                            },
-                          ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                await _cubit.login();
-                                context.router.replace(const WelcomeRoute());
-                              },
-                              style: context.theme.buttonsStyle.filledButton
-                                  .copyWith(
-                                fixedSize: WidgetStatePropertyAll(
-                                  Size(120.w, 56.h),
-                                ),
-                                textStyle: WidgetStatePropertyAll(
-                                  context.theme.textStyles.bodyLarge,
-                                ),
+                      child: BlocBuilder<LogInCubit, LogInState>(
+                        builder: (context, state) {
+                          if (state.error != null) {
+                            return Text(
+                              state.error!,
+                              style: TextStyle(color: Colors.red),
+                            );
+                          }
+
+                          return Column(
+                            spacing: 52.h,
+                            children: [
+                              AppTextField(
+                                controller: emailController,
+                                label: "Email",
+                                onChanged: (email) {
+                                  _cubit.setEmail(email);
+                                },
+                                enabled: !state.codeSent,
                               ),
-                              child: const Text(
-                                "Ingresar",
+                              if (state.codeSent) ...[
+                                AppTextField(
+                                  controller: codeController,
+                                  label: "Código",
+                                  onChanged: (code) {
+                                    _cubit.setCode(code);
+                                  },
+                                ),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: ElevatedButton(
+                                    onPressed: state.isLoading
+                                        ? null
+                                        : () async {
+                                            await _cubit.login();
+                                            if (_cubit.state.error == null) {
+                                              context.router.replace(
+                                                  const WelcomeRoute());
+                                            }
+                                          },
+                                    style: context
+                                        .theme.buttonsStyle.filledButton
+                                        .copyWith(
+                                      fixedSize: WidgetStatePropertyAll(
+                                        Size(120.w, 56.h),
+                                      ),
+                                      textStyle: WidgetStatePropertyAll(
+                                        context.theme.textStyles.bodyLarge,
+                                      ),
+                                    ),
+                                    child: state.isLoading
+                                        ? CircularProgressIndicator(
+                                            color: context
+                                                .theme.colorScheme.onPrimary,
+                                          )
+                                        : const Text("Ingresar"),
+                                  ),
+                                ),
+                              ] else ...[
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: ElevatedButton(
+                                    onPressed: state.isLoading
+                                        ? null
+                                        : () async {
+                                            await _cubit.requestCode();
+                                          },
+                                    style: context
+                                        .theme.buttonsStyle.filledButton
+                                        .copyWith(
+                                      fixedSize: WidgetStatePropertyAll(
+                                        Size(180.w, 56.h),
+                                      ),
+                                      textStyle: WidgetStatePropertyAll(
+                                        context.theme.textStyles.bodyLarge,
+                                      ),
+                                    ),
+                                    child: state.isLoading
+                                        ? CircularProgressIndicator(
+                                            color: context
+                                                .theme.colorScheme.onPrimary,
+                                          )
+                                        : const Text("Enviar código"),
+                                  ),
+                                ),
+                              ],
+                              TextButton(
+                                onPressed: () {},
+                                child: const Text("Olvidé mi contraseña"),
                               ),
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: () {},
-                            child: const Text("Olvidé mi contraseña"),
-                          ),
-                        ],
+                            ],
+                          );
+                        },
                       ),
                     ),
                     Container(

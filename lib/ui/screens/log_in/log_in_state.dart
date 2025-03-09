@@ -6,5 +6,7 @@ class LogInState with _$LogInState {
     @Default('') String email,
     @Default('') String code,
     @Default(false) bool isLoading,
-}) = _LogInState;
+    @Default(false) bool codeSent,
+    String? error,
+  }) = _LogInState;
 }

@@ -25,6 +25,10 @@ class SessionRepository {
 
   Stream<User?> getUserInfo() => _authLocalSource.getUser();
 
+  Future<void> requestSignInCode(String email) async {
+    await _authRemoteSource.requestSignInCode(email);
+  }
+
   Future<void> signInUser({
     required String email,
     required String code,
@@ -40,7 +44,7 @@ class SessionRepository {
     await _authLocalSource.saveUserInfo(user);
   }
 
-  Future<void> refresh() async  {
+  Future<void> refresh() async {
     final refreshToken = await _authLocalSource.getRefreshToken().first;
     if (refreshToken == null) {
       return;
