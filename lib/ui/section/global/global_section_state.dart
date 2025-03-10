@@ -5,5 +5,6 @@ class GlobalSectionState with _$GlobalSectionState {
   const factory GlobalSectionState.state({
     @Default(null) User? user,
     @Default(null) List<Level>? levels,
+    @Default(null) List<Activity>? activities,
   }) = _GlobalSectionStateState;
 }

@@ -4,10 +4,14 @@ import 'dart:ui';
 import 'package:dartx/dartx.dart';
 import 'package:flame/components.dart';
 import 'package:flame/palette.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:imitador/core/common/logger.dart';
 import 'package:imitador/game/simon_game.dart';
 import 'package:imitador/model/level_expression/level_expression.dart';
 import 'package:math_expressions/math_expressions.dart';
+
+const verticalPadding = 0.9;
 
 class GraphComponent extends PositionComponent
     with HasGameReference<SimonGame> {
@@ -26,8 +30,8 @@ class GraphComponent extends PositionComponent
   final objectivePaint = BasicPalette.green.paint()..strokeWidth = 3.0;
   final currentTimePaint = BasicPalette.gray.paint()..strokeWidth = 3.0;
   final mathContext = ContextModel();
+  late double xAxisYOffset;
   late final double effectiveTimeSize;
-  final verticalPadding = 0.9;
 
   GraphComponent({
     required this.fixedExpressions,
@@ -41,6 +45,10 @@ class GraphComponent extends PositionComponent
     Logger.d('Game width: ${game.size.x}');
     Logger.d("Canvas height: ${size.y}");
     effectiveTimeSize = size.x - game.spriteOutOfBoundsSize;
+    xAxisYOffset = size.y +
+        (distanceRange.first / (distanceRange.second - distanceRange.first)) *
+            size.y *
+            verticalPadding;
     return super.onLoad();
   }
 
@@ -63,18 +71,21 @@ class GraphComponent extends PositionComponent
     return Offset(
       point.first * effectiveTimeSize / secondsDuration +
           game.spriteOutOfBoundsSize,
-      size.y - (point.second * size.y) * verticalPadding,
+      xAxisYOffset -
+          (point.second /
+              (distanceRange.second - distanceRange.first) *
+              size.y *
+              verticalPadding),
     );
   }
 
   @override
   void render(Canvas canvas) {
     super.render(canvas);
-
     // Dibujar los ejes
     canvas.drawLine(
-      Offset(0, size.y),
-      Offset(size.x, size.y),
+      Offset(0, xAxisYOffset),
+      Offset(size.x, xAxisYOffset),
       axisLinePaint,
     ); // eje x
     canvas.drawLine(
@@ -82,13 +93,18 @@ class GraphComponent extends PositionComponent
       Offset(game.spriteOutOfBoundsSize, size.y),
       axisLinePaint,
     ); // eje y
-    canvas.drawLine(
-      Offset(
-          game.spriteOutOfBoundsSize - 10, size.y - size.y * verticalPadding),
-      Offset(
-          game.spriteOutOfBoundsSize + 10, size.y - size.y * verticalPadding),
-      axisLinePaint,
-    ); // Max y tick
+    _drawYTickAt(value: distanceRange.second, canvas: canvas); // Max y tick
+    _drawYTickAt(value: distanceRange.first, canvas: canvas); // Min y tick
+    for (int i = distanceRange.first.ceil();
+        i <= distanceRange.second.floor();
+        i++) {
+      if (i != 0) {
+        _drawYTickAt(value: i.toDouble(), canvas: canvas);
+      }
+    }
+    for (int i = 1; i <= secondsDuration; i++) {
+      drawXTickAt(value: i.toDouble(), canvas: canvas);
+    }
 
     // Dibujar las expresiones fijas
     fixedExpressions.forEachIndexed((expression, index) {
@@ -108,7 +124,7 @@ class GraphComponent extends PositionComponent
                 effectiveTimeSize *
                 (i - game.spriteOutOfBoundsSize)));
         final value = expression.evaluate(EvaluationType.REAL, mathContext);
-        final y = size.y -
+        final y = xAxisYOffset -
             (value *
                 size.y /
                 (distanceRange.second - distanceRange.first) *
@@ -166,5 +182,60 @@ class GraphComponent extends PositionComponent
       }
     }
     super.update(dt);
+  }
+
+  void _drawYTickAt({
+    required double value,
+    required Canvas canvas,
+  }) {
+    final y = xAxisYOffset -
+        (value /
+            (distanceRange.second - distanceRange.first) *
+            size.y *
+            verticalPadding);
+    canvas.drawLine(
+      Offset(game.spriteOutOfBoundsSize - 5, y),
+      Offset(game.spriteOutOfBoundsSize + 5, y),
+      axisLinePaint,
+    );
+    if (y.toInt() != 0) {
+      TextSpan span = TextSpan(
+        style: TextStyle(color: Colors.white),
+        text: value.toInt().toString(),
+      );
+      TextPainter tp = TextPainter(
+        text: span,
+        textAlign: TextAlign.right,
+        textDirection: TextDirection.ltr,
+      );
+      tp.layout();
+      tp.paint(canvas, Offset(game.spriteOutOfBoundsSize - 30, y - 10));
+    }
+  }
+
+  void drawXTickAt({
+    required double value,
+    required Canvas canvas,
+  }) {
+    final x = value * effectiveTimeSize / secondsDuration +
+        game.spriteOutOfBoundsSize;
+    canvas.drawLine(
+      Offset(x, xAxisYOffset - 5),
+      Offset(x, xAxisYOffset + 5),
+      axisLinePaint,
+    );
+    if (x.toInt() != 0) {
+      TextSpan span = TextSpan(
+        style: TextStyle(color: Colors.white),
+        text: value.toInt().toString(),
+      );
+      TextPainter tp = TextPainter(
+        text: span,
+        textAlign: TextAlign.left,
+        textDirection: TextDirection.ltr,
+      );
+      tp.layout();
+      tp.paint(canvas, Offset(x - 15, xAxisYOffset + 5));
+    }
   }
 }

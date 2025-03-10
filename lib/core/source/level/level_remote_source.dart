@@ -3,7 +3,7 @@ import 'package:imitador/core/source/common/http_service.dart';
 import 'package:imitador/model/level/level.dart';
 
 class LevelRemoteSource {
-  static const _urlGetLevels = '/v1/levels';
+  static const _urlGetLevels = '/v1/levels/default';
 
   final HttpServiceDio _httpService;
 

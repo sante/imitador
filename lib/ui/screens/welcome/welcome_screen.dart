@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imitador/core/common/extension/context_extensions.dart';
+import 'package:imitador/model/user/user.dart';
 import 'package:imitador/ui/router/app_router.dart';
 import 'package:imitador/ui/section/global/global_section_cubit.dart';
 import 'package:imitador/ui/theme/app_theme.dart';
@@ -39,42 +40,8 @@ class _WelcomeContentScreen extends StatelessWidget {
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        spacing: 28.w,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {
-                              context.router.push(const LevelSelectorRoute());
-                            },
-                            style: context.theme.buttonsStyle.filledButton
-                                .copyWith(
-                              fixedSize:
-                                  WidgetStatePropertyAll(Size(268.w, 68.h)),
-                            ),
-                            child: Text(
-                              context.localizations.play_as_guest,
-                            ),
-                          ),
-                          ElevatedButton(
-                            onPressed: state.user != null
-                                ? () {}
-                                : () {
-                                    context.router.push(const LogInRoute());
-                                  },
-                            style: context.theme.buttonsStyle.outlineButton
-                                .copyWith(
-                              fixedSize:
-                                  WidgetStatePropertyAll(Size(268.w, 68.h)),
-                            ),
-                            child: Text(
-                              state.user != null
-                                  ? state.user!.name
-                                  : context.localizations.sign_in,
-                            ),
-                          ),
-                        ],
-                      ),
+                      if (state.user == null) const GuestActions(),
+                      if (state.user != null) UserActions(user: state.user!),
                       Column(
                         mainAxisSize: MainAxisSize.min,
                         spacing: 36.h,
@@ -119,4 +86,81 @@ class _WelcomeContentScreen extends StatelessWidget {
           ),
         ),
       );
+}
+
+class GuestActions extends StatelessWidget {
+  const GuestActions({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      spacing: 28.w,
+      children: [
+        ElevatedButton(
+          onPressed: () {
+            context.router.push(const LevelSelectorRoute());
+          },
+          style: context.theme.buttonsStyle.filledButton.copyWith(
+            fixedSize: WidgetStatePropertyAll(Size(268.w, 68.h)),
+          ),
+          child: Text(
+            context.localizations.play_as_guest,
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            context.router.push(const LogInRoute());
+          },
+          style: context.theme.buttonsStyle.outlineButton.copyWith(
+            fixedSize: WidgetStatePropertyAll(Size(268.w, 68.h)),
+          ),
+          child: Text(
+            context.localizations.sign_in,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class UserActions extends StatelessWidget {
+  final User user;
+
+  const UserActions({
+    required this.user,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      spacing: 28.w,
+      children: [
+        ElevatedButton(
+          onPressed: () {
+            context.router.push(const LevelSelectorRoute());
+          },
+          style: context.theme.buttonsStyle.filledButton.copyWith(
+            fixedSize: WidgetStatePropertyAll(Size(268.w, 68.h)),
+          ),
+          child: const Text(
+            "Jugar",
+          ),
+        ),
+        ElevatedButton(
+          onPressed: context.read<GlobalSectionCubit>().logOut,
+          style: context.theme.buttonsStyle.outlineButton.copyWith(
+            fixedSize: WidgetStatePropertyAll(Size(268.w, 68.h)),
+          ),
+          child: const Text(
+            "Cerrar Sesión",
+          ),
+        ),
+      ],
+    );
+  }
 }
