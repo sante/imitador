@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive/hive.dart';
@@ -24,7 +25,11 @@ Future initSdks() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Logger.init();
   await Config.initialize();
-  Hive.init(Config.appDirectoryPath);
+  if (kIsWeb) {
+    Hive.init(null);
+  } else {
+    Hive.init(Config.appDirectoryPath);
+  }
 
   await Future.wait([
     DiProvider.init(),

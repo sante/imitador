@@ -25,8 +25,7 @@ class GameLevelPage extends Component
   late final TextComponent _helperText;
   late final RoundedButton _playButton;
   bool finishedSampling = false;
-  void Function(List<Pair<double, double>>)
-      onFinishedWithResult;
+  void Function(List<Pair<double, double>>) onFinishedWithResult;
 
   GameLevelPage({
     this.difficulty,
@@ -42,6 +41,8 @@ class GameLevelPage extends Component
       _graph = GraphComponent(
         fixedExpressions: game.level.expressions,
         onFinishedSampling: finishSampling,
+        secondsDuration: game.level.secondsDuration.toInt(),
+        distanceRange: Pair(game.level.minPosition, game.level.maxPosition),
       )
         ..size = Vector2(gameInitialSize.x, gameInitialSize.y / 2)
         ..position = Vector2(0, 0),
@@ -76,8 +77,9 @@ class GameLevelPage extends Component
 
   void addPositionValue(Vector2 position) {
     _graph.addDataPoint(
-      (position.x - game.spriteOutOfBoundsSize) /
-          (game.size.x - Constants.trackingSpriteSize),
+      game.level.minPosition + (position.x - game.spriteOutOfBoundsSize) /
+          (game.size.x - Constants.trackingSpriteSize) *
+          (game.level.maxPosition - game.level.minPosition),
     );
   }
 

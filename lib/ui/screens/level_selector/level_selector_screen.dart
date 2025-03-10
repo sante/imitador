@@ -16,8 +16,6 @@ import 'package:imitador/ui/section/global/global_section_cubit.dart';
 import 'package:imitador/ui/theme/app_theme.dart';
 import 'package:imitador/ui/theme/level_card.dart';
 
-import 'level_selector_cubit.dart';
-
 final dummyLevels = [
   Level(
     id: '1',
@@ -118,50 +116,52 @@ class _LevelSelectorContentScreen extends StatelessWidget {
         child: Stack(
           children: [
             Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                spacing: 60.h,
-                children: [
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 24.h,
-                    children: [
-                      Text(
-                        'Juegos libres',
-                        style: context.theme.textStyles.titleLarge!.copyWith(
-                          fontSize: 32.sp,
-                          fontWeight: FontWeight.bold,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  spacing: 60.h,
+                  children: [
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 24.h,
+                      children: [
+                        Text(
+                          'Juegos libres',
+                          style: context.theme.textStyles.titleLarge!.copyWith(
+                            fontSize: 32.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        textAlign: TextAlign.center,
-                      ),
-                      _LevelsRow(
-                          levels: levels
-                              .filter((it) => it.difficulty != null)
-                              .toList()),
-                    ],
-                  ),
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 24.h,
-                    children: [
-                      Text(
-                        'Niveles',
-                        style: context.theme.textStyles.titleLarge!.copyWith(
-                          fontSize: 32.sp,
-                          fontWeight: FontWeight.bold,
+                        _LevelsRow(
+                            levels: levels
+                                .filter((it) => it.difficulty != null)
+                                .toList()),
+                      ],
+                    ),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 24.h,
+                      children: [
+                        Text(
+                          'Niveles',
+                          style: context.theme.textStyles.titleLarge!.copyWith(
+                            fontSize: 32.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        textAlign: TextAlign.center,
-                      ),
-                      _LevelsRow(
-                          levels: levels
-                              .filter((it) => it.difficulty == null)
-                              .toList()),
-                    ],
-                  ),
-                ],
+                        _LevelsRow(
+                            levels: levels
+                                .filter((it) => it.difficulty == null)
+                                .toList()),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
             Align(
@@ -218,23 +218,27 @@ class _LevelsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SizedBox(
-        height: 205.h,
-        child: ListView.separated(
-          itemCount: levels.length,
-          scrollDirection: Axis.horizontal,
-          separatorBuilder: (context, index) => SizedBox(
-            width: context.theme.dimensions.spacing24.w,
-          ),
-          itemBuilder: (context, index) => LevelCard(
-            label: levels[index].name,
-            onPressed: () {
-              context.router.push(
-                LevelSectionRoute(
-                  level: levels[index],
-                ),
-              );
-            },
-          ),
-        ),
-      );
+    width: double.infinity,
+    child: Wrap(
+      spacing: context.theme.dimensions.spacing24.w,
+      runSpacing: context.theme.dimensions.spacing24.h,
+      alignment: WrapAlignment.start,
+      crossAxisAlignment: WrapCrossAlignment.start,
+      direction: Axis.horizontal,
+      children: levels
+          .map(
+            (it) => LevelCard(
+              label: it.name,
+              onPressed: () {
+                context.router.push(
+                  LevelSectionRoute(
+                    level: it,
+                  ),
+                );
+              },
+            ),
+          )
+          .toList(),
+    ),
+  );
 }

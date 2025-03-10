@@ -7,13 +7,12 @@ part 'activity.g.dart';
 
 @freezed
 abstract class Activity with _$Activity {
-
   const factory Activity({
     required String id,
     required String name,
     required List<Level> levels,
   }) = _Activity;
 
-
-  factory Activity.fromJson(Map<String, Object?> json) => _$ActivityFromJson(json);
+  factory Activity.fromJson(Map<String, Object?> json) =>
+      _$ActivityFromJson(json);
 }
