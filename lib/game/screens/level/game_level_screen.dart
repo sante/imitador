@@ -76,11 +76,14 @@ class GameLevelPage extends Component
   }
 
   void addPositionValue(Vector2 position) {
-    _graph.addDataPoint(
-      game.level.minPosition + (position.x - game.spriteOutOfBoundsSize) /
-          (game.size.x - Constants.trackingSpriteSize) *
-          (game.level.maxPosition - game.level.minPosition),
-    );
+    _graph.addDataPoint(toScaledPosition(position.x));
+  }
+
+  double toScaledPosition(double position) {
+    return game.level.minPosition +
+        (position - game.spriteOutOfBoundsSize) /
+            (game.size.x - Constants.trackingSpriteSize) *
+            (game.level.maxPosition - game.level.minPosition);
   }
 
   @override
@@ -88,7 +91,7 @@ class GameLevelPage extends Component
     final newX = (event.localPosition.x)
         .clamp(_sparky.size.x / 2, game.size.x - _sparky.size.x / 2);
     _sparky.position = Vector2(newX, _sparky.position.y);
-    _graph.updateCurrentPosition(newX);
+    _graph.updateCurrentPosition(toScaledPosition(newX));
   }
 
   @override
