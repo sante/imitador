@@ -58,3 +58,40 @@ Map<String, dynamic> _$$SignInRefreshImplToJson(_$SignInRefreshImpl instance) =>
       'refreshToken': instance.token,
       'runtimeType': instance.$type,
     };
+
+_$SignUpRequestImpl _$$SignUpRequestImplFromJson(Map<String, dynamic> json) =>
+    _$SignUpRequestImpl(
+      email: json['email'] as String,
+      name: json['name'] as String,
+      code: json['code'] as String,
+      userType: $enumDecode(_$UserTypeEnumMap, json['type']),
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$SignUpRequestImplToJson(_$SignUpRequestImpl instance) =>
+    <String, dynamic>{
+      'email': instance.email,
+      'name': instance.name,
+      'code': instance.code,
+      'type': _$UserTypeEnumMap[instance.userType]!,
+      'runtimeType': instance.$type,
+    };
+
+const _$UserTypeEnumMap = {
+  UserType.student: 'STUDENT',
+  UserType.teacher: 'TEACHER',
+};
+
+_$SignUpRequestCodeImpl _$$SignUpRequestCodeImplFromJson(
+        Map<String, dynamic> json) =>
+    _$SignUpRequestCodeImpl(
+      email: json['email'] as String,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$SignUpRequestCodeImplToJson(
+        _$SignUpRequestCodeImpl instance) =>
+    <String, dynamic>{
+      'email': instance.email,
+      'runtimeType': instance.$type,
+    };

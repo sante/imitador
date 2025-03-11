@@ -783,3 +783,509 @@ abstract class _SignInRefresh implements SignInRequest {
   _$$SignInRefreshImplCopyWith<_$SignInRefreshImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+SignUpRequest _$SignUpRequestFromJson(Map<String, dynamic> json) {
+  switch (json['runtimeType']) {
+    case 'default':
+      return _SignUpRequest.fromJson(json);
+    case 'code':
+      return _SignUpRequestCode.fromJson(json);
+
+    default:
+      throw CheckedFromJsonException(json, 'runtimeType', 'SignUpRequest',
+          'Invalid union type "${json['runtimeType']}"!');
+  }
+}
+
+/// @nodoc
+mixin _$SignUpRequest {
+  @JsonKey(name: 'email')
+  String get email => throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(name: 'email') String email,
+            @JsonKey(name: 'name') String name,
+            @JsonKey(name: 'code') String code,
+            @JsonKey(name: 'type') UserType userType)
+        $default, {
+    required TResult Function(@JsonKey(name: 'email') String email) code,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            @JsonKey(name: 'email') String email,
+            @JsonKey(name: 'name') String name,
+            @JsonKey(name: 'code') String code,
+            @JsonKey(name: 'type') UserType userType)?
+        $default, {
+    TResult? Function(@JsonKey(name: 'email') String email)? code,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(name: 'email') String email,
+            @JsonKey(name: 'name') String name,
+            @JsonKey(name: 'code') String code,
+            @JsonKey(name: 'type') UserType userType)?
+        $default, {
+    TResult Function(@JsonKey(name: 'email') String email)? code,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_SignUpRequest value) $default, {
+    required TResult Function(_SignUpRequestCode value) code,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_SignUpRequest value)? $default, {
+    TResult? Function(_SignUpRequestCode value)? code,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_SignUpRequest value)? $default, {
+    TResult Function(_SignUpRequestCode value)? code,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $SignUpRequestCopyWith<SignUpRequest> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $SignUpRequestCopyWith<$Res> {
+  factory $SignUpRequestCopyWith(
+          SignUpRequest value, $Res Function(SignUpRequest) then) =
+      _$SignUpRequestCopyWithImpl<$Res, SignUpRequest>;
+  @useResult
+  $Res call({@JsonKey(name: 'email') String email});
+}
+
+/// @nodoc
+class _$SignUpRequestCopyWithImpl<$Res, $Val extends SignUpRequest>
+    implements $SignUpRequestCopyWith<$Res> {
+  _$SignUpRequestCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? email = null,
+  }) {
+    return _then(_value.copyWith(
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$SignUpRequestImplCopyWith<$Res>
+    implements $SignUpRequestCopyWith<$Res> {
+  factory _$$SignUpRequestImplCopyWith(
+          _$SignUpRequestImpl value, $Res Function(_$SignUpRequestImpl) then) =
+      __$$SignUpRequestImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'email') String email,
+      @JsonKey(name: 'name') String name,
+      @JsonKey(name: 'code') String code,
+      @JsonKey(name: 'type') UserType userType});
+}
+
+/// @nodoc
+class __$$SignUpRequestImplCopyWithImpl<$Res>
+    extends _$SignUpRequestCopyWithImpl<$Res, _$SignUpRequestImpl>
+    implements _$$SignUpRequestImplCopyWith<$Res> {
+  __$$SignUpRequestImplCopyWithImpl(
+      _$SignUpRequestImpl _value, $Res Function(_$SignUpRequestImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? email = null,
+    Object? name = null,
+    Object? code = null,
+    Object? userType = null,
+  }) {
+    return _then(_$SignUpRequestImpl(
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      code: null == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String,
+      userType: null == userType
+          ? _value.userType
+          : userType // ignore: cast_nullable_to_non_nullable
+              as UserType,
+    ));
+  }
+}
+
+/// @nodoc
+
+@JsonSerializable()
+class _$SignUpRequestImpl implements _SignUpRequest {
+  _$SignUpRequestImpl(
+      {@JsonKey(name: 'email') required this.email,
+      @JsonKey(name: 'name') required this.name,
+      @JsonKey(name: 'code') required this.code,
+      @JsonKey(name: 'type') required this.userType,
+      final String? $type})
+      : $type = $type ?? 'default';
+
+  factory _$SignUpRequestImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SignUpRequestImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'email')
+  final String email;
+  @override
+  @JsonKey(name: 'name')
+  final String name;
+  @override
+  @JsonKey(name: 'code')
+  final String code;
+  @override
+  @JsonKey(name: 'type')
+  final UserType userType;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString() {
+    return 'SignUpRequest(email: $email, name: $name, code: $code, userType: $userType)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SignUpRequestImpl &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.code, code) || other.code == code) &&
+            (identical(other.userType, userType) ||
+                other.userType == userType));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, email, name, code, userType);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SignUpRequestImplCopyWith<_$SignUpRequestImpl> get copyWith =>
+      __$$SignUpRequestImplCopyWithImpl<_$SignUpRequestImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(name: 'email') String email,
+            @JsonKey(name: 'name') String name,
+            @JsonKey(name: 'code') String code,
+            @JsonKey(name: 'type') UserType userType)
+        $default, {
+    required TResult Function(@JsonKey(name: 'email') String email) code,
+  }) {
+    return $default(email, name, this.code, userType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            @JsonKey(name: 'email') String email,
+            @JsonKey(name: 'name') String name,
+            @JsonKey(name: 'code') String code,
+            @JsonKey(name: 'type') UserType userType)?
+        $default, {
+    TResult? Function(@JsonKey(name: 'email') String email)? code,
+  }) {
+    return $default?.call(email, name, this.code, userType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(name: 'email') String email,
+            @JsonKey(name: 'name') String name,
+            @JsonKey(name: 'code') String code,
+            @JsonKey(name: 'type') UserType userType)?
+        $default, {
+    TResult Function(@JsonKey(name: 'email') String email)? code,
+    required TResult orElse(),
+  }) {
+    if ($default != null) {
+      return $default(email, name, this.code, userType);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_SignUpRequest value) $default, {
+    required TResult Function(_SignUpRequestCode value) code,
+  }) {
+    return $default(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_SignUpRequest value)? $default, {
+    TResult? Function(_SignUpRequestCode value)? code,
+  }) {
+    return $default?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_SignUpRequest value)? $default, {
+    TResult Function(_SignUpRequestCode value)? code,
+    required TResult orElse(),
+  }) {
+    if ($default != null) {
+      return $default(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$SignUpRequestImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _SignUpRequest implements SignUpRequest {
+  factory _SignUpRequest(
+          {@JsonKey(name: 'email') required final String email,
+          @JsonKey(name: 'name') required final String name,
+          @JsonKey(name: 'code') required final String code,
+          @JsonKey(name: 'type') required final UserType userType}) =
+      _$SignUpRequestImpl;
+
+  factory _SignUpRequest.fromJson(Map<String, dynamic> json) =
+      _$SignUpRequestImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'email')
+  String get email;
+  @JsonKey(name: 'name')
+  String get name;
+  @JsonKey(name: 'code')
+  String get code;
+  @JsonKey(name: 'type')
+  UserType get userType;
+  @override
+  @JsonKey(ignore: true)
+  _$$SignUpRequestImplCopyWith<_$SignUpRequestImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$SignUpRequestCodeImplCopyWith<$Res>
+    implements $SignUpRequestCopyWith<$Res> {
+  factory _$$SignUpRequestCodeImplCopyWith(_$SignUpRequestCodeImpl value,
+          $Res Function(_$SignUpRequestCodeImpl) then) =
+      __$$SignUpRequestCodeImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({@JsonKey(name: 'email') String email});
+}
+
+/// @nodoc
+class __$$SignUpRequestCodeImplCopyWithImpl<$Res>
+    extends _$SignUpRequestCopyWithImpl<$Res, _$SignUpRequestCodeImpl>
+    implements _$$SignUpRequestCodeImplCopyWith<$Res> {
+  __$$SignUpRequestCodeImplCopyWithImpl(_$SignUpRequestCodeImpl _value,
+      $Res Function(_$SignUpRequestCodeImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? email = null,
+  }) {
+    return _then(_$SignUpRequestCodeImpl(
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$SignUpRequestCodeImpl implements _SignUpRequestCode {
+  _$SignUpRequestCodeImpl(
+      {@JsonKey(name: 'email') required this.email, final String? $type})
+      : $type = $type ?? 'code';
+
+  factory _$SignUpRequestCodeImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SignUpRequestCodeImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'email')
+  final String email;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString() {
+    return 'SignUpRequest.code(email: $email)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SignUpRequestCodeImpl &&
+            (identical(other.email, email) || other.email == email));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, email);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SignUpRequestCodeImplCopyWith<_$SignUpRequestCodeImpl> get copyWith =>
+      __$$SignUpRequestCodeImplCopyWithImpl<_$SignUpRequestCodeImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(name: 'email') String email,
+            @JsonKey(name: 'name') String name,
+            @JsonKey(name: 'code') String code,
+            @JsonKey(name: 'type') UserType userType)
+        $default, {
+    required TResult Function(@JsonKey(name: 'email') String email) code,
+  }) {
+    return code(email);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            @JsonKey(name: 'email') String email,
+            @JsonKey(name: 'name') String name,
+            @JsonKey(name: 'code') String code,
+            @JsonKey(name: 'type') UserType userType)?
+        $default, {
+    TResult? Function(@JsonKey(name: 'email') String email)? code,
+  }) {
+    return code?.call(email);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(name: 'email') String email,
+            @JsonKey(name: 'name') String name,
+            @JsonKey(name: 'code') String code,
+            @JsonKey(name: 'type') UserType userType)?
+        $default, {
+    TResult Function(@JsonKey(name: 'email') String email)? code,
+    required TResult orElse(),
+  }) {
+    if (code != null) {
+      return code(email);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_SignUpRequest value) $default, {
+    required TResult Function(_SignUpRequestCode value) code,
+  }) {
+    return code(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_SignUpRequest value)? $default, {
+    TResult? Function(_SignUpRequestCode value)? code,
+  }) {
+    return code?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_SignUpRequest value)? $default, {
+    TResult Function(_SignUpRequestCode value)? code,
+    required TResult orElse(),
+  }) {
+    if (code != null) {
+      return code(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$SignUpRequestCodeImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _SignUpRequestCode implements SignUpRequest {
+  factory _SignUpRequestCode(
+          {@JsonKey(name: 'email') required final String email}) =
+      _$SignUpRequestCodeImpl;
+
+  factory _SignUpRequestCode.fromJson(Map<String, dynamic> json) =
+      _$SignUpRequestCodeImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'email')
+  String get email;
+  @override
+  @JsonKey(ignore: true)
+  _$$SignUpRequestCodeImplCopyWith<_$SignUpRequestCodeImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

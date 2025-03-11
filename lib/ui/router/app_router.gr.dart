@@ -101,10 +101,22 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const SettingsScreen(),
       );
     },
-    SignUpRoute.name: (routeData) {
+    SignUpDataRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const SignUpScreen(),
+        child: const SignUpDataScreen(),
+      );
+    },
+    SignUpSectionRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SignUpSectionRouter(),
+      );
+    },
+    SignUpTypeRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SignUpTypeScreen(),
       );
     },
     WelcomeRoute.name: (routeData) {
@@ -402,15 +414,43 @@ class SettingsRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [SignUpScreen]
-class SignUpRoute extends PageRouteInfo<void> {
-  const SignUpRoute({List<PageRouteInfo>? children})
+/// [SignUpDataScreen]
+class SignUpDataRoute extends PageRouteInfo<void> {
+  const SignUpDataRoute({List<PageRouteInfo>? children})
       : super(
-          SignUpRoute.name,
+          SignUpDataRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'SignUpRoute';
+  static const String name = 'SignUpDataRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [SignUpSectionRouter]
+class SignUpSectionRoute extends PageRouteInfo<void> {
+  const SignUpSectionRoute({List<PageRouteInfo>? children})
+      : super(
+          SignUpSectionRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SignUpSectionRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [SignUpTypeScreen]
+class SignUpTypeRoute extends PageRouteInfo<void> {
+  const SignUpTypeRoute({List<PageRouteInfo>? children})
+      : super(
+          SignUpTypeRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SignUpTypeRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

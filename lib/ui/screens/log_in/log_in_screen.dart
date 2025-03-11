@@ -177,7 +177,12 @@ class _LogInContentScreenState extends State<_LogInContentScreen> {
                       children: [
                         const Text("¿Todavía no tenés cuenta?"),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.router.replaceAll([
+                              const GlobalSectionRoute(),
+                              const SignUpSectionRoute(),
+                            ]);
+                          },
                           style: context
                               .theme.buttonsStyle.secondaryFilledButton
                               .copyWith(

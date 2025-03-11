@@ -16,20 +16,32 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SignUpSectionState {
-  List<Level>? get levels => throw _privateConstructorUsedError;
+  UserType? get userType => throw _privateConstructorUsedError;
+  String get email => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  String get code => throw _privateConstructorUsedError;
+  bool get codeSent => throw _privateConstructorUsedError;
+  bool get isLoading => throw _privateConstructorUsedError;
+  String? get error => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Level>? levels) state,
+    required TResult Function(UserType? userType, String email, String name,
+            String code, bool codeSent, bool isLoading, String? error)
+        state,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Level>? levels)? state,
+    TResult? Function(UserType? userType, String email, String name,
+            String code, bool codeSent, bool isLoading, String? error)?
+        state,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Level>? levels)? state,
+    TResult Function(UserType? userType, String email, String name, String code,
+            bool codeSent, bool isLoading, String? error)?
+        state,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -61,7 +73,14 @@ abstract class $SignUpSectionStateCopyWith<$Res> {
           SignUpSectionState value, $Res Function(SignUpSectionState) then) =
       _$SignUpSectionStateCopyWithImpl<$Res, SignUpSectionState>;
   @useResult
-  $Res call({List<Level>? levels});
+  $Res call(
+      {UserType? userType,
+      String email,
+      String name,
+      String code,
+      bool codeSent,
+      bool isLoading,
+      String? error});
 }
 
 /// @nodoc
@@ -77,13 +96,43 @@ class _$SignUpSectionStateCopyWithImpl<$Res, $Val extends SignUpSectionState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? levels = freezed,
+    Object? userType = freezed,
+    Object? email = null,
+    Object? name = null,
+    Object? code = null,
+    Object? codeSent = null,
+    Object? isLoading = null,
+    Object? error = freezed,
   }) {
     return _then(_value.copyWith(
-      levels: freezed == levels
-          ? _value.levels
-          : levels // ignore: cast_nullable_to_non_nullable
-              as List<Level>?,
+      userType: freezed == userType
+          ? _value.userType
+          : userType // ignore: cast_nullable_to_non_nullable
+              as UserType?,
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      code: null == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String,
+      codeSent: null == codeSent
+          ? _value.codeSent
+          : codeSent // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -97,7 +146,14 @@ abstract class _$$SignUpSectionStateStateImplCopyWith<$Res>
       __$$SignUpSectionStateStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Level>? levels});
+  $Res call(
+      {UserType? userType,
+      String email,
+      String name,
+      String code,
+      bool codeSent,
+      bool isLoading,
+      String? error});
 }
 
 /// @nodoc
@@ -113,13 +169,43 @@ class __$$SignUpSectionStateStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? levels = freezed,
+    Object? userType = freezed,
+    Object? email = null,
+    Object? name = null,
+    Object? code = null,
+    Object? codeSent = null,
+    Object? isLoading = null,
+    Object? error = freezed,
   }) {
     return _then(_$SignUpSectionStateStateImpl(
-      levels: freezed == levels
-          ? _value._levels
-          : levels // ignore: cast_nullable_to_non_nullable
-              as List<Level>?,
+      userType: freezed == userType
+          ? _value.userType
+          : userType // ignore: cast_nullable_to_non_nullable
+              as UserType?,
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      code: null == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String,
+      codeSent: null == codeSent
+          ? _value.codeSent
+          : codeSent // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -127,23 +213,40 @@ class __$$SignUpSectionStateStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SignUpSectionStateStateImpl implements _SignUpSectionStateState {
-  const _$SignUpSectionStateStateImpl({final List<Level>? levels = null})
-      : _levels = levels;
+  const _$SignUpSectionStateStateImpl(
+      {this.userType = null,
+      this.email = "",
+      this.name = "",
+      this.code = "",
+      this.codeSent = false,
+      this.isLoading = false,
+      this.error = null});
 
-  final List<Level>? _levels;
   @override
   @JsonKey()
-  List<Level>? get levels {
-    final value = _levels;
-    if (value == null) return null;
-    if (_levels is EqualUnmodifiableListView) return _levels;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
+  final UserType? userType;
+  @override
+  @JsonKey()
+  final String email;
+  @override
+  @JsonKey()
+  final String name;
+  @override
+  @JsonKey()
+  final String code;
+  @override
+  @JsonKey()
+  final bool codeSent;
+  @override
+  @JsonKey()
+  final bool isLoading;
+  @override
+  @JsonKey()
+  final String? error;
 
   @override
   String toString() {
-    return 'SignUpSectionState.state(levels: $levels)';
+    return 'SignUpSectionState.state(userType: $userType, email: $email, name: $name, code: $code, codeSent: $codeSent, isLoading: $isLoading, error: $error)';
   }
 
   @override
@@ -151,12 +254,21 @@ class _$SignUpSectionStateStateImpl implements _SignUpSectionStateState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SignUpSectionStateStateImpl &&
-            const DeepCollectionEquality().equals(other._levels, _levels));
+            (identical(other.userType, userType) ||
+                other.userType == userType) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.code, code) || other.code == code) &&
+            (identical(other.codeSent, codeSent) ||
+                other.codeSent == codeSent) &&
+            (identical(other.isLoading, isLoading) ||
+                other.isLoading == isLoading) &&
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_levels));
+  int get hashCode => Object.hash(
+      runtimeType, userType, email, name, code, codeSent, isLoading, error);
 
   @JsonKey(ignore: true)
   @override
@@ -168,27 +280,33 @@ class _$SignUpSectionStateStateImpl implements _SignUpSectionStateState {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Level>? levels) state,
+    required TResult Function(UserType? userType, String email, String name,
+            String code, bool codeSent, bool isLoading, String? error)
+        state,
   }) {
-    return state(levels);
+    return state(userType, email, name, code, codeSent, isLoading, error);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Level>? levels)? state,
+    TResult? Function(UserType? userType, String email, String name,
+            String code, bool codeSent, bool isLoading, String? error)?
+        state,
   }) {
-    return state?.call(levels);
+    return state?.call(userType, email, name, code, codeSent, isLoading, error);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Level>? levels)? state,
+    TResult Function(UserType? userType, String email, String name, String code,
+            bool codeSent, bool isLoading, String? error)?
+        state,
     required TResult orElse(),
   }) {
     if (state != null) {
-      return state(levels);
+      return state(userType, email, name, code, codeSent, isLoading, error);
     }
     return orElse();
   }
@@ -223,11 +341,29 @@ class _$SignUpSectionStateStateImpl implements _SignUpSectionStateState {
 }
 
 abstract class _SignUpSectionStateState implements SignUpSectionState {
-  const factory _SignUpSectionStateState({final List<Level>? levels}) =
-      _$SignUpSectionStateStateImpl;
+  const factory _SignUpSectionStateState(
+      {final UserType? userType,
+      final String email,
+      final String name,
+      final String code,
+      final bool codeSent,
+      final bool isLoading,
+      final String? error}) = _$SignUpSectionStateStateImpl;
 
   @override
-  List<Level>? get levels;
+  UserType? get userType;
+  @override
+  String get email;
+  @override
+  String get name;
+  @override
+  String get code;
+  @override
+  bool get codeSent;
+  @override
+  bool get isLoading;
+  @override
+  String? get error;
   @override
   @JsonKey(ignore: true)
   _$$SignUpSectionStateStateImplCopyWith<_$SignUpSectionStateStateImpl>

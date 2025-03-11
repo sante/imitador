@@ -234,7 +234,8 @@ extension HttpServiceCommon on HttpService {
 }
 
 extension ResponseExtensions<T> on Response<T> {
-  bool get isSuccess => statusCode == 200;
+  bool get isSuccess =>
+      statusCode != null && statusCode! >= 200 && statusCode! <= 300;
 
   ServiceResponse<R> processServiceResponse<R>(
     R Function(dynamic json) serializer,
