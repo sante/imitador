@@ -9,13 +9,15 @@ import 'package:imitador/ui/screens/level/level_screen.dart';
 import 'package:imitador/ui/screens/level_selector/level_selector_screen.dart';
 import 'package:imitador/ui/screens/log_in/log_in_screen.dart';
 import 'package:imitador/ui/screens/settings/settings_screen.dart';
-import 'package:imitador/ui/screens/sign_up/sign_up_screen.dart';
+import 'package:imitador/ui/screens/sign_up/sign_up_data_screen.dart';
+import 'package:imitador/ui/screens/sign_up/sign_up_type_screen.dart';
 import 'package:imitador/ui/section/activity/activity_section.dart';
 import 'package:imitador/ui/section/game_session/game_session_section.dart';
 import 'package:imitador/ui/section/global/global_section.dart';
 import 'package:imitador/ui/section/level/level_section.dart';
 import 'package:imitador/ui/screens/welcome/welcome_screen.dart';
 import 'package:imitador/ui/screens/results/results_screen.dart';
+import 'package:imitador/ui/section/sign_up/sign_up_section.dart';
 
 part 'app_router.gr.dart';
 
@@ -57,6 +59,19 @@ class AppRouter extends _$AppRouter {
               AutoRoute(
                 page: SettingsRoute.page,
                 path: "settings",
+              ),
+              AutoRoute(
+                page: SignUpSectionRoute.page,
+                path: "signUp",
+                children: [
+                  AutoRoute(
+                    page: SignUpTypeRoute.page,
+                    initial: true,
+                  ),
+                  AutoRoute(
+                    page: SignUpDataRoute.page,
+                  ),
+                ],
               ),
               AutoRoute(
                 page: LevelSectionRoute.page,

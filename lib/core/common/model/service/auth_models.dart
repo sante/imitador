@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:imitador/model/enum/user_type.dart';
 
 part 'auth_models.freezed.dart';
 
@@ -33,4 +34,22 @@ sealed class SignInRequest with _$SignInRequest {
 
   factory SignInRequest.fromJson(Map<String, dynamic> json) =>
       _$SignInRequestFromJson(json);
+}
+
+@freezed
+sealed class SignUpRequest with _$SignUpRequest {
+  @JsonSerializable()
+  factory SignUpRequest({
+    @JsonKey(name: 'email') required String email,
+    @JsonKey(name: 'name') required String name,
+    @JsonKey(name: 'code') required String code,
+    @JsonKey(name: 'type') required UserType userType,
+  }) = _SignUpRequest;
+
+  factory SignUpRequest.code({
+    @JsonKey(name: 'email') required String email,
+  }) = _SignUpRequestCode;
+
+  factory SignUpRequest.fromJson(Map<String, dynamic> json) =>
+      _$SignUpRequestFromJson(json);
 }

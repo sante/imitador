@@ -42,13 +42,15 @@ class _WelcomeContentScreen extends StatelessWidget {
                       ),
                       if (state.user == null) const GuestActions(),
                       if (state.user != null) UserActions(user: state.user!),
-                      Column(
+                      if (state.user == null) Column(
                         mainAxisSize: MainAxisSize.min,
                         spacing: 36.h,
                         children: [
                           Text("¿Todavía no tenés cuenta?"),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              context.router.push(const SignUpSectionRoute());
+                            },
                             style: context
                                 .theme.buttonsStyle.secondaryFilledButton
                                 .copyWith(
