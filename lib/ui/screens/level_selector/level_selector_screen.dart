@@ -13,6 +13,7 @@ import 'package:imitador/ui/router/app_router.dart';
 import 'package:imitador/ui/section/activity/activity_section_cubit.dart';
 import 'package:imitador/ui/section/game_session/game_session_section_cubit.dart';
 import 'package:imitador/ui/section/global/global_section_cubit.dart';
+import 'package:imitador/ui/theme/activity_card.dart';
 import 'package:imitador/ui/theme/app_theme.dart';
 import 'package:imitador/ui/theme/level_card.dart';
 
@@ -65,180 +66,275 @@ class LevelSelectorScreen extends StatelessWidget {
         builder: (context, state) => _LevelSelectorContentScreen(
           levels: state.levels ?? [],
           user: state.user,
+          activities: state.activities ?? [],
+        ),
+      );
+}
+
+@RoutePage()
+class ActivityLevelSelectorScreen extends StatelessWidget {
+  const ActivityLevelSelectorScreen({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) =>
+      BlocBuilder<ActivitySectionCubit, ActivitySectionState>(
+        builder: (context, state) => _LevelSelectorContentScreen(
+          levels: state.activity?.levels ?? [],
+          user: state.user,
+          activity: state.activity,
+          isLoading: state.isLoading,
+          sessionType: PlaySessionType.activity,
         ),
       );
 }
 
 @RoutePage()
 class SessionLevelSelectorScreen extends StatelessWidget {
-  final PlaySessionType sessionType;
-
-  const SessionLevelSelectorScreen({
-    required this.sessionType,
-    super.key,
-  });
+  const SessionLevelSelectorScreen({super.key});
 
   @override
-  Widget build(BuildContext context) => switch (sessionType) {
-        PlaySessionType.gameSession =>
-          BlocBuilder<ActivitySectionCubit, ActivitySectionState>(
-            builder: (context, state) => _LevelSelectorContentScreen(
-              levels: state.activity.levels,
-              user: state.user,
-            ),
-          ),
-        PlaySessionType.activity =>
-          BlocBuilder<GameSessionSectionCubit, GameSessionSectionState>(
-            builder: (context, state) => _LevelSelectorContentScreen(
-              levels: state.session.activity.levels,
-              user: state.user,
-            ),
-          ),
-        PlaySessionType.level => Container(), // We shouldn't arrive here
-      };
+  Widget build(BuildContext context) {
+    return BlocBuilder<GameSessionSectionCubit, GameSessionSectionState>(
+      builder: (context, state) => _LevelSelectorContentScreen(
+        levels: state.session.activity.levels,
+        user: state.user,
+        activity: state.session.activity,
+        sessionType: PlaySessionType.gameSession,
+      ),
+    );
+  }
 }
 
 class _LevelSelectorContentScreen extends StatelessWidget {
   final List<Level> levels;
   final List<Activity> activities;
+  final Activity? activity;
   final User? user;
+  final bool isLoading;
+  final PlaySessionType? sessionType;
 
   const _LevelSelectorContentScreen({
     required this.levels,
     required this.user,
     this.activities = const [],
+    this.activity,
+    this.isLoading = false,
+    this.sessionType,
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) => Padding(
-        padding: EdgeInsets.symmetric(vertical: 60.h, horizontal: 104.w),
-        child: Stack(
-          children: [
-            Center(
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  spacing: 60.h,
-                  children: [
-                    Column(
+  Widget build(BuildContext context) {
+    final randomLevels = levels.filter((it) => it.difficulty != null).toList();
+    final fixedLevels = levels.filter((it) => it.difficulty == null).toList();
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 60.h, horizontal: 104.w),
+      child: Stack(
+        children: [
+          Center(
+            child: !isLoading
+                ? SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: 24.h,
+                      spacing: 60.h,
                       children: [
-                        Text(
-                          'Juegos libres',
-                          style: context.theme.textStyles.titleLarge!.copyWith(
-                            fontSize: 32.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          textAlign: TextAlign.center,
+                        if (activity != null) Text(activity!.name),
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          spacing: 24.h,
+                          children: [
+                            if (randomLevels.isNotEmpty)
+                              Text(
+                                'Juegos libres',
+                                style: context.theme.textStyles.titleLarge!
+                                    .copyWith(
+                                  fontSize: 32.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            _LevelCards(
+                              levels: randomLevels,
+                              sessionType: sessionType,
+                            ),
+                          ],
                         ),
-                        _LevelsRow(
-                            levels: levels
-                                .filter((it) => it.difficulty != null)
-                                .toList()),
+                        if (fixedLevels.isNotEmpty)
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            spacing: 24.h,
+                            children: [
+                              Text(
+                                'Niveles',
+                                style: context.theme.textStyles.titleLarge!
+                                    .copyWith(
+                                  fontSize: 32.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              _LevelCards(
+                                levels: fixedLevels,
+                                sessionType: sessionType,
+                              ),
+                            ],
+                          ),
+                        if (activity == null)
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            spacing: 24.h,
+                            children: [
+                              Text(
+                                'Actividades',
+                                style: context.theme.textStyles.titleLarge!
+                                    .copyWith(
+                                  fontSize: 32.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              _ActivityCards(activities: activities.toList()),
+                            ],
+                          ),
                       ],
                     ),
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: 24.h,
-                      children: [
-                        Text(
-                          'Niveles',
-                          style: context.theme.textStyles.titleLarge!.copyWith(
-                            fontSize: 32.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        _LevelsRow(
-                            levels: levels
-                                .filter((it) => it.difficulty == null)
-                                .toList()),
-                      ],
+                  )
+                : CircularProgressIndicator(
+                    color: context.theme.primaryColor,
+                  ),
+          ),
+          Align(
+            alignment: Alignment.topRight,
+            child: Column(
+              spacing: 12.h,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.max,
+                  spacing: 24.w,
+                  children: [
+                    Text(
+                      "¡Hola, ${user?.name ?? "invitado"}!",
+                      style: context.theme.textStyles.titleLarge!.copyWith(),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: context.theme.buttonsStyle.filledButton.copyWith(
+                        fixedSize: WidgetStatePropertyAll(Size(56.r, 56.r)),
+                      ),
+                      child: Icon(
+                        Icons.person_outline,
+                        color: context.theme.colorScheme.onPrimary,
+                      ),
                     ),
                   ],
                 ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.topRight,
-              child: Column(
-                spacing: 12.h,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    mainAxisSize: MainAxisSize.max,
-                    spacing: 24.w,
-                    children: [
-                      Text(
-                        "¡Hola, ${user?.name ?? "invitado"}!",
-                        style: context.theme.textStyles.titleLarge!.copyWith(),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        style: context.theme.buttonsStyle.filledButton.copyWith(
-                          fixedSize: WidgetStatePropertyAll(Size(56.r, 56.r)),
-                        ),
-                        child: Icon(
-                          Icons.person_outline,
-                          color: context.theme.colorScheme.onPrimary,
-                        ),
-                      ),
-                    ],
+                ElevatedButton(
+                  onPressed: () {},
+                  style: context.theme.buttonsStyle.outlineButton.copyWith(
+                    fixedSize: WidgetStatePropertyAll(Size(56.r, 56.r)),
                   ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: context.theme.buttonsStyle.outlineButton.copyWith(
-                      fixedSize: WidgetStatePropertyAll(Size(56.r, 56.r)),
-                    ),
-                    child: Icon(
-                      Icons.settings_outlined,
-                      color: context.theme.colorScheme.primary,
-                      size: 16.r,
-                    ),
+                  child: Icon(
+                    Icons.settings_outlined,
+                    color: context.theme.colorScheme.primary,
+                    size: 16.r,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
-      );
+          ),
+        ],
+      ),
+    );
+  }
 }
 
-class _LevelsRow extends StatelessWidget {
+class _LevelCards extends StatelessWidget {
   final List<Level> levels;
+  final PlaySessionType? sessionType;
 
-  const _LevelsRow({required this.levels, super.key});
+  const _LevelCards({
+    required this.levels,
+    this.sessionType,
+    super.key,
+  });
 
   @override
-  Widget build(BuildContext context) => SizedBox(
-    width: double.infinity,
-    child: Wrap(
-      spacing: context.theme.dimensions.spacing24.w,
-      runSpacing: context.theme.dimensions.spacing24.h,
-      alignment: WrapAlignment.start,
-      crossAxisAlignment: WrapCrossAlignment.start,
-      direction: Axis.horizontal,
+  Widget build(BuildContext context) {
+    return _SelectorRow(
       children: levels
           .map(
             (it) => LevelCard(
               label: it.name,
               onPressed: () {
-                context.router.push(
-                  LevelSectionRoute(
-                    level: it,
-                  ),
-                );
+                switch (sessionType) {
+                  case PlaySessionType.activity:
+                    context.read<ActivitySectionCubit>().setCurrentLevel(it);
+                    break;
+                  default: //TODO: Add other cases
+                    break;
+                }
+                context.router.push(switch (sessionType) {
+                  PlaySessionType.activity => const ActivityLevelRoute(),
+                  _ =>
+                    LevelSectionRoute(level: it), // TODO: Add other navigations
+                });
               },
             ),
           )
           .toList(),
-    ),
-  );
+    );
+  }
+}
+
+class _ActivityCards extends StatelessWidget {
+  final List<Activity> activities;
+
+  const _ActivityCards({
+    required this.activities,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return _SelectorRow(
+      children: activities
+          .map(
+            (it) => ActivityCard(
+              activity: it,
+              onPressed: () {
+                context.router.push(ActivitySectionRoute(activityId: it.id));
+              },
+            ),
+          )
+          .toList(),
+    );
+  }
+}
+
+class _SelectorRow extends StatelessWidget {
+  final List<Widget> children;
+
+  const _SelectorRow({required this.children, super.key});
+
+  @override
+  Widget build(BuildContext context) => SizedBox(
+        width: double.infinity,
+        child: Wrap(
+          spacing: context.theme.dimensions.spacing24.w,
+          runSpacing: context.theme.dimensions.spacing24.h,
+          alignment: WrapAlignment.start,
+          crossAxisAlignment: WrapCrossAlignment.start,
+          direction: Axis.horizontal,
+          children: children,
+        ),
+      );
 }
