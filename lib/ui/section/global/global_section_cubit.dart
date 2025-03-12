@@ -22,6 +22,7 @@ class GlobalSectionCubit extends Cubit<GlobalSectionState> {
 
   StreamSubscription<User?>? _userSubscription;
   StreamSubscription<List<Level>?>? _levelsSubscription;
+  StreamSubscription<List<Activity>?>? _activitiesSubscription;
 
   GlobalSectionCubit() : super(const GlobalSectionState.state()) {
     _initStreams();
@@ -30,14 +31,17 @@ class GlobalSectionCubit extends Cubit<GlobalSectionState> {
   void _initStreams() async {
     _userSubscription = _sessionRepository.getUserInfo().listen((user) {
       emit(state.copyWith(user: user));
+      _activityRepository.getActivities();
+      _levelRepository.getLevels();
     });
-    // _levelsSubscription = _levelRepository.getLevels().listen((levels) {
-    //   emit(state.copyWith(levels: levels));
-    //   Logger.d('GlobalSectionCubit._initStreams: levels: $levels');
-    // });
-    final levels = await _levelRepository.getDirectLevels();
-    Logger.d('GlobalSectionCubit._initStreams: levels: ${levels?.length}');
-    emit(state.copyWith(levels: levels));
+    _levelsSubscription = _levelRepository.getLevels().listen((levels) {
+      emit(state.copyWith(levels: levels));
+      Logger.d('GlobalSectionCubit._initStreams: levels: $levels');
+    });
+    _activitiesSubscription = _activityRepository.getActivities().listen((activities) {
+      emit(state.copyWith(activities: activities));
+      Logger.d('GlobalSectionCubit._initStreams: activities: $activities');
+    });
   }
 
   void logOut() {

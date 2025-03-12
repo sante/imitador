@@ -3,7 +3,7 @@ import 'package:imitador/core/source/common/http_service.dart';
 import 'package:imitador/model/activity/activity.dart';
 
 class ActivityRemoteSource {
-  static const _urlGetActivities = '/v1/activities';
+  static const _urlGetActivities = '/v1/activities/default';
 
   final HttpServiceDio _httpService;
 

@@ -82,22 +82,26 @@ class AppRouter extends _$AppRouter {
                     initial: true,
                   ),
                   AutoRoute(
-                    page: ResultsRoute.page,
+                    page: LevelResultsRoute.page,
                     path: "results",
                   ),
                 ],
               ),
               AutoRoute(
+                path: "activity/:id",
+                usesPathAsKey: true,
                 page: ActivitySectionRoute.page,
-                path: "activity",
                 children: [
-                  AutoRoute(page: LevelSelectorRoute.page, initial: true),
                   AutoRoute(
-                    page: LevelRoute.page,
+                    page: ActivityLevelSelectorRoute.page,
+                    initial: true,
+                  ),
+                  AutoRoute(
+                    page: ActivityLevelRoute.page,
                     path: "level",
                   ),
                   AutoRoute(
-                    page: ResultsRoute.page,
+                    page: ActivityResultsRoute.page,
                     path: "levelResults",
                   ),
                 ],

@@ -19,4 +19,5 @@ class ActivityLocalSource extends HiveBaseSource<String, Activity> {
       ),
     );
   }
+
 }

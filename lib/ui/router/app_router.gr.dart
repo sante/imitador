@@ -15,12 +15,33 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    ActivityLevelRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ActivityLevelScreen(),
+      );
+    },
+    ActivityLevelSelectorRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ActivityLevelSelectorScreen(),
+      );
+    },
+    ActivityResultsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ActivityResultsScreen(),
+      );
+    },
     ActivitySectionRoute.name: (routeData) {
-      final args = routeData.argsAs<ActivitySectionRouteArgs>();
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<ActivitySectionRouteArgs>(
+          orElse: () =>
+              ActivitySectionRouteArgs(activityId: pathParams.optString('id')));
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: ActivitySectionRouter(
-          activity: args.activity,
+          activityId: args.activityId,
           key: args.key,
         ),
       );
@@ -41,15 +62,16 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const GlobalSectionRouter(),
       );
     },
-    LevelRoute.name: (routeData) {
-      final args = routeData.argsAs<LevelRouteArgs>(
-          orElse: () => const LevelRouteArgs());
+    LevelResultsRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: LevelScreen(
-          sessionType: args.sessionType,
-          key: args.key,
-        ),
+        child: const LevelResultsScreen(),
+      );
+    },
+    LevelRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const LevelScreen(),
       );
     },
     LevelSectionRoute.name: (routeData) {
@@ -74,25 +96,10 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const LogInScreen(),
       );
     },
-    ResultsRoute.name: (routeData) {
-      final args = routeData.argsAs<ResultsRouteArgs>(
-          orElse: () => const ResultsRouteArgs());
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: ResultsScreen(
-          sessionType: args.sessionType,
-          key: args.key,
-        ),
-      );
-    },
     SessionLevelSelectorRoute.name: (routeData) {
-      final args = routeData.argsAs<SessionLevelSelectorRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: SessionLevelSelectorScreen(
-          sessionType: args.sessionType,
-          key: args.key,
-        ),
+        child: const SessionLevelSelectorScreen(),
       );
     },
     SettingsRoute.name: (routeData) {
@@ -129,18 +136,61 @@ abstract class _$AppRouter extends RootStackRouter {
 }
 
 /// generated route for
+/// [ActivityLevelScreen]
+class ActivityLevelRoute extends PageRouteInfo<void> {
+  const ActivityLevelRoute({List<PageRouteInfo>? children})
+      : super(
+          ActivityLevelRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ActivityLevelRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ActivityLevelSelectorScreen]
+class ActivityLevelSelectorRoute extends PageRouteInfo<void> {
+  const ActivityLevelSelectorRoute({List<PageRouteInfo>? children})
+      : super(
+          ActivityLevelSelectorRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ActivityLevelSelectorRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ActivityResultsScreen]
+class ActivityResultsRoute extends PageRouteInfo<void> {
+  const ActivityResultsRoute({List<PageRouteInfo>? children})
+      : super(
+          ActivityResultsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ActivityResultsRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [ActivitySectionRouter]
 class ActivitySectionRoute extends PageRouteInfo<ActivitySectionRouteArgs> {
   ActivitySectionRoute({
-    required Activity activity,
+    String? activityId,
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
           ActivitySectionRoute.name,
           args: ActivitySectionRouteArgs(
-            activity: activity,
+            activityId: activityId,
             key: key,
           ),
+          rawPathParams: {'id': activityId},
           initialChildren: children,
         );
 
@@ -152,17 +202,17 @@ class ActivitySectionRoute extends PageRouteInfo<ActivitySectionRouteArgs> {
 
 class ActivitySectionRouteArgs {
   const ActivitySectionRouteArgs({
-    required this.activity,
+    this.activityId,
     this.key,
   });
 
-  final Activity activity;
+  final String? activityId;
 
   final Key? key;
 
   @override
   String toString() {
-    return 'ActivitySectionRouteArgs{activity: $activity, key: $key}';
+    return 'ActivitySectionRouteArgs{activityId: $activityId, key: $key}';
   }
 }
 
@@ -220,40 +270,31 @@ class GlobalSectionRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [LevelResultsScreen]
+class LevelResultsRoute extends PageRouteInfo<void> {
+  const LevelResultsRoute({List<PageRouteInfo>? children})
+      : super(
+          LevelResultsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'LevelResultsRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [LevelScreen]
-class LevelRoute extends PageRouteInfo<LevelRouteArgs> {
-  LevelRoute({
-    PlaySessionType sessionType = PlaySessionType.level,
-    Key? key,
-    List<PageRouteInfo>? children,
-  }) : super(
+class LevelRoute extends PageRouteInfo<void> {
+  const LevelRoute({List<PageRouteInfo>? children})
+      : super(
           LevelRoute.name,
-          args: LevelRouteArgs(
-            sessionType: sessionType,
-            key: key,
-          ),
           initialChildren: children,
         );
 
   static const String name = 'LevelRoute';
 
-  static const PageInfo<LevelRouteArgs> page = PageInfo<LevelRouteArgs>(name);
-}
-
-class LevelRouteArgs {
-  const LevelRouteArgs({
-    this.sessionType = PlaySessionType.level,
-    this.key,
-  });
-
-  final PlaySessionType sessionType;
-
-  final Key? key;
-
-  @override
-  String toString() {
-    return 'LevelRouteArgs{sessionType: $sessionType, key: $key}';
-  }
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -323,80 +364,17 @@ class LogInRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [ResultsScreen]
-class ResultsRoute extends PageRouteInfo<ResultsRouteArgs> {
-  ResultsRoute({
-    PlaySessionType sessionType = PlaySessionType.level,
-    Key? key,
-    List<PageRouteInfo>? children,
-  }) : super(
-          ResultsRoute.name,
-          args: ResultsRouteArgs(
-            sessionType: sessionType,
-            key: key,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'ResultsRoute';
-
-  static const PageInfo<ResultsRouteArgs> page =
-      PageInfo<ResultsRouteArgs>(name);
-}
-
-class ResultsRouteArgs {
-  const ResultsRouteArgs({
-    this.sessionType = PlaySessionType.level,
-    this.key,
-  });
-
-  final PlaySessionType sessionType;
-
-  final Key? key;
-
-  @override
-  String toString() {
-    return 'ResultsRouteArgs{sessionType: $sessionType, key: $key}';
-  }
-}
-
-/// generated route for
 /// [SessionLevelSelectorScreen]
-class SessionLevelSelectorRoute
-    extends PageRouteInfo<SessionLevelSelectorRouteArgs> {
-  SessionLevelSelectorRoute({
-    required PlaySessionType sessionType,
-    Key? key,
-    List<PageRouteInfo>? children,
-  }) : super(
+class SessionLevelSelectorRoute extends PageRouteInfo<void> {
+  const SessionLevelSelectorRoute({List<PageRouteInfo>? children})
+      : super(
           SessionLevelSelectorRoute.name,
-          args: SessionLevelSelectorRouteArgs(
-            sessionType: sessionType,
-            key: key,
-          ),
           initialChildren: children,
         );
 
   static const String name = 'SessionLevelSelectorRoute';
 
-  static const PageInfo<SessionLevelSelectorRouteArgs> page =
-      PageInfo<SessionLevelSelectorRouteArgs>(name);
-}
-
-class SessionLevelSelectorRouteArgs {
-  const SessionLevelSelectorRouteArgs({
-    required this.sessionType,
-    this.key,
-  });
-
-  final PlaySessionType sessionType;
-
-  final Key? key;
-
-  @override
-  String toString() {
-    return 'SessionLevelSelectorRouteArgs{sessionType: $sessionType, key: $key}';
-  }
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

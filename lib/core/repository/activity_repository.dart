@@ -9,24 +9,34 @@ import 'package:imitador/model/level/level.dart';
 import 'package:stock/stock.dart';
 
 class ActivityRepository {
-  final ActivityLocalSource _levelLocalSource;
-  final ActivityRemoteSource _levelRemoteSource;
+  final ActivityLocalSource _activityLocalSource;
+  final ActivityRemoteSource _activityRemoteSource;
 
   final Stock<dynamic, List<Activity>> _store;
 
   ActivityRepository(
-    this._levelLocalSource,
-    this._levelRemoteSource,
+    this._activityLocalSource,
+    this._activityRemoteSource,
   ) : _store = Stock(
           fetcher: Fetcher.ofFuture(
-            (_) => _levelRemoteSource.getActivities(),
+            (_) => _activityRemoteSource.getActivities(),
           ),
           sourceOfTruth: SourceOfTruth<dynamic, List<Activity>>(
-            reader: (_) => _levelLocalSource.getElementsStream(),
+            reader: (_) => _activityLocalSource.getElementsStream(),
             writer: (_, value) =>
-                _levelLocalSource.replaceActivities(value ?? []),
+                _activityLocalSource.replaceActivities(value ?? []),
           ),
         );
+
+  Future<List<Activity>?> getDirectActivities() =>
+      _activityRemoteSource.getActivities();
+
+  Future<Activity> getActivityById(String id) async {
+    final activities = await _store.fresh(null);
+    return activities.firstWhere((element) => element.id == id);
+  }
+
+  void refresh() => _store.fresh(null);
 
   Stream<List<Activity>?> getActivities() => _store
       .stream(null)
