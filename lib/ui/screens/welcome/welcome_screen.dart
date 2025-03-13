@@ -154,12 +154,14 @@ class UserActions extends StatelessWidget {
           ),
         ),
         ElevatedButton(
-          onPressed: context.read<GlobalSectionCubit>().logOut,
+          onPressed: () {
+            context.router.push(const JoinSessionRoute());
+          },
           style: context.theme.buttonsStyle.outlineButton.copyWith(
             fixedSize: WidgetStatePropertyAll(Size(268.w, 68.h)),
           ),
           child: const Text(
-            "Cerrar Sesión",
+            "Unirse a una clase",
           ),
         ),
       ],

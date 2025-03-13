@@ -5,6 +5,8 @@ import 'package:imitador/model/activity/activity.dart';
 import 'package:imitador/model/enum/play_session_type.dart';
 import 'package:imitador/model/game_session/game_session.dart';
 import 'package:imitador/model/level/level.dart';
+import 'package:imitador/ui/screens/game_session_test_screen.dart';
+import 'package:imitador/ui/screens/join_session/join_session_screen.dart';
 import 'package:imitador/ui/screens/level/level_screen.dart';
 import 'package:imitador/ui/screens/level_selector/level_selector_screen.dart';
 import 'package:imitador/ui/screens/log_in/log_in_screen.dart';
@@ -104,6 +106,20 @@ class AppRouter extends _$AppRouter {
                     page: ActivityResultsRoute.page,
                     path: "levelResults",
                   ),
+                ],
+              ),
+              AutoRoute(
+                page: JoinSessionRoute.page,
+                path: "joinSession",
+              ),
+              AutoRoute(
+                page: GameSessionSectionRoute.page,
+                path: "gameSession",
+                children: [
+                  AutoRoute(
+                    page: GameSessionTestRoute.page,
+                    path: "test",
+                  )
                 ],
               ),
             ],
