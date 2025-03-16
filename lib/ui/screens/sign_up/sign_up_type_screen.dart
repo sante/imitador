@@ -48,6 +48,7 @@ class _SignUpContentScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   UserTypeCard(
+                    userType: UserType.student,
                     onPressed: () {
                       context
                           .read<SignUpSectionCubit>()
@@ -57,6 +58,7 @@ class _SignUpContentScreen extends StatelessWidget {
                     label: "Estudiante",
                   ),
                   UserTypeCard(
+                    userType: UserType.teacher,
                     onPressed: () {
                       context
                           .read<SignUpSectionCubit>()

@@ -102,6 +102,8 @@ flutter:
       - assets/images/background.png
       - assets/images/background_simple.png
       - assets/images/background_sheet.png
+      - assets/images/icon_student.png
+      - assets/images/icon_teacher.png
       - environments/
 
 flutter_gen:

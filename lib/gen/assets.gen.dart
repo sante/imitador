@@ -24,12 +24,26 @@ class $AssetsImagesGen {
   AssetGenImage get backgroundSimple =>
       const AssetGenImage('assets/images/background_simple.png');
 
+  /// File path: assets/images/icon_student.png
+  AssetGenImage get iconStudent =>
+      const AssetGenImage('assets/images/icon_student.png');
+
+  /// File path: assets/images/icon_teacher.png
+  AssetGenImage get iconTeacher =>
+      const AssetGenImage('assets/images/icon_teacher.png');
+
   /// File path: assets/images/sparky.png
   AssetGenImage get sparky => const AssetGenImage('assets/images/sparky.png');
 
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [background, backgroundSheet, backgroundSimple, sparky];
+  List<AssetGenImage> get values => [
+        background,
+        backgroundSheet,
+        backgroundSimple,
+        iconStudent,
+        iconTeacher,
+        sparky
+      ];
 }
 
 class Assets {
