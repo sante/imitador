@@ -2,7 +2,7 @@ name: imitador
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.4.4 <4.0.0'
+  sdk: ">=3.4.4 <4.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -32,7 +32,6 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -65,7 +64,7 @@ dependencies:
   google_fonts: ^6.2.1
   path_provider: ^2.1.5
   phosphor_flutter: 2.1.0
-
+  socket_io_client: ^3.0.2
 
 dev_dependencies:
   flutter_test:
@@ -87,8 +86,6 @@ dev_dependencies:
   json_serializable: 6.8.0
   lints: 4.0.0
 
-
-
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -97,24 +94,24 @@ flutter:
   generate: true
   uses-material-design: true
   assets:
-      - assets/
-      - assets/images/sparky.png
-      - assets/images/background.png
-      - assets/images/background_simple.png
-      - assets/images/background_sheet.png
-      - assets/images/icon_student.png
-      - assets/images/icon_teacher.png
-      - assets/images/rating_0_5.png
-      - assets/images/rating_1.png
-      - assets/images/rating_1_5.png
-      - assets/images/rating_2.png
-      - assets/images/rating_2_5.png
-      - assets/images/rating_3.png
-      - assets/images/rating_3_5.png
-      - assets/images/rating_4.png
-      - assets/images/rating_4_5.png
-      - assets/images/rating_5.png
-      - environments/
+    - assets/
+    - assets/images/sparky.png
+    - assets/images/background.png
+    - assets/images/background_simple.png
+    - assets/images/background_sheet.png
+    - assets/images/icon_student.png
+    - assets/images/icon_teacher.png
+    - assets/images/rating_0_5.png
+    - assets/images/rating_1.png
+    - assets/images/rating_1_5.png
+    - assets/images/rating_2.png
+    - assets/images/rating_2_5.png
+    - assets/images/rating_3.png
+    - assets/images/rating_3_5.png
+    - assets/images/rating_4.png
+    - assets/images/rating_4_5.png
+    - assets/images/rating_5.png
+    - environments/
 
 flutter_gen:
   assets:

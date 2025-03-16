@@ -46,20 +46,34 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
-    GameSessionSectionRoute.name: (routeData) {
-      final args = routeData.argsAs<GameSessionSectionRouteArgs>();
+    GameSessionLobbyRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: GameSessionSectionRouter(
-          session: args.session,
-          key: args.key,
-        ),
+        child: const GameSessionLobbyScreen(),
+      );
+    },
+    GameSessionSectionRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const GameSessionSectionRouter(),
+      );
+    },
+    GameSessionTestRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const GameSessionTestScreen(),
       );
     },
     GlobalSectionRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const GlobalSectionRouter(),
+      );
+    },
+    JoinSessionRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const JoinSessionScreen(),
       );
     },
     LevelResultsRoute.name: (routeData) {
@@ -223,42 +237,45 @@ class ActivitySectionRouteArgs {
 }
 
 /// generated route for
+/// [GameSessionLobbyScreen]
+class GameSessionLobbyRoute extends PageRouteInfo<void> {
+  const GameSessionLobbyRoute({List<PageRouteInfo>? children})
+      : super(
+          GameSessionLobbyRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'GameSessionLobbyRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [GameSessionSectionRouter]
-class GameSessionSectionRoute
-    extends PageRouteInfo<GameSessionSectionRouteArgs> {
-  GameSessionSectionRoute({
-    required GameSession session,
-    Key? key,
-    List<PageRouteInfo>? children,
-  }) : super(
+class GameSessionSectionRoute extends PageRouteInfo<void> {
+  const GameSessionSectionRoute({List<PageRouteInfo>? children})
+      : super(
           GameSessionSectionRoute.name,
-          args: GameSessionSectionRouteArgs(
-            session: session,
-            key: key,
-          ),
           initialChildren: children,
         );
 
   static const String name = 'GameSessionSectionRoute';
 
-  static const PageInfo<GameSessionSectionRouteArgs> page =
-      PageInfo<GameSessionSectionRouteArgs>(name);
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
-class GameSessionSectionRouteArgs {
-  const GameSessionSectionRouteArgs({
-    required this.session,
-    this.key,
-  });
+/// generated route for
+/// [GameSessionTestScreen]
+class GameSessionTestRoute extends PageRouteInfo<void> {
+  const GameSessionTestRoute({List<PageRouteInfo>? children})
+      : super(
+          GameSessionTestRoute.name,
+          initialChildren: children,
+        );
 
-  final GameSession session;
+  static const String name = 'GameSessionTestRoute';
 
-  final Key? key;
-
-  @override
-  String toString() {
-    return 'GameSessionSectionRouteArgs{session: $session, key: $key}';
-  }
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -271,6 +288,20 @@ class GlobalSectionRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'GlobalSectionRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [JoinSessionScreen]
+class JoinSessionRoute extends PageRouteInfo<void> {
+  const JoinSessionRoute({List<PageRouteInfo>? children})
+      : super(
+          JoinSessionRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'JoinSessionRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

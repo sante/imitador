@@ -99,9 +99,9 @@ class SessionLevelSelectorScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<GameSessionSectionCubit, GameSessionSectionState>(
       builder: (context, state) => _LevelSelectorContentScreen(
-        levels: state.session.activity.levels,
+        levels: state.session?.activity.levels ?? [],
         user: state.user,
-        activity: state.session.activity,
+        activity: state.session?.activity,
         sessionType: PlaySessionType.gameSession,
       ),
     );

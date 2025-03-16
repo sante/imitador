@@ -16,25 +16,49 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$GameSessionSectionState {
-  GameSession get session => throw _privateConstructorUsedError;
+  String? get code => throw _privateConstructorUsedError;
+  GameSession? get session => throw _privateConstructorUsedError;
   List<Attempt> get attempts => throw _privateConstructorUsedError;
+  Level? get currentLevel => throw _privateConstructorUsedError;
   User? get user => throw _privateConstructorUsedError;
+  String? get gameId => throw _privateConstructorUsedError;
+  String? get activityId => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            GameSession session, List<Attempt> attempts, User? user)
+            String? code,
+            GameSession? session,
+            List<Attempt> attempts,
+            Level? currentLevel,
+            User? user,
+            String? gameId,
+            String? activityId)
         state,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(GameSession session, List<Attempt> attempts, User? user)?
+    TResult? Function(
+            String? code,
+            GameSession? session,
+            List<Attempt> attempts,
+            Level? currentLevel,
+            User? user,
+            String? gameId,
+            String? activityId)?
         state,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(GameSession session, List<Attempt> attempts, User? user)?
+    TResult Function(
+            String? code,
+            GameSession? session,
+            List<Attempt> attempts,
+            Level? currentLevel,
+            User? user,
+            String? gameId,
+            String? activityId)?
         state,
     required TResult orElse(),
   }) =>
@@ -67,9 +91,17 @@ abstract class $GameSessionSectionStateCopyWith<$Res> {
           $Res Function(GameSessionSectionState) then) =
       _$GameSessionSectionStateCopyWithImpl<$Res, GameSessionSectionState>;
   @useResult
-  $Res call({GameSession session, List<Attempt> attempts, User? user});
+  $Res call(
+      {String? code,
+      GameSession? session,
+      List<Attempt> attempts,
+      Level? currentLevel,
+      User? user,
+      String? gameId,
+      String? activityId});
 
-  $GameSessionCopyWith<$Res> get session;
+  $GameSessionCopyWith<$Res>? get session;
+  $LevelCopyWith<$Res>? get currentLevel;
   $UserCopyWith<$Res>? get user;
 }
 
@@ -87,31 +119,67 @@ class _$GameSessionSectionStateCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? session = null,
+    Object? code = freezed,
+    Object? session = freezed,
     Object? attempts = null,
+    Object? currentLevel = freezed,
     Object? user = freezed,
+    Object? gameId = freezed,
+    Object? activityId = freezed,
   }) {
     return _then(_value.copyWith(
-      session: null == session
+      code: freezed == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String?,
+      session: freezed == session
           ? _value.session
           : session // ignore: cast_nullable_to_non_nullable
-              as GameSession,
+              as GameSession?,
       attempts: null == attempts
           ? _value.attempts
           : attempts // ignore: cast_nullable_to_non_nullable
               as List<Attempt>,
+      currentLevel: freezed == currentLevel
+          ? _value.currentLevel
+          : currentLevel // ignore: cast_nullable_to_non_nullable
+              as Level?,
       user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User?,
+      gameId: freezed == gameId
+          ? _value.gameId
+          : gameId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      activityId: freezed == activityId
+          ? _value.activityId
+          : activityId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $GameSessionCopyWith<$Res> get session {
-    return $GameSessionCopyWith<$Res>(_value.session, (value) {
+  $GameSessionCopyWith<$Res>? get session {
+    if (_value.session == null) {
+      return null;
+    }
+
+    return $GameSessionCopyWith<$Res>(_value.session!, (value) {
       return _then(_value.copyWith(session: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $LevelCopyWith<$Res>? get currentLevel {
+    if (_value.currentLevel == null) {
+      return null;
+    }
+
+    return $LevelCopyWith<$Res>(_value.currentLevel!, (value) {
+      return _then(_value.copyWith(currentLevel: value) as $Val);
     });
   }
 
@@ -137,10 +205,19 @@ abstract class _$$GameSessionSectionStateImplCopyWith<$Res>
       __$$GameSessionSectionStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({GameSession session, List<Attempt> attempts, User? user});
+  $Res call(
+      {String? code,
+      GameSession? session,
+      List<Attempt> attempts,
+      Level? currentLevel,
+      User? user,
+      String? gameId,
+      String? activityId});
 
   @override
-  $GameSessionCopyWith<$Res> get session;
+  $GameSessionCopyWith<$Res>? get session;
+  @override
+  $LevelCopyWith<$Res>? get currentLevel;
   @override
   $UserCopyWith<$Res>? get user;
 }
@@ -158,23 +235,43 @@ class __$$GameSessionSectionStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? session = null,
+    Object? code = freezed,
+    Object? session = freezed,
     Object? attempts = null,
+    Object? currentLevel = freezed,
     Object? user = freezed,
+    Object? gameId = freezed,
+    Object? activityId = freezed,
   }) {
     return _then(_$GameSessionSectionStateImpl(
-      session: null == session
+      code: freezed == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String?,
+      session: freezed == session
           ? _value.session
           : session // ignore: cast_nullable_to_non_nullable
-              as GameSession,
+              as GameSession?,
       attempts: null == attempts
           ? _value._attempts
           : attempts // ignore: cast_nullable_to_non_nullable
               as List<Attempt>,
+      currentLevel: freezed == currentLevel
+          ? _value.currentLevel
+          : currentLevel // ignore: cast_nullable_to_non_nullable
+              as Level?,
       user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User?,
+      gameId: freezed == gameId
+          ? _value.gameId
+          : gameId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      activityId: freezed == activityId
+          ? _value.activityId
+          : activityId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -183,13 +280,21 @@ class __$$GameSessionSectionStateImplCopyWithImpl<$Res>
 
 class _$GameSessionSectionStateImpl implements _GameSessionSectionState {
   const _$GameSessionSectionStateImpl(
-      {required this.session,
+      {this.code = null,
+      this.session = null,
       final List<Attempt> attempts = const [],
-      this.user = null})
+      this.currentLevel = null,
+      this.user = null,
+      this.gameId = null,
+      this.activityId = null})
       : _attempts = attempts;
 
   @override
-  final GameSession session;
+  @JsonKey()
+  final String? code;
+  @override
+  @JsonKey()
+  final GameSession? session;
   final List<Attempt> _attempts;
   @override
   @JsonKey()
@@ -201,11 +306,20 @@ class _$GameSessionSectionStateImpl implements _GameSessionSectionState {
 
   @override
   @JsonKey()
+  final Level? currentLevel;
+  @override
+  @JsonKey()
   final User? user;
+  @override
+  @JsonKey()
+  final String? gameId;
+  @override
+  @JsonKey()
+  final String? activityId;
 
   @override
   String toString() {
-    return 'GameSessionSectionState.state(session: $session, attempts: $attempts, user: $user)';
+    return 'GameSessionSectionState.state(code: $code, session: $session, attempts: $attempts, currentLevel: $currentLevel, user: $user, gameId: $gameId, activityId: $activityId)';
   }
 
   @override
@@ -213,14 +327,27 @@ class _$GameSessionSectionStateImpl implements _GameSessionSectionState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GameSessionSectionStateImpl &&
+            (identical(other.code, code) || other.code == code) &&
             (identical(other.session, session) || other.session == session) &&
             const DeepCollectionEquality().equals(other._attempts, _attempts) &&
-            (identical(other.user, user) || other.user == user));
+            (identical(other.currentLevel, currentLevel) ||
+                other.currentLevel == currentLevel) &&
+            (identical(other.user, user) || other.user == user) &&
+            (identical(other.gameId, gameId) || other.gameId == gameId) &&
+            (identical(other.activityId, activityId) ||
+                other.activityId == activityId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, session,
-      const DeepCollectionEquality().hash(_attempts), user);
+  int get hashCode => Object.hash(
+      runtimeType,
+      code,
+      session,
+      const DeepCollectionEquality().hash(_attempts),
+      currentLevel,
+      user,
+      gameId,
+      activityId);
 
   @JsonKey(ignore: true)
   @override
@@ -233,30 +360,53 @@ class _$GameSessionSectionStateImpl implements _GameSessionSectionState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            GameSession session, List<Attempt> attempts, User? user)
+            String? code,
+            GameSession? session,
+            List<Attempt> attempts,
+            Level? currentLevel,
+            User? user,
+            String? gameId,
+            String? activityId)
         state,
   }) {
-    return state(session, attempts, user);
+    return state(
+        code, session, attempts, currentLevel, user, gameId, activityId);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(GameSession session, List<Attempt> attempts, User? user)?
+    TResult? Function(
+            String? code,
+            GameSession? session,
+            List<Attempt> attempts,
+            Level? currentLevel,
+            User? user,
+            String? gameId,
+            String? activityId)?
         state,
   }) {
-    return state?.call(session, attempts, user);
+    return state?.call(
+        code, session, attempts, currentLevel, user, gameId, activityId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(GameSession session, List<Attempt> attempts, User? user)?
+    TResult Function(
+            String? code,
+            GameSession? session,
+            List<Attempt> attempts,
+            Level? currentLevel,
+            User? user,
+            String? gameId,
+            String? activityId)?
         state,
     required TResult orElse(),
   }) {
     if (state != null) {
-      return state(session, attempts, user);
+      return state(
+          code, session, attempts, currentLevel, user, gameId, activityId);
     }
     return orElse();
   }
@@ -292,16 +442,28 @@ class _$GameSessionSectionStateImpl implements _GameSessionSectionState {
 
 abstract class _GameSessionSectionState implements GameSessionSectionState {
   const factory _GameSessionSectionState(
-      {required final GameSession session,
+      {final String? code,
+      final GameSession? session,
       final List<Attempt> attempts,
-      final User? user}) = _$GameSessionSectionStateImpl;
+      final Level? currentLevel,
+      final User? user,
+      final String? gameId,
+      final String? activityId}) = _$GameSessionSectionStateImpl;
 
   @override
-  GameSession get session;
+  String? get code;
+  @override
+  GameSession? get session;
   @override
   List<Attempt> get attempts;
   @override
+  Level? get currentLevel;
+  @override
   User? get user;
+  @override
+  String? get gameId;
+  @override
+  String? get activityId;
   @override
   @JsonKey(ignore: true)
   _$$GameSessionSectionStateImplCopyWith<_$GameSessionSectionStateImpl>
