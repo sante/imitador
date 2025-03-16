@@ -7,6 +7,9 @@ import 'package:imitador/core/common/extension/context_extensions.dart';
 import 'package:imitador/ui/router/app_router.dart';
 import 'package:imitador/ui/theme/app_text_field.dart';
 import 'package:imitador/ui/theme/app_theme.dart';
+import 'package:imitador/ui/theme/components/buttons.dart';
+import 'package:imitador/ui/theme/components/scaffold.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import 'log_in_cubit.dart';
 
@@ -40,177 +43,115 @@ class _LogInContentScreenState extends State<_LogInContentScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(BuildContext context) => MotionScaffold(
+        actionIcon: PhosphorIcons.gear(),
+        action: () {
+          context.router.push(const SettingsRoute());
+        },
+        simpleBackground: true,
         body: Padding(
           padding: EdgeInsets.symmetric(vertical: 67.h, horizontal: 104.w),
-          child: SizedBox(
-            width: double.infinity,
-            child: Stack(
-              alignment: Alignment.center,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
               children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Text(
-                      context.localizations.game_title.toUpperCase(),
-                      style: context.theme.textStyles.titleLarge!.copyWith(
-                        fontSize: 40.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      "¡Hola de nuevo!",
-                      style: context.theme.textStyles.titleMedium!.copyWith(
-                        fontSize: 40.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(
-                      width: 394.w,
-                      child: BlocBuilder<LogInCubit, LogInState>(
-                        builder: (context, state) {
-                          if (state.error != null) {
-                            return Text(
-                              state.error!,
-                              style: TextStyle(color: Colors.red),
-                            );
-                          }
+                Text(
+                  "¡Hola de nuevo!",
+                  style: context.theme.textStyles.titleSmall?.copyWith(
+                    color: context.theme.colorScheme.onSurface,
+                  ),
+                ),
+                SizedBox(
+                  width: 394.w,
+                  child: BlocBuilder<LogInCubit, LogInState>(
+                    builder: (context, state) {
+                      if (state.error != null) {
+                        return Text(
+                          state.error!,
+                          style: const TextStyle(color: Colors.red),
+                        );
+                      }
 
-                          return Column(
-                            spacing: 52.h,
-                            children: [
-                              AppTextField(
-                                controller: emailController,
-                                label: "Email",
-                                onChanged: (email) {
-                                  _cubit.setEmail(email);
+                      return Column(
+                        spacing: 52.h,
+                        children: [
+                          AppTextField(
+                            controller: emailController,
+                            label: "Email",
+                            onChanged: (email) {
+                              _cubit.setEmail(email);
+                            },
+                            enabled: !state.codeSent,
+                          ),
+                          if (state.codeSent) ...[
+                            AppTextField(
+                              controller: codeController,
+                              label: "Código",
+                              onChanged: (code) {
+                                _cubit.setCode(code);
+                              },
+                            ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: PrimaryButton(
+                                label: "Ingresar",
+                                onPressed: () async {
+                                  await _cubit.login();
+                                  if (_cubit.state.error == null) {
+                                    context.router
+                                        .replace(const WelcomeRoute());
+                                  }
                                 },
-                                enabled: !state.codeSent,
+                                loading: state.isLoading
+                                    ? CircularProgressIndicator(
+                                        color:
+                                            context.theme.colorScheme.onPrimary,
+                                      )
+                                    : null,
                               ),
-                              if (state.codeSent) ...[
-                                AppTextField(
-                                  controller: codeController,
-                                  label: "Código",
-                                  onChanged: (code) {
-                                    _cubit.setCode(code);
-                                  },
-                                ),
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: ElevatedButton(
-                                    onPressed: state.isLoading
-                                        ? null
-                                        : () async {
-                                            await _cubit.login();
-                                            if (_cubit.state.error == null) {
-                                              context.router.replace(
-                                                  const WelcomeRoute());
-                                            }
-                                          },
-                                    style: context
-                                        .theme.buttonsStyle.filledButton
-                                        .copyWith(
-                                      fixedSize: WidgetStatePropertyAll(
-                                        Size(120.w, 56.h),
-                                      ),
-                                      textStyle: WidgetStatePropertyAll(
-                                        context.theme.textStyles.bodyLarge,
-                                      ),
-                                    ),
-                                    child: state.isLoading
-                                        ? CircularProgressIndicator(
-                                            color: context
-                                                .theme.colorScheme.onPrimary,
-                                          )
-                                        : const Text("Ingresar"),
-                                  ),
-                                ),
-                              ] else ...[
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: ElevatedButton(
-                                    onPressed: state.isLoading
-                                        ? null
-                                        : () async {
-                                            await _cubit.requestCode();
-                                          },
-                                    style: context
-                                        .theme.buttonsStyle.filledButton
-                                        .copyWith(
-                                      fixedSize: WidgetStatePropertyAll(
-                                        Size(180.w, 56.h),
-                                      ),
-                                      textStyle: WidgetStatePropertyAll(
-                                        context.theme.textStyles.bodyLarge,
-                                      ),
-                                    ),
-                                    child: state.isLoading
-                                        ? CircularProgressIndicator(
-                                            color: context
-                                                .theme.colorScheme.onPrimary,
-                                          )
-                                        : const Text("Enviar código"),
-                                  ),
-                                ),
-                              ],
-                              TextButton(
-                                onPressed: () {},
-                                child: const Text("Olvidé mi contraseña"),
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                    ),
-                    Container(
-                      color: context.theme.colorScheme.primary.getShade(300),
-                      height: 2.h,
-                      width: 432.w,
-                    ),
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      spacing: 36.h,
-                      children: [
-                        const Text("¿Todavía no tenés cuenta?"),
-                        ElevatedButton(
-                          onPressed: () {
-                            context.router.replaceAll([
-                              const GlobalSectionRoute(),
-                              const SignUpSectionRoute(),
-                            ]);
-                          },
-                          style: context
-                              .theme.buttonsStyle.secondaryFilledButton
-                              .copyWith(
-                            fixedSize: WidgetStatePropertyAll(
-                              Size(186.w, 56.h),
+                            ),
+                          ] else Align(
+                            alignment: Alignment.centerRight,
+                            child: PrimaryButton(
+                              label: "Enviar código",
+                              onPressed: () async {
+                                await _cubit.requestCode();
+                              },
+                              loading: state.isLoading
+                                  ? CircularProgressIndicator(
+                                color:
+                                context.theme.colorScheme.onPrimary,
+                              )
+                                  : null,
                             ),
                           ),
-                          child: Text(
-                            "Registrate",
-                            style: context.theme.customTextStyles.buttonLarge,
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: context.theme.buttonsStyle.filledButton.copyWith(
-                        fixedSize: WidgetStatePropertyAll(Size(56.r, 56.r))),
-                    child: Icon(
-                      Icons.settings,
-                      color: context.theme.colorScheme.onPrimary,
-                      size: 16.r,
-                    ),
+                        ],
+                      );
+                    },
                   ),
+                ),
+                Container(
+                  color: context.theme.customColors.textColor?.getShade(300),
+                  height: 2.h,
+                  width: 432.w,
+                ),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  spacing: 36.h,
+                  children: [
+                    const Text("¿Todavía no tenés cuenta?"),
+                    SecondaryButton(
+                      onPressed: () {
+                        context.router.replaceAll([
+                          const GlobalSectionRoute(),
+                          const SignUpSectionRoute(),
+                        ]);
+                      },
+                      label: "Registrate",
+                    ),
+                  ],
                 )
               ],
             ),

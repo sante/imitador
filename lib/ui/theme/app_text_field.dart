@@ -35,7 +35,7 @@ class AppTextField extends StatelessWidget {
         children: [
           Text(
             label,
-            style: context.theme.textStyles.labelMedium?.copyWith(
+            style: context.theme.textStyles.bodySmall?.copyWith(
               color: context.theme.customColors.textColor,
             ),
           ),
@@ -45,6 +45,9 @@ class AppTextField extends StatelessWidget {
             obscureText: obscureText,
             keyboardType: keyboardType,
             enabled: enabled,
+            style: context.theme.textStyles.bodyMedium?.copyWith(
+              color: context.theme.colorScheme.onSurface,
+            ),
             decoration: InputDecoration(
               hintText: hint,
               hintStyle: context.theme.textStyles.bodyMedium,
@@ -64,6 +67,8 @@ class AppTextField extends StatelessWidget {
                   width: 1,
                 ),
               ),
+              filled: false,
+              hoverColor: null,
             ),
           ),
         ],

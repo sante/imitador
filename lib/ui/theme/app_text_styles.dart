@@ -6,8 +6,29 @@ import 'package:google_fonts/google_fonts.dart';
 
 const FontWeight _semiboldWeight = FontWeight.w600;
 
-class AppTextStyles extends TextTheme {
+TextStyle russoOneTextStyle(
+  double fontSize,
+  FontWeight fontWeight,
+  double? height,
+) =>
+    GoogleFonts.russoOne(
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      height: height,
+    );
 
+TextStyle spaceGroteskTextStyle(
+  double fontSize,
+  FontWeight fontWeight,
+  double? height,
+) =>
+    GoogleFonts.spaceGrotesk(
+      fontWeight: fontWeight,
+      fontSize: fontSize,
+      height: height,
+    );
+
+class AppTextStyles extends TextTheme {
   const AppTextStyles({
     super.headlineLarge,
     super.headlineMedium,
@@ -51,12 +72,16 @@ class AppTextStyles extends TextTheme {
       );
 
   static AppTextStyles getDefaultAppStyles() => AppTextStyles.fromTextTheme(
-        textTheme: GoogleFonts.robotoTextTheme().copyWith(
-          labelLarge: _robotoTextStyle(20.sp, FontWeight.normal),
-          labelMedium: _robotoTextStyle(16.sp, FontWeight.normal),
-          labelSmall: _robotoTextStyle(14.sp, FontWeight.normal),
-          headlineMedium: _robotoTextStyle(20.sp, FontWeight.bold),
-          headlineLarge: _robotoTextStyle(24.sp, FontWeight.bold),
+        textTheme: GoogleFonts.russoOneTextTheme().copyWith(
+          titleLarge: russoOneTextStyle(68.sp, FontWeight.bold, 1.2),
+          titleMedium: russoOneTextStyle(56.sp, FontWeight.bold, 1.2),
+          titleSmall: russoOneTextStyle(48.sp, FontWeight.bold, 1.2),
+          headlineLarge: russoOneTextStyle(40.sp, FontWeight.bold, 1.2),
+          headlineMedium: russoOneTextStyle(32.sp, FontWeight.bold, 1.2),
+          headlineSmall: russoOneTextStyle(24.sp, FontWeight.bold, 1.2),
+          bodyLarge: spaceGroteskTextStyle(20.sp, FontWeight.normal, 1.4),
+          bodyMedium: spaceGroteskTextStyle(16.sp, FontWeight.normal, 1.4),
+          bodySmall: spaceGroteskTextStyle(14.sp, FontWeight.normal, 1.4),
         ),
       );
 

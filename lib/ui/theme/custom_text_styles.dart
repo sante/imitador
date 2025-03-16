@@ -1,8 +1,7 @@
 // ignore_for_file: overridden_fields
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:imitador/core/common/extension/color_extensions.dart';
+import 'package:imitador/ui/theme/app_text_styles.dart';
 import 'package:imitador/ui/theme/custom_colors.dart';
 
 const FontWeight _semiboldWeight = FontWeight.w600;
@@ -10,56 +9,46 @@ const FontWeight _semiboldWeight = FontWeight.w600;
 @immutable
 class CustomTextStyles extends ThemeExtension<CustomTextStyles> {
   const CustomTextStyles({
-    required this.tinyText,
-    required this.customOverline,
-    required this.buttonXLarge,
-    required this.buttonLarge,
-    required this.buttonMedium,
-    required this.buttonSmall,
-    required this.buttonXSmall,
-    required this.buttonTiny,
-    required this.labelXSmall,
-    required this.bodyXSmall,
+    required this.bodyTiny,
+    required this.overline,
+    required this.linkLarge,
+    required this.linkMedium,
+    required this.linkSmall,
+    required this.linkTiny,
+    required this.linkOverline,
     required this.customColors,
   }) : super();
 
-  final TextStyle tinyText;
-  final TextStyle customOverline;
-  final TextStyle buttonXLarge;
-  final TextStyle buttonLarge;
-  final TextStyle buttonMedium;
-  final TextStyle buttonSmall;
-  final TextStyle buttonXSmall;
-  final TextStyle buttonTiny;
-  final TextStyle bodyXSmall;
-  final TextStyle labelXSmall;
+  final TextStyle bodyTiny;
+  final TextStyle overline;
+  final TextStyle linkLarge;
+  final TextStyle linkMedium;
+  final TextStyle linkSmall;
+  final TextStyle linkTiny;
+  final TextStyle linkOverline;
   final CustomColors customColors;
 
   static CustomTextStyles getCustomTextStyles(CustomColors customColors) =>
       CustomTextStyles(
-        tinyText: _robotoTextStyle(10.sp, FontWeight.normal, customColors),
-        customOverline:
-            _robotoTextStyle(10.sp, FontWeight.normal, customColors),
-        buttonXLarge: _robotoTextStyle(24.sp, _semiboldWeight, customColors),
-        buttonLarge: _robotoTextStyle(16.sp, _semiboldWeight, customColors),
-        buttonMedium: _robotoTextStyle(14.sp, _semiboldWeight, customColors),
-        buttonSmall: _robotoTextStyle(12.sp, _semiboldWeight, customColors),
-        buttonXSmall: _robotoTextStyle(10.sp, _semiboldWeight, customColors),
-        bodyXSmall: _robotoTextStyle(12.sp, _semiboldWeight, customColors),
-        labelXSmall: _robotoTextStyle(12.sp, _semiboldWeight, customColors),
-        buttonTiny: _robotoTextStyle(10.sp, _semiboldWeight, customColors),
+        bodyTiny: spaceGroteskTextStyle(12.sp, FontWeight.normal, 1.4),
+        overline: spaceGroteskTextStyle(10.sp, FontWeight.normal, 1.4),
+        linkLarge: spaceGroteskTextStyle(24.sp, _semiboldWeight, 1.4).copyWith(
+          decoration: TextDecoration.underline,
+        ),
+        linkMedium: spaceGroteskTextStyle(16.sp, _semiboldWeight, 1.4).copyWith(
+          decoration: TextDecoration.underline,
+        ),
+        linkSmall: spaceGroteskTextStyle(14.sp, _semiboldWeight, 1.4).copyWith(
+          decoration: TextDecoration.underline,
+        ),
+        linkTiny: spaceGroteskTextStyle(12.sp, _semiboldWeight, 1.4).copyWith(
+          decoration: TextDecoration.underline,
+        ),
+        linkOverline:
+            spaceGroteskTextStyle(10.sp, _semiboldWeight, 1.4).copyWith(
+          decoration: TextDecoration.underline,
+        ),
         customColors: customColors,
-      );
-
-  static TextStyle _robotoTextStyle(
-    double fontSize,
-    FontWeight fontWeight,
-    CustomColors customColors,
-  ) =>
-      GoogleFonts.roboto(
-        fontSize: fontSize,
-        fontWeight: fontWeight,
-        color: customColors.textColor!.getShade(500),
       );
 
   @override
@@ -72,16 +61,13 @@ class CustomTextStyles extends ThemeExtension<CustomTextStyles> {
       return this;
     }
     return CustomTextStyles(
-      tinyText: TextStyle.lerp(tinyText, other.tinyText, t)!,
-      customOverline: TextStyle.lerp(customOverline, other.customOverline, t)!,
-      buttonXLarge: TextStyle.lerp(buttonXLarge, other.buttonXLarge, t)!,
-      buttonLarge: TextStyle.lerp(buttonLarge, other.buttonLarge, t)!,
-      buttonMedium: TextStyle.lerp(buttonMedium, other.buttonMedium, t)!,
-      buttonSmall: TextStyle.lerp(buttonSmall, other.buttonSmall, t)!,
-      buttonXSmall: TextStyle.lerp(buttonXSmall, other.buttonXSmall, t)!,
-      buttonTiny: TextStyle.lerp(buttonTiny, other.buttonTiny, t)!,
-      bodyXSmall: TextStyle.lerp(bodyXSmall, other.bodyXSmall, t)!,
-      labelXSmall: TextStyle.lerp(labelXSmall, other.labelXSmall, t)!,
+      bodyTiny: TextStyle.lerp(bodyTiny, other.bodyTiny, t)!,
+      overline: TextStyle.lerp(overline, other.overline, t)!,
+      linkLarge: TextStyle.lerp(linkLarge, other.linkLarge, t)!,
+      linkMedium: TextStyle.lerp(linkMedium, other.linkMedium, t)!,
+      linkSmall: TextStyle.lerp(linkSmall, other.linkSmall, t)!,
+      linkTiny: TextStyle.lerp(linkTiny, other.linkTiny, t)!,
+      linkOverline: TextStyle.lerp(linkOverline, other.linkOverline, t)!,
       customColors: customColors,
     );
   }

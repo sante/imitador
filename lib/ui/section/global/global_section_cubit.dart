@@ -38,14 +38,22 @@ class GlobalSectionCubit extends Cubit<GlobalSectionState> {
       emit(state.copyWith(levels: levels));
       Logger.d('GlobalSectionCubit._initStreams: levels: $levels');
     });
-    _activitiesSubscription = _activityRepository.getActivities().listen((activities) {
+    _activitiesSubscription =
+        _activityRepository.getActivities().listen((activities) {
       emit(state.copyWith(activities: activities));
       Logger.d('GlobalSectionCubit._initStreams: activities: $activities');
     });
   }
 
-  void logOut() {
-    _sessionRepository.logOut();
+  void logOut() async {
+    await _sessionRepository.logOut();
+    _levelRepository.refreshLevels();
+    _activityRepository.refresh();
+    emit(
+      state.copyWith(
+        user: null,
+      ),
+    );
   }
 
   @override

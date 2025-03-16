@@ -11,6 +11,7 @@ import 'package:imitador/ui/screens/log_in/log_in_screen.dart';
 import 'package:imitador/ui/screens/settings/settings_screen.dart';
 import 'package:imitador/ui/screens/sign_up/sign_up_data_screen.dart';
 import 'package:imitador/ui/screens/sign_up/sign_up_type_screen.dart';
+import 'package:imitador/ui/screens/splash/splash_screen.dart';
 import 'package:imitador/ui/section/activity/activity_section.dart';
 import 'package:imitador/ui/section/game_session/game_session_section.dart';
 import 'package:imitador/ui/section/global/global_section.dart';
@@ -40,13 +41,17 @@ class AppRouter extends _$AppRouter {
             page: GlobalSectionRoute.page,
             children: [
               AutoRoute(
+                path: "splash",
+                page: SplashRoute.page,
+                initial: true,
+              ),
+              AutoRoute(
                 path: 'welcome',
                 page: WelcomeRoute.page,
-                initial: true,
               ),
               RedirectRoute(
                 path: '',
-                redirectTo: 'welcome',
+                redirectTo: 'splash',
               ),
               AutoRoute(
                 page: LevelSelectorRoute.page,

@@ -1,0 +1,62 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:imitador/core/common/extension/context_extensions.dart';
+import 'package:imitador/gen/assets.gen.dart';
+import 'package:imitador/ui/router/app_router.dart';
+import 'package:imitador/ui/theme/app_theme.dart';
+import 'package:imitador/ui/theme/components/buttons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
+
+@RoutePage()
+class SplashScreen extends StatelessWidget {
+  const SplashScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) => Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(Assets.images.background.path),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 141.h),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Flexible(
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        "Mission:",
+                        style: context.theme.textStyles.titleLarge?.copyWith(
+                          color: context.theme.colorScheme.onSurface,
+                          fontSize: 96.sp,
+                        ),
+                      ),
+                      Text(
+                        "Motion",
+                        style: context.theme.textStyles.titleLarge?.copyWith(
+                          color: context.theme.colorScheme.onSurface,
+                          fontSize: 128.sp,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              PrimaryButton(
+                label: "Ingresar",
+                trailingIcon: PhosphorIcons.arrowRight(PhosphorIconsStyle.bold),
+                onPressed: () {
+                  context.router.replace(const WelcomeRoute());
+                },
+              ),
+            ],
+          ),
+        ),
+      );
+}

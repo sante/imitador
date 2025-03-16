@@ -12,11 +12,24 @@ import 'package:flutter/widgets.dart';
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/background.png
+  AssetGenImage get background =>
+      const AssetGenImage('assets/images/background.png');
+
+  /// File path: assets/images/background_sheet.png
+  AssetGenImage get backgroundSheet =>
+      const AssetGenImage('assets/images/background_sheet.png');
+
+  /// File path: assets/images/background_simple.png
+  AssetGenImage get backgroundSimple =>
+      const AssetGenImage('assets/images/background_simple.png');
+
   /// File path: assets/images/sparky.png
   AssetGenImage get sparky => const AssetGenImage('assets/images/sparky.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [sparky];
+  List<AssetGenImage> get values =>
+      [background, backgroundSheet, backgroundSimple, sparky];
 }
 
 class Assets {
