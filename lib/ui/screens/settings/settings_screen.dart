@@ -4,8 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imitador/core/common/extension/color_extensions.dart';
 import 'package:imitador/core/common/extension/context_extensions.dart';
+import 'package:imitador/gen/assets.gen.dart';
 import 'package:imitador/ui/router/app_router.dart';
 import 'package:imitador/ui/theme/app_theme.dart';
+import 'package:imitador/ui/theme/components/buttons.dart';
+import 'package:imitador/ui/theme/components/dividers.dart';
+import 'package:imitador/ui/theme/components/inputs.dart';
+import 'package:imitador/ui/theme/components/scaffold.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import 'settings_cubit.dart';
 
@@ -22,30 +28,20 @@ class SettingsScreen extends StatelessWidget {
 
 class _SettingsContentScreen extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          backgroundColor: context.theme.colorScheme.surface,
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: context.theme.colorScheme.primary,
-            ),
-            onPressed: () async {
-              final router = context.router;
-              final popped = await router.maybePopTop();
-              if (!popped) {
-                router.replace(const WelcomeRoute());
-              }
-            },
-          ),
-        ),
+  Widget build(BuildContext context) => MotionScaffold(
+        backRoute: const WelcomeRoute(),
         body: Center(
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 12.h),
             child: Container(
+              width: 604.w,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12.r),
                 color: const Color(0xFFEDF0F7),
+                image: DecorationImage(
+                  image: AssetImage(Assets.images.backgroundSheet.path),
+                  fit: BoxFit.cover,
+                ),
               ),
               child: Padding(
                 padding: EdgeInsets.symmetric(
@@ -58,35 +54,41 @@ class _SettingsContentScreen extends StatelessWidget {
                   children: [
                     Text(
                       "Configuración",
-                      style: context.theme.textStyles.titleLarge,
+                      style: context.theme.textStyles.headlineLarge,
                     ),
-                    DropdownButton(
-                      items: ["Español", "Inglés"]
-                          .map(
-                            (e) => DropdownMenuItem(
-                              value: e,
-                              child: Text(e),
-                            ),
-                          )
-                          .toList(),
+                    MotionDropDown(
+                      value: null,
+                      items: const ["Español", "Inglés"],
+                      hint: "Seleccione un idioma",
+                      label: "Idioma",
                       onChanged: (_) {},
                     ),
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: const Text("Guardar selección"),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: PrimaryButton(
+                        onPressed: () {},
+                        label: "Guardar selección",
+                        leadingIcon: PhosphorIcons.floppyDisk(),
+                      ),
                     ),
-                    Container(
-                      color: context.theme.primaryColor.getShade(200),
-                      width: 460.w,
-                      height: 2.h,
-                    ),
-                    Text(
-                      "Conectar sensor",
-                      style: context.theme.textStyles.titleLarge,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: const Text("Conectar"),
+                    const DarkHorizontalDivider(),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 40.h,
+                      children: [
+                        Text(
+                          "Conectar sensor",
+                          style: context.theme.textStyles.headlineSmall,
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: PrimaryButton(
+                            onPressed: () {},
+                            label: "Conectar",
+                            leadingIcon: PhosphorIcons.usb(),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

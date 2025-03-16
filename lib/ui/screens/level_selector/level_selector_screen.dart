@@ -13,9 +13,10 @@ import 'package:imitador/ui/router/app_router.dart';
 import 'package:imitador/ui/section/activity/activity_section_cubit.dart';
 import 'package:imitador/ui/section/game_session/game_session_section_cubit.dart';
 import 'package:imitador/ui/section/global/global_section_cubit.dart';
-import 'package:imitador/ui/theme/activity_card.dart';
 import 'package:imitador/ui/theme/app_theme.dart';
-import 'package:imitador/ui/theme/level_card.dart';
+import 'package:imitador/ui/theme/components/cards.dart';
+import 'package:imitador/ui/theme/components/scaffold.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 final dummyLevels = [
   Level(
@@ -129,129 +130,93 @@ class _LevelSelectorContentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final randomLevels = levels.filter((it) => it.difficulty != null).toList();
     final fixedLevels = levels.filter((it) => it.difficulty == null).toList();
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 60.h, horizontal: 104.w),
-      child: Stack(
-        children: [
-          Center(
-            child: !isLoading
-                ? SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      spacing: 60.h,
-                      children: [
-                        if (activity != null) Text(activity!.name),
+    return MotionScaffold(
+      showTitle: false,
+      action: () {},
+      actionIcon: user != null ? PhosphorIcons.user() : PhosphorIcons.gear(),
+      message: "¡Hola, ${user?.name ?? "invitado"}!",
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 104.w),
+        child: Center(
+          child: !isLoading
+              ? SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    spacing: 60.h,
+                    children: [
+                      if (activity != null) Text(
+                        activity!.name,
+                        style: context.theme.textStyles.headlineLarge!.copyWith(
+                          color: context.theme.colorScheme.onSurface,
+                        ),
+                      ),
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 24.h,
+                        children: [
+                          if (randomLevels.isNotEmpty)
+                            Text(
+                              'Juegos libres',
+                              style: context
+                                  .theme.textStyles.headlineMedium!
+                                  .copyWith(
+                                color: context.theme.colorScheme.onSurface,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          _LevelCards(
+                            levels: randomLevels,
+                            sessionType: sessionType,
+                          ),
+                        ],
+                      ),
+                      if (fixedLevels.isNotEmpty)
                         Column(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           spacing: 24.h,
                           children: [
-                            if (randomLevels.isNotEmpty)
-                              Text(
-                                'Juegos libres',
-                                style: context.theme.textStyles.titleLarge!
-                                    .copyWith(
-                                  fontSize: 32.sp,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                textAlign: TextAlign.center,
+                            Text(
+                              'Niveles',
+                              style: context
+                                  .theme.textStyles.headlineMedium!
+                                  .copyWith(
+                                color: context.theme.colorScheme.onSurface,
                               ),
+                              textAlign: TextAlign.center,
+                            ),
                             _LevelCards(
-                              levels: randomLevels,
+                              levels: fixedLevels,
                               sessionType: sessionType,
                             ),
                           ],
                         ),
-                        if (fixedLevels.isNotEmpty)
-                          Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            spacing: 24.h,
-                            children: [
-                              Text(
-                                'Niveles',
-                                style: context.theme.textStyles.titleLarge!
-                                    .copyWith(
-                                  fontSize: 32.sp,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                textAlign: TextAlign.center,
+                      if (activity == null)
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          spacing: 24.h,
+                          children: [
+                            Text(
+                              'Actividades',
+                              style: context.theme.textStyles.headlineMedium!
+                                  .copyWith(
+                                color: context.theme.colorScheme.onSurface,
                               ),
-                              _LevelCards(
-                                levels: fixedLevels,
-                                sessionType: sessionType,
-                              ),
-                            ],
-                          ),
-                        if (activity == null)
-                          Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            spacing: 24.h,
-                            children: [
-                              Text(
-                                'Actividades',
-                                style: context.theme.textStyles.titleLarge!
-                                    .copyWith(
-                                  fontSize: 32.sp,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                              _ActivityCards(activities: activities.toList()),
-                            ],
-                          ),
-                      ],
-                    ),
-                  )
-                : CircularProgressIndicator(
-                    color: context.theme.primaryColor,
+                              textAlign: TextAlign.center,
+                            ),
+                            _ActivityCards(activities: activities.toList()),
+                          ],
+                        ),
+                    ],
                   ),
-          ),
-          Align(
-            alignment: Alignment.topRight,
-            child: Column(
-              spacing: 12.h,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  mainAxisSize: MainAxisSize.max,
-                  spacing: 24.w,
-                  children: [
-                    Text(
-                      "¡Hola, ${user?.name ?? "invitado"}!",
-                      style: context.theme.textStyles.titleLarge!.copyWith(),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: context.theme.buttonsStyle.filledButton.copyWith(
-                        fixedSize: WidgetStatePropertyAll(Size(56.r, 56.r)),
-                      ),
-                      child: Icon(
-                        Icons.person_outline,
-                        color: context.theme.colorScheme.onPrimary,
-                      ),
-                    ),
-                  ],
+                )
+              : CircularProgressIndicator(
+                  color: context.theme.primaryColor,
                 ),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: context.theme.buttonsStyle.outlineButton.copyWith(
-                    fixedSize: WidgetStatePropertyAll(Size(56.r, 56.r)),
-                  ),
-                  child: Icon(
-                    Icons.settings_outlined,
-                    color: context.theme.colorScheme.primary,
-                    size: 16.r,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

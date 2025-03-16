@@ -27,6 +27,8 @@ class LevelRepository {
 
   Future<List<Level>?> getDirectLevels() => _levelRemoteSource.getLevels();
 
+  Future<void> refreshLevels() => _store.fresh(null);
+
   Stream<List<Level>?> getLevels() => _store
       .stream(null)
       .where((event) => event.isData)

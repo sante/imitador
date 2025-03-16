@@ -18,6 +18,7 @@ class AppTheme {
     final customTextStyles = CustomTextStyles.getCustomTextStyles(customColors);
     final appDimension = AppDimension.getDefaultDimensions();
     final buttonTheme = AppButtonsStyle.getDefaultButtonTheme(
+      textTheme,
       customColors,
       customTextStyles,
       colors,
@@ -28,14 +29,14 @@ class AppTheme {
       primaryColor: colors.primary,
       colorScheme: colors,
       dialogTheme: DialogTheme(
-        backgroundColor: colors.surface.shade100,
+        backgroundColor: colors.surface,
         elevation: 2,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.r),
-          side: BorderSide(color: colors.surface.shade500),
+          side: BorderSide(color: colors.surface),
         ),
-        titleTextStyle: customTextStyles.customOverline
-            .copyWith(color: customColors.textColor!.getShade(300))
+        titleTextStyle: textTheme.headlineSmall
+            ?.copyWith(color: customColors.textColor!.getShade(300))
             .semibold(),
         contentTextStyle: textTheme.bodyMedium
             ?.copyWith(color: customColors.textColor!.getShade(400)),
@@ -43,7 +44,7 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         labelStyle: textTheme.bodyMedium
             ?.copyWith(color: customColors.textColor!.getShade(400)),
-        filled: true,
+        filled: false,
         helperStyle: textTheme.bodySmall
             ?.copyWith(color: customColors.textColor!..getShade(300)),
         hintStyle: textTheme.bodyMedium
@@ -55,7 +56,7 @@ class AppTheme {
             color: customColors.textColor!.getShade(100),
           ),
         ),
-        fillColor: colors.surface.shade100,
+        fillColor: colors.surface,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4.r),
           borderSide: BorderSide(
@@ -74,7 +75,7 @@ class AppTheme {
           borderRadius: BorderRadius.circular(4.r),
           borderSide: BorderSide(
             width: 2,
-            color: colors.primary.shade800,
+            color: colors.primary,
           ),
         ),
         disabledBorder: OutlineInputBorder(
@@ -93,23 +94,24 @@ class AppTheme {
         ),
         errorStyle: textTheme.labelSmall?.copyWith(color: customColors.danger),
         errorMaxLines: 2,
-        hoverColor: colors.primary.shade400,
-        focusColor: colors.primary.shade800,
+        hoverColor: colors.primary,
+        focusColor: colors.primary,
       ),
       dropdownMenuTheme: DropdownMenuThemeData(
         textStyle: textTheme.bodyMedium?.copyWith(
-          color: colors.primary.shade500,
+          color: colors.primary,
         ),
         menuStyle: MenuStyle(
           maximumSize: WidgetStateProperty.resolveWith<Size?>(
             (Set<WidgetState> states) => Size(1.sw, 35.h * 6),
           ),
+          backgroundColor: getMaterialStatesColors(colors.surface),
         ),
         inputDecorationTheme: InputDecorationTheme(
-          filled: true,
+          filled: false,
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: colors.onSurface.shade200,
+              color: colors.onSurface,
             ),
             borderRadius: BorderRadius.all(Radius.circular(4.r)),
           ),
@@ -129,14 +131,16 @@ class AppTheme {
         displayColor: CustomColors.getCustomColors().textColor!.getShade(500),
       ),
       appBarTheme: AppBarTheme(
-        backgroundColor: colors.primary.shade400,
+        backgroundColor: colors.primary,
+        toolbarHeight: 120.h,
+        centerTitle: true,
         titleTextStyle: TextStyle(
           color: CustomColors.getCustomColors().textColor!.getShade(500),
         ),
       ),
       primaryTextTheme: textTheme,
       checkboxTheme: CheckboxThemeData(
-        checkColor: getMaterialStatesColors(colors.primary.shade600),
+        checkColor: getMaterialStatesColors(colors.primary),
         fillColor:
             getMaterialStatesColors(customColors.textColor!..getShade(100)),
         side: BorderSide(
@@ -147,6 +151,11 @@ class AppTheme {
       radioTheme: RadioThemeData(
         fillColor:
             getMaterialStatesColors(customColors.textColor!.getShade(400)),
+      ),
+      iconButtonTheme: IconButtonThemeData(
+        style: buttonTheme.secondaryFilledButton.copyWith(
+          fixedSize: WidgetStatePropertyAll(Size(56.w, 48.h)),
+        ),
       ),
     );
   }

@@ -7,6 +7,9 @@ import 'package:imitador/model/user/user.dart';
 import 'package:imitador/ui/router/app_router.dart';
 import 'package:imitador/ui/section/global/global_section_cubit.dart';
 import 'package:imitador/ui/theme/app_theme.dart';
+import 'package:imitador/ui/theme/components/buttons.dart';
+import 'package:imitador/ui/theme/components/scaffold.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 @RoutePage()
 class WelcomeScreen extends StatelessWidget {
@@ -20,70 +23,61 @@ class _WelcomeContentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       BlocBuilder<GlobalSectionCubit, GlobalSectionState>(
-        builder: (context, state) => Scaffold(
+        builder: (context, state) => MotionScaffold(
+          actionIcon: PhosphorIcons.gear(),
+          showTitle: false,
+          action: () {
+            context.router.push(const SettingsRoute());
+          },
           body: Padding(
-            padding: EdgeInsets.symmetric(vertical: 200.h, horizontal: 104.w),
-            child: SizedBox(
-              width: double.infinity,
-              child: Stack(
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
+            padding: EdgeInsets.symmetric(vertical: 90.h),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                RichText(
+                  text: TextSpan(
+                    text: "Mission: ",
+                    style: context.theme.textStyles.titleMedium!.copyWith(
+                      color: context.theme.colorScheme.onSurface,
+                    ),
                     children: [
-                      Text(
-                        context.localizations.game_title.toUpperCase(),
+                      TextSpan(
+                        text: "Motion",
                         style: context.theme.textStyles.titleLarge!.copyWith(
-                          fontSize: 40.sp,
-                          fontWeight: FontWeight.bold,
+                          color: context.theme.colorScheme.onSurface,
                         ),
-                        textAlign: TextAlign.center,
                       ),
-                      if (state.user == null) const GuestActions(),
-                      if (state.user != null) UserActions(user: state.user!),
-                      if (state.user == null) Column(
-                        mainAxisSize: MainAxisSize.min,
-                        spacing: 36.h,
-                        children: [
-                          Text("¿Todavía no tenés cuenta?"),
-                          ElevatedButton(
-                            onPressed: () {
-                              context.router.push(const SignUpSectionRoute());
-                            },
-                            style: context
-                                .theme.buttonsStyle.secondaryFilledButton
-                                .copyWith(
-                              fixedSize: WidgetStatePropertyAll(
-                                Size(186.w, 56.h),
-                              ),
-                            ),
-                            child: Text(
-                              "Registrate",
-                              style: context.theme.customTextStyles.buttonLarge,
-                            ),
-                          ),
-                        ],
-                      )
                     ],
                   ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        context.router.push(const SettingsRoute());
-                      },
-                      style: context.theme.buttonsStyle.filledButton.copyWith(
-                          fixedSize: WidgetStatePropertyAll(Size(56.r, 56.r))),
-                      child: Icon(
-                        Icons.settings,
-                        color: context.theme.colorScheme.onPrimary,
-                        size: 16.r,
-                      ),
-                    ),
-                  )
+                ),
+                if (state.user != null) ...[
+                  UserActions(user: state.user!),
+                  Container()
                 ],
-              ),
+                if (state.user == null) ...[
+                  const GuestActions(),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    spacing: 36.h,
+                    children: [
+                      Text(
+                        "¿Todavía no tenés cuenta?",
+                        style: context.theme.textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SecondaryButton(
+                        onPressed: () {
+                          context.router.push(const SignUpSectionRoute());
+                        },
+                        label: "Registrate",
+                      ),
+                    ],
+                  )
+                ]
+              ],
             ),
           ),
         ),
@@ -101,27 +95,17 @@ class GuestActions extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       spacing: 28.w,
       children: [
-        ElevatedButton(
-          onPressed: () {
-            context.router.push(const LevelSelectorRoute());
-          },
-          style: context.theme.buttonsStyle.filledButton.copyWith(
-            fixedSize: WidgetStatePropertyAll(Size(268.w, 68.h)),
-          ),
-          child: Text(
-            context.localizations.play_as_guest,
-          ),
-        ),
-        ElevatedButton(
+        PrimaryButton(
           onPressed: () {
             context.router.push(const LogInRoute());
           },
-          style: context.theme.buttonsStyle.outlineButton.copyWith(
-            fixedSize: WidgetStatePropertyAll(Size(268.w, 68.h)),
-          ),
-          child: Text(
-            context.localizations.sign_in,
-          ),
+          label: context.localizations.sign_in,
+        ),
+        PrimaryOutlineButton(
+          onPressed: () {
+            context.router.push(const LevelSelectorRoute());
+          },
+          label: context.localizations.play_as_guest,
         ),
       ],
     );
@@ -142,25 +126,15 @@ class UserActions extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       spacing: 28.w,
       children: [
-        ElevatedButton(
+        PrimaryButton(
           onPressed: () {
             context.router.push(const LevelSelectorRoute());
           },
-          style: context.theme.buttonsStyle.filledButton.copyWith(
-            fixedSize: WidgetStatePropertyAll(Size(268.w, 68.h)),
-          ),
-          child: const Text(
-            "Jugar",
-          ),
+          label: "Jugar",
         ),
-        ElevatedButton(
+        PrimaryOutlineButton(
           onPressed: context.read<GlobalSectionCubit>().logOut,
-          style: context.theme.buttonsStyle.outlineButton.copyWith(
-            fixedSize: WidgetStatePropertyAll(Size(268.w, 68.h)),
-          ),
-          child: const Text(
-            "Cerrar Sesión",
-          ),
+          label: "Cerrar Sesión",
         ),
       ],
     );

@@ -25,9 +25,9 @@ class GraphComponent extends PositionComponent
   bool inCountdown = false;
   bool sampling = false;
   final axisLinePaint = BasicPalette.white.paint()..strokeWidth = 2.0;
-  final linePaint = BasicPalette.red.paint()..strokeWidth = 1.0;
-  final pointPaint = BasicPalette.blue.paint()..strokeWidth = 3.0;
-  final objectivePaint = BasicPalette.green.paint()..strokeWidth = 3.0;
+  final pointPaint = PaletteEntry(Color(0xffC7EF00)).paint()..strokeWidth = 3.0;
+  final objectivePaint = PaletteEntry(Color(0xffA882DD)).paint()
+    ..strokeWidth = 3.0;
   final currentTimePaint = BasicPalette.gray.paint()..strokeWidth = 3.0;
   final mathContext = ContextModel();
   late double xAxisYOffset;
