@@ -32,6 +32,46 @@ class $AssetsImagesGen {
   AssetGenImage get iconTeacher =>
       const AssetGenImage('assets/images/icon_teacher.png');
 
+  /// File path: assets/images/rating_0_5.png
+  AssetGenImage get rating05 =>
+      const AssetGenImage('assets/images/rating_0_5.png');
+
+  /// File path: assets/images/rating_1.png
+  AssetGenImage get rating1 =>
+      const AssetGenImage('assets/images/rating_1.png');
+
+  /// File path: assets/images/rating_1_5.png
+  AssetGenImage get rating15 =>
+      const AssetGenImage('assets/images/rating_1_5.png');
+
+  /// File path: assets/images/rating_2.png
+  AssetGenImage get rating2 =>
+      const AssetGenImage('assets/images/rating_2.png');
+
+  /// File path: assets/images/rating_2_5.png
+  AssetGenImage get rating25 =>
+      const AssetGenImage('assets/images/rating_2_5.png');
+
+  /// File path: assets/images/rating_3.png
+  AssetGenImage get rating3 =>
+      const AssetGenImage('assets/images/rating_3.png');
+
+  /// File path: assets/images/rating_3_5.png
+  AssetGenImage get rating35 =>
+      const AssetGenImage('assets/images/rating_3_5.png');
+
+  /// File path: assets/images/rating_4.png
+  AssetGenImage get rating4 =>
+      const AssetGenImage('assets/images/rating_4.png');
+
+  /// File path: assets/images/rating_4_5.png
+  AssetGenImage get rating45 =>
+      const AssetGenImage('assets/images/rating_4_5.png');
+
+  /// File path: assets/images/rating_5.png
+  AssetGenImage get rating5 =>
+      const AssetGenImage('assets/images/rating_5.png');
+
   /// File path: assets/images/sparky.png
   AssetGenImage get sparky => const AssetGenImage('assets/images/sparky.png');
 
@@ -42,6 +82,16 @@ class $AssetsImagesGen {
         backgroundSimple,
         iconStudent,
         iconTeacher,
+        rating05,
+        rating1,
+        rating15,
+        rating2,
+        rating25,
+        rating3,
+        rating35,
+        rating4,
+        rating45,
+        rating5,
         sparky
       ];
 }

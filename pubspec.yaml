@@ -104,6 +104,16 @@ flutter:
       - assets/images/background_sheet.png
       - assets/images/icon_student.png
       - assets/images/icon_teacher.png
+      - assets/images/rating_0_5.png
+      - assets/images/rating_1.png
+      - assets/images/rating_1_5.png
+      - assets/images/rating_2.png
+      - assets/images/rating_2_5.png
+      - assets/images/rating_3.png
+      - assets/images/rating_3_5.png
+      - assets/images/rating_4.png
+      - assets/images/rating_4_5.png
+      - assets/images/rating_5.png
       - environments/
 
 flutter_gen:

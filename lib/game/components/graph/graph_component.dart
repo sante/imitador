@@ -45,10 +45,7 @@ class GraphComponent extends PositionComponent
     Logger.d('Game width: ${game.size.x}');
     Logger.d("Canvas height: ${size.y}");
     effectiveTimeSize = size.x - game.spriteOutOfBoundsSize;
-    xAxisYOffset = size.y +
-        (distanceRange.first / (distanceRange.second - distanceRange.first)) *
-            size.y *
-            verticalPadding;
+
     return super.onLoad();
   }
 
@@ -67,107 +64,28 @@ class GraphComponent extends PositionComponent
     currentPosition = position;
   }
 
-  Offset toCanvasCoordinates(Pair<double, double> point) {
-    return Offset(
-      point.first * effectiveTimeSize / secondsDuration +
-          game.spriteOutOfBoundsSize,
-      xAxisYOffset -
-          (point.second /
-              (distanceRange.second - distanceRange.first) *
-              size.y *
-              verticalPadding),
-    );
-  }
-
   @override
   void render(Canvas canvas) {
     super.render(canvas);
-    // Dibujar los ejes
-    canvas.drawLine(
-      Offset(0, xAxisYOffset),
-      Offset(size.x, xAxisYOffset),
-      axisLinePaint,
-    ); // eje x
-    canvas.drawLine(
-      Offset(game.spriteOutOfBoundsSize, 0),
-      Offset(game.spriteOutOfBoundsSize, size.y),
-      axisLinePaint,
-    ); // eje y
-    _drawYTickAt(value: distanceRange.second, canvas: canvas); // Max y tick
-    _drawYTickAt(value: distanceRange.first, canvas: canvas); // Min y tick
-    for (int i = distanceRange.first.ceil();
-        i <= distanceRange.second.floor();
-        i++) {
-      if (i != 0) {
-        _drawYTickAt(value: i.toDouble(), canvas: canvas);
-      }
-    }
-    for (int i = 1; i <= secondsDuration; i++) {
-      drawXTickAt(value: i.toDouble(), canvas: canvas);
-    }
-
-    // Dibujar las expresiones fijas
-    fixedExpressions.forEachIndexed((expression, index) {
-      final startTime = index * secondsDuration / fixedExpressions.length;
-      final endTime = (index + 1) * secondsDuration / fixedExpressions.length;
-      final startPixel = (startTime * effectiveTimeSize / secondsDuration +
-              game.spriteOutOfBoundsSize)
-          .round();
-      final endPixel = (endTime * effectiveTimeSize / secondsDuration +
-              game.spriteOutOfBoundsSize)
-          .round();
-      final List<Offset> sectionPoints = [];
-      for (int i = startPixel; i <= endPixel; i++) {
-        mathContext.bindVariable(
-            Variable("t"),
-            Number(secondsDuration /
-                effectiveTimeSize *
-                (i - game.spriteOutOfBoundsSize)));
-        final value = expression.evaluate(EvaluationType.REAL, mathContext);
-        final y = xAxisYOffset -
-            (value *
-                size.y /
-                (distanceRange.second - distanceRange.first) *
-                verticalPadding);
-        sectionPoints.add(Offset(i.toDouble(), y));
-      }
-      canvas.drawPoints(PointMode.polygon, sectionPoints, objectivePaint);
-    });
-
-    // Dibujar la gráfica de distancia vs tiempo
-    if (distances.isNotEmpty) {
-      canvas.drawPoints(PointMode.polygon,
-          distances.map((it) => toCanvasCoordinates(it)).toList(), pointPaint);
-    }
-
-    // Dibujar posicion actual
-    final currentPositionInCanvas =
-        toCanvasCoordinates(Pair(0, currentPosition)).dy;
-    canvas.drawLine(
-      Offset(
-        game.spriteOutOfBoundsSize - 10,
-        currentPositionInCanvas,
-      ),
-      Offset(
-        game.spriteOutOfBoundsSize + 10,
-        currentPositionInCanvas,
-      ),
-      pointPaint,
+    drawGraph(
+      canvas: canvas,
+      size: size,
+      axisLinePaint: axisLinePaint,
+      pointPaint: pointPaint,
+      yAxisXOffset: game.spriteOutOfBoundsSize,
+      samples: distances,
+      secondsDuration: secondsDuration.toDouble(),
+      currentValue: currentPosition,
+      sampling: sampling,
+      fixedExpressions: fixedExpressions,
+      effectiveTimeSize: effectiveTimeSize,
+      currentTime: currentTime,
+      currentTimePaint: currentTimePaint,
+      objectivePaint: objectivePaint,
+      range: distanceRange,
+      mathContext: mathContext,
+      fontColor: Colors.white,
     );
-
-    // Dibujar el tiempo actual
-    if (sampling) {
-      canvas.drawLine(
-          Offset(
-              currentTime * effectiveTimeSize / secondsDuration +
-                  game.spriteOutOfBoundsSize,
-              0),
-          Offset(
-              currentTime * effectiveTimeSize / secondsDuration +
-                  game.spriteOutOfBoundsSize,
-              size.y),
-          currentTimePaint);
-    }
   }
 
   @override
@@ -183,59 +101,244 @@ class GraphComponent extends PositionComponent
     }
     super.update(dt);
   }
+}
 
-  void _drawYTickAt({
-    required double value,
-    required Canvas canvas,
-  }) {
-    final y = xAxisYOffset -
-        (value /
-            (distanceRange.second - distanceRange.first) *
-            size.y *
-            verticalPadding);
-    canvas.drawLine(
-      Offset(game.spriteOutOfBoundsSize - 5, y),
-      Offset(game.spriteOutOfBoundsSize + 5, y),
-      axisLinePaint,
+void drawXTickAt({
+  required double value,
+  required Canvas canvas,
+  required double xAxisYOffset,
+  required double yAxisXOffset,
+  required double secondsDuration,
+  required double effectiveTimeSize,
+  required Paint axisLinePaint,
+  required Color fontColor,
+}) {
+  final x = value * effectiveTimeSize / secondsDuration + yAxisXOffset;
+  canvas.drawLine(
+    Offset(x, xAxisYOffset - 5),
+    Offset(x, xAxisYOffset + 5),
+    axisLinePaint,
+  );
+  if (x.toInt() != 0) {
+    TextSpan span = TextSpan(
+      style: TextStyle(color: fontColor),
+      text: value.toInt().toString(),
     );
-    if (y.toInt() != 0) {
-      TextSpan span = TextSpan(
-        style: TextStyle(color: Colors.white),
-        text: value.toInt().toString(),
+    TextPainter tp = TextPainter(
+      text: span,
+      textAlign: TextAlign.left,
+      textDirection: TextDirection.ltr,
+    );
+    tp.layout();
+    tp.paint(canvas, Offset(x - 15, xAxisYOffset + 5));
+  }
+}
+
+Offset toCanvasCoordinates({
+  required Pair<double, double> point,
+  required double xAxisYOffset,
+  required double verticalPadding,
+  required double effectiveTimeSize,
+  required double secondsDuration,
+  required Pair<double, double> range,
+  required Vector2 size,
+  required double yAxisXOffset,
+}) {
+  return Offset(
+    point.first * effectiveTimeSize / secondsDuration + yAxisXOffset,
+    xAxisYOffset -
+        (point.second /
+            (range.second - range.first) *
+            size.y *
+            verticalPadding),
+  );
+}
+
+void drawYTickAt({
+  required double value,
+  required Canvas canvas,
+  required double xAxisYOffset,
+  required double yAxisXOffset,
+  required Vector2 size,
+  required Paint axisLinePaint,
+  required Pair<double, double> range,
+  required Color fontColor,
+}) {
+  final y = xAxisYOffset -
+      (value / (range.second - range.first) * size.y * verticalPadding);
+  canvas.drawLine(
+    Offset(yAxisXOffset - 5, y),
+    Offset(yAxisXOffset + 5, y),
+    axisLinePaint,
+  );
+  if (y.toInt() != 0) {
+    TextSpan span = TextSpan(
+      style: TextStyle(color: fontColor),
+      text: value.toInt().toString(),
+    );
+    TextPainter tp = TextPainter(
+      text: span,
+      textAlign: TextAlign.right,
+      textDirection: TextDirection.ltr,
+    );
+    tp.layout();
+    tp.paint(canvas, Offset(yAxisXOffset - 30, y - 10));
+  }
+}
+
+void drawGraph({
+  required Canvas canvas,
+  required Vector2 size,
+  required Paint axisLinePaint,
+  required Paint pointPaint,
+  required double yAxisXOffset, // game.spriteOutOfBoundsSize
+  required List<Pair<double, double>> samples, // distances
+  required double secondsDuration,
+  double? currentValue,
+  bool sampling = false,
+  required List<Expression> fixedExpressions,
+  required double effectiveTimeSize,
+  double? currentTime,
+  Paint? currentTimePaint,
+  required Paint objectivePaint,
+  required Pair<double, double> range, // distanceRange
+  required Color fontColor,
+  required ContextModel mathContext,
+}) {
+  final xAxisYOffset = size.y +
+      (range.first / (range.second - range.first)) *
+          size.y *
+          verticalPadding;
+  // Dibujar los ejes
+  canvas.drawLine(
+    Offset(0, xAxisYOffset),
+    Offset(size.x, xAxisYOffset),
+    axisLinePaint,
+  ); // eje x
+  canvas.drawLine(
+    Offset(yAxisXOffset, 0),
+    Offset(yAxisXOffset, size.y),
+    axisLinePaint,
+  ); // eje y
+  drawYTickAt(
+    value: range.second,
+    canvas: canvas,
+    size: size,
+    range: range,
+    axisLinePaint: axisLinePaint,
+    xAxisYOffset: xAxisYOffset,
+    yAxisXOffset: yAxisXOffset,
+    fontColor: fontColor,
+  ); // Max y tick
+  drawYTickAt(
+    value: range.first,
+    canvas: canvas,
+    size: size,
+    range: range,
+    axisLinePaint: axisLinePaint,
+    xAxisYOffset: xAxisYOffset,
+    yAxisXOffset: yAxisXOffset,
+    fontColor: fontColor,
+  ); // Min y tick
+  for (int i = range.first.ceil(); i <= range.second.floor(); i++) {
+    if (i != 0) {
+      drawYTickAt(
+        value: i.toDouble(),
+        canvas: canvas,
+        size: size,
+        range: range,
+        axisLinePaint: axisLinePaint,
+        xAxisYOffset: xAxisYOffset,
+        yAxisXOffset: yAxisXOffset,
+        fontColor: fontColor,
       );
-      TextPainter tp = TextPainter(
-        text: span,
-        textAlign: TextAlign.right,
-        textDirection: TextDirection.ltr,
-      );
-      tp.layout();
-      tp.paint(canvas, Offset(game.spriteOutOfBoundsSize - 30, y - 10));
     }
   }
-
-  void drawXTickAt({
-    required double value,
-    required Canvas canvas,
-  }) {
-    final x = value * effectiveTimeSize / secondsDuration +
-        game.spriteOutOfBoundsSize;
-    canvas.drawLine(
-      Offset(x, xAxisYOffset - 5),
-      Offset(x, xAxisYOffset + 5),
-      axisLinePaint,
+  for (int i = 1; i <= secondsDuration; i++) {
+    drawXTickAt(
+      value: i.toDouble(),
+      canvas: canvas,
+      yAxisXOffset: yAxisXOffset,
+      xAxisYOffset: xAxisYOffset,
+      secondsDuration: secondsDuration,
+      effectiveTimeSize: effectiveTimeSize,
+      axisLinePaint: axisLinePaint,
+      fontColor: fontColor,
     );
-    if (x.toInt() != 0) {
-      TextSpan span = TextSpan(
-        style: TextStyle(color: Colors.white),
-        text: value.toInt().toString(),
-      );
-      TextPainter tp = TextPainter(
-        text: span,
-        textAlign: TextAlign.left,
-        textDirection: TextDirection.ltr,
-      );
-      tp.layout();
-      tp.paint(canvas, Offset(x - 15, xAxisYOffset + 5));
+  }
+
+  // Dibujar las expresiones fijas
+  fixedExpressions.forEachIndexed((expression, index) {
+    final startTime = index * secondsDuration / fixedExpressions.length;
+    final endTime = (index + 1) * secondsDuration / fixedExpressions.length;
+    final startPixel =
+        (startTime * effectiveTimeSize / secondsDuration + yAxisXOffset)
+            .round();
+    final endPixel =
+        (endTime * effectiveTimeSize / secondsDuration + yAxisXOffset).round();
+    final List<Offset> sectionPoints = [];
+    for (int i = startPixel; i <= endPixel; i++) {
+      mathContext.bindVariable(Variable("t"),
+          Number(secondsDuration / effectiveTimeSize * (i - yAxisXOffset)));
+      final value = expression.evaluate(EvaluationType.REAL, mathContext);
+      final y = xAxisYOffset -
+          (value * size.y / (range.second - range.first) * verticalPadding);
+      sectionPoints.add(Offset(i.toDouble(), y));
     }
+    canvas.drawPoints(PointMode.polygon, sectionPoints, objectivePaint);
+  });
+
+  // Dibujar la gráfica de distancia vs tiempo
+  if (samples.isNotEmpty) {
+    canvas.drawPoints(
+        PointMode.polygon,
+        samples
+            .map((it) => toCanvasCoordinates(
+                  point: it,
+                  yAxisXOffset: yAxisXOffset,
+                  xAxisYOffset: xAxisYOffset,
+                  range: range,
+                  size: size,
+                  secondsDuration: secondsDuration,
+                  effectiveTimeSize: effectiveTimeSize,
+                  verticalPadding: verticalPadding,
+                ))
+            .toList(),
+        pointPaint);
+  }
+
+  if (currentValue != null) {
+    // Dibujar posicion actual
+    final currentPositionInCanvas = toCanvasCoordinates(
+      point: Pair(0, currentValue),
+      yAxisXOffset: yAxisXOffset,
+      xAxisYOffset: xAxisYOffset,
+      range: range,
+      size: size,
+      secondsDuration: secondsDuration,
+      effectiveTimeSize: effectiveTimeSize,
+      verticalPadding: verticalPadding,
+    ).dy;
+    canvas.drawLine(
+      Offset(
+        yAxisXOffset - 10,
+        currentPositionInCanvas,
+      ),
+      Offset(
+        yAxisXOffset + 10,
+        currentPositionInCanvas,
+      ),
+      pointPaint,
+    );
+  }
+
+  // Dibujar el tiempo actual
+  if (sampling && currentTime != null && currentTimePaint != null) {
+    canvas.drawLine(
+        Offset(currentTime * effectiveTimeSize / secondsDuration + yAxisXOffset,
+            0),
+        Offset(currentTime * effectiveTimeSize / secondsDuration + yAxisXOffset,
+            size.y),
+        currentTimePaint);
   }
 }
