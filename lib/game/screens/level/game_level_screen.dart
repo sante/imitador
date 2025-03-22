@@ -51,6 +51,8 @@ class GameLevelPage extends Component
       _graph = GraphComponent(
         fixedExpressions: game.level.expressions,
         onFinishedSampling: finishSampling,
+        secondsDuration: game.level.secondsDuration.toInt(),
+        distanceRange: Pair(game.level.minPosition, game.level.maxPosition),
       )
         ..size = Vector2(gameInitialSize.x, gameInitialSize.y / 2)
         ..position = Vector2(0, 0),
@@ -197,8 +199,9 @@ class GameLevelPage extends Component
         // Subscribe to microbit data stream
         _microbitSubscription = _microbitController.dataStream.listen((value) {
           // Convert value from 0-1 to screen coordinates
-          final screenWidth = game.size.x - _sparky.size.x;
-          final newX = (value * screenWidth).clamp(0.0, screenWidth);
+          final screenWidth = game.size.x - _sparky.size.x / 2;
+          final newX = (value * screenWidth)
+              .clamp(_sparky.size.x / 2, game.size.x - _sparky.size.x / 2);
 
           // Update sprite position
           _sparky.position = Vector2(newX, _sparky.position.y);

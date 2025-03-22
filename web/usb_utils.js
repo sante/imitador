@@ -47,12 +47,10 @@ function handleMicrobitEvents(event, device, data) {
       if (data && data.data !== undefined) {
         // Convert graph data to a normalized value
         const value = data.data;
-        const normalizedValue = Math.max(0, Math.min(1, value / 255.0));
         console.log("Graph data received:", data);
-        console.log("Normalized value for game:", normalizedValue);
 
         // Send to throttled sender
-        sendThrottledValue(normalizedValue);
+        sendValue(value);
       }
       break;
 
@@ -81,7 +79,7 @@ function processSerialData(data) {
     let value = null;
 
     // Format 2: Parse as simple number
-    const simpleNumber = parseInt(dataString, 10);
+    const simpleNumber = Number.parseFloat(dataString);
     if (!isNaN(simpleNumber)) {
       // console.log("Parsed as simple number:", simpleNumber);
       value = simpleNumber;
@@ -99,12 +97,10 @@ function processSerialData(data) {
 
     // If we got a value, send it to the game
     if (value !== null) {
-      // Normalize to 0-1 range for the game
-      const normalizedValue = Math.max(0, Math.min(1, value / 255.0));
       // console.log("Final normalized value for game:", normalizedValue);
 
       // Send to throttled sender instead of direct callback
-      sendThrottledValue(normalizedValue);
+      sendValue(value);
     } else {
       console.log("Could not extract a usable value from data");
     }
@@ -131,6 +127,17 @@ function sendThrottledValue(value) {
         lastValue = null;
       }
     }, THROTTLE_INTERVAL);
+  }
+}
+
+function sendValue(value) {
+  // Store the latest value
+  lastValue = value;
+
+  if (lastValue !== null && typeof window.flutterMicrobitCallback === "function") {
+    window.flutterMicrobitCallback(lastValue);
+    // Reset last value to null to avoid duplicate sends
+    lastValue = null;
   }
 }
 
