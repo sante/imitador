@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imitador/core/common/extension/context_extensions.dart';
 import 'package:imitador/ui/router/app_router.dart';
-import 'package:imitador/ui/section/game_session/game_session_section_cubit.dart';
 import 'package:imitador/ui/theme/app_text_field.dart';
 import 'package:imitador/ui/theme/app_theme.dart';
 
@@ -100,12 +99,6 @@ class _JoinSessionContentScreenState extends State<_JoinSessionContentScreen> {
                                               await _cubit.joinGameSession();
                                           if (response != null &&
                                               context.mounted) {
-                                            final gameSessionCubit =
-                                                context.read<
-                                                    GameSessionSectionCubit>();
-                                            gameSessionCubit.setGameId(
-                                              gameId: response.id,
-                                            );
                                             context.router.replace(
                                                 const GameSessionSectionRoute());
                                           }

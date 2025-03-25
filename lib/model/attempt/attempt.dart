@@ -22,6 +22,7 @@ class Attempt with _$Attempt {
     required String levelId,
     required Level level,
     required String? playerId,
+    String? gameSessionId,
   }) = _Attempt;
 
   factory Attempt.fromJson(Map<String, dynamic> json) =>

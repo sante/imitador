@@ -32,12 +32,14 @@ class GameSessionRepository {
     final response = await _gameSessionRemoteSource.joinGameSessionAPI(code);
 
     await _gameSessionLocalSource.saveGameSessionCode(code);
-    await _gameSessionLocalSource.saveGameId(
-      gameId: response.id,
-    );
+    await _gameSessionLocalSource.saveGameId(response.id);
 
     return response;
   }
 
   Stream<String?> getGameId() => _gameSessionLocalSource.getGameId();
+
+  Future<void> clearGameSessionData() async {
+    await _gameSessionLocalSource.clearGameSessionData();
+  }
 }

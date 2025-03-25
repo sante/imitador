@@ -4,6 +4,7 @@ import 'package:imitador/model/activity/activity.dart';
 
 class ActivityRemoteSource {
   static const _urlGetActivities = '/v1/activities/default';
+  static const _urlGetActivity = '/v1/activities';
 
   final HttpServiceDio _httpService;
 
@@ -15,6 +16,13 @@ class ActivityRemoteSource {
         serializer: (listResponse) => (listResponse as List)
             .map((activity) => Activity.fromJson(activity))
             .toList(),
+      )
+      .then((value) => value.getDataOrThrow());
+
+  Future<Activity> getActivityById(String id) => _httpService
+      .getAndProcessResponse(
+        '$_urlGetActivity/$id',
+        serializer: (response) => Activity.fromJson(response),
       )
       .then((value) => value.getDataOrThrow());
 }

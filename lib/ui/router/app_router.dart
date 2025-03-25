@@ -1,12 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:imitador/core/repository/session_repository.dart';
-import 'package:imitador/model/activity/activity.dart';
-import 'package:imitador/model/enum/play_session_type.dart';
-import 'package:imitador/model/game_session/game_session.dart';
 import 'package:imitador/model/level/level.dart';
 import 'package:imitador/ui/screens/game_session/game_session_lobby_screen.dart';
-import 'package:imitador/ui/screens/game_session_test_screen.dart';
+import 'package:imitador/ui/screens/game_session/game_session_test_screen.dart';
 import 'package:imitador/ui/screens/join_session/join_session_screen.dart';
 import 'package:imitador/ui/screens/level/level_screen.dart';
 import 'package:imitador/ui/screens/level_selector/level_selector_screen.dart';

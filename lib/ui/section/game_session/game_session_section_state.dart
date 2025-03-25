@@ -9,6 +9,7 @@ class GameSessionSectionState with _$GameSessionSectionState {
     @Default(null) Level? currentLevel,
     @Default(null) User? user,
     @Default(null) String? gameId,
-    @Default(null) String? activityId,
+    @Default(false) bool isConnected,
+    @Default(null) Activity? activity,
   }) = _GameSessionSectionState;
 }

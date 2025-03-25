@@ -47,9 +47,11 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     GameSessionLobbyRoute.name: (routeData) {
+      final args = routeData.argsAs<GameSessionLobbyRouteArgs>(
+          orElse: () => const GameSessionLobbyRouteArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const GameSessionLobbyScreen(),
+        child: GameSessionLobbyScreen(key: args.key),
       );
     },
     GameSessionSectionRoute.name: (routeData) {
@@ -238,16 +240,31 @@ class ActivitySectionRouteArgs {
 
 /// generated route for
 /// [GameSessionLobbyScreen]
-class GameSessionLobbyRoute extends PageRouteInfo<void> {
-  const GameSessionLobbyRoute({List<PageRouteInfo>? children})
-      : super(
+class GameSessionLobbyRoute extends PageRouteInfo<GameSessionLobbyRouteArgs> {
+  GameSessionLobbyRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
           GameSessionLobbyRoute.name,
+          args: GameSessionLobbyRouteArgs(key: key),
           initialChildren: children,
         );
 
   static const String name = 'GameSessionLobbyRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<GameSessionLobbyRouteArgs> page =
+      PageInfo<GameSessionLobbyRouteArgs>(name);
+}
+
+class GameSessionLobbyRouteArgs {
+  const GameSessionLobbyRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'GameSessionLobbyRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for

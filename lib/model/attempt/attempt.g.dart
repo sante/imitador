@@ -23,6 +23,7 @@ _$AttemptImpl _$$AttemptImplFromJson(Map<String, dynamic> json) =>
       levelId: json['levelId'] as String,
       level: Level.fromJson(json['level'] as Map<String, dynamic>),
       playerId: json['playerId'] as String?,
+      gameSessionId: json['gameSessionId'] as String?,
     );
 
 Map<String, dynamic> _$$AttemptImplToJson(_$AttemptImpl instance) =>
@@ -38,6 +39,7 @@ Map<String, dynamic> _$$AttemptImplToJson(_$AttemptImpl instance) =>
       'levelId': instance.levelId,
       'level': instance.level,
       'playerId': instance.playerId,
+      'gameSessionId': instance.gameSessionId,
     };
 
 const _$InterfaceTypeEnumMap = {
