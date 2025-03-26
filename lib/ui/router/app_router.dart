@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:imitador/core/repository/session_repository.dart';
 import 'package:imitador/model/level/level.dart';
+import 'package:imitador/ui/screens/create_session/create_session_screen.dart';
 import 'package:imitador/ui/screens/game_session/game_session_lobby_screen.dart';
 import 'package:imitador/ui/screens/game_session/game_session_test_screen.dart';
 import 'package:imitador/ui/screens/join_session/join_session_screen.dart';
@@ -116,12 +117,28 @@ class AppRouter extends _$AppRouter {
                 path: "joinSession",
               ),
               AutoRoute(
+                page: CreateSessionRoute.page,
+                path: "createSession",
+              ),
+              AutoRoute(
                 page: GameSessionSectionRoute.page,
                 path: "gameSession",
                 children: [
                   AutoRoute(
                     page: GameSessionLobbyRoute.page,
                     initial: true,
+                  ),
+                  AutoRoute(
+                    page: SessionLevelSelectorRoute.page,
+                    path: "levelSelector",
+                  ),
+                  AutoRoute(
+                    page: SessionActivityLevelRoute.page,
+                    path: "level",
+                  ),
+                  AutoRoute(
+                    page: SessionActivityResultsRoute.page,
+                    path: "results",
                   ),
                   AutoRoute(
                     page: GameSessionTestRoute.page,

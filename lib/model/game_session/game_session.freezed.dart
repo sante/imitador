@@ -25,6 +25,7 @@ mixin _$GameSession {
   Teacher get teacher => throw _privateConstructorUsedError;
   List<Player> get players => throw _privateConstructorUsedError;
   String get activityId => throw _privateConstructorUsedError;
+  bool get playing => throw _privateConstructorUsedError;
   String? get userId => throw _privateConstructorUsedError;
   String? get userName => throw _privateConstructorUsedError;
 
@@ -46,6 +47,7 @@ abstract class $GameSessionCopyWith<$Res> {
       Teacher teacher,
       List<Player> players,
       String activityId,
+      bool playing,
       String? userId,
       String? userName});
 
@@ -70,6 +72,7 @@ class _$GameSessionCopyWithImpl<$Res, $Val extends GameSession>
     Object? teacher = null,
     Object? players = null,
     Object? activityId = null,
+    Object? playing = null,
     Object? userId = freezed,
     Object? userName = freezed,
   }) {
@@ -94,6 +97,10 @@ class _$GameSessionCopyWithImpl<$Res, $Val extends GameSession>
           ? _value.activityId
           : activityId // ignore: cast_nullable_to_non_nullable
               as String,
+      playing: null == playing
+          ? _value.playing
+          : playing // ignore: cast_nullable_to_non_nullable
+              as bool,
       userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -128,6 +135,7 @@ abstract class _$$GameSessionImplCopyWith<$Res>
       Teacher teacher,
       List<Player> players,
       String activityId,
+      bool playing,
       String? userId,
       String? userName});
 
@@ -151,6 +159,7 @@ class __$$GameSessionImplCopyWithImpl<$Res>
     Object? teacher = null,
     Object? players = null,
     Object? activityId = null,
+    Object? playing = null,
     Object? userId = freezed,
     Object? userName = freezed,
   }) {
@@ -175,6 +184,10 @@ class __$$GameSessionImplCopyWithImpl<$Res>
           ? _value.activityId
           : activityId // ignore: cast_nullable_to_non_nullable
               as String,
+      playing: null == playing
+          ? _value.playing
+          : playing // ignore: cast_nullable_to_non_nullable
+              as bool,
       userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -196,6 +209,7 @@ class _$GameSessionImpl implements _GameSession {
       required this.teacher,
       required final List<Player> players,
       required this.activityId,
+      required this.playing,
       this.userId,
       this.userName})
       : _players = players;
@@ -220,13 +234,15 @@ class _$GameSessionImpl implements _GameSession {
   @override
   final String activityId;
   @override
+  final bool playing;
+  @override
   final String? userId;
   @override
   final String? userName;
 
   @override
   String toString() {
-    return 'GameSession(id: $id, code: $code, teacher: $teacher, players: $players, activityId: $activityId, userId: $userId, userName: $userName)';
+    return 'GameSession(id: $id, code: $code, teacher: $teacher, players: $players, activityId: $activityId, playing: $playing, userId: $userId, userName: $userName)';
   }
 
   @override
@@ -240,6 +256,7 @@ class _$GameSessionImpl implements _GameSession {
             const DeepCollectionEquality().equals(other._players, _players) &&
             (identical(other.activityId, activityId) ||
                 other.activityId == activityId) &&
+            (identical(other.playing, playing) || other.playing == playing) &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.userName, userName) ||
                 other.userName == userName));
@@ -254,6 +271,7 @@ class _$GameSessionImpl implements _GameSession {
       teacher,
       const DeepCollectionEquality().hash(_players),
       activityId,
+      playing,
       userId,
       userName);
 
@@ -278,6 +296,7 @@ abstract class _GameSession implements GameSession {
       required final Teacher teacher,
       required final List<Player> players,
       required final String activityId,
+      required final bool playing,
       final String? userId,
       final String? userName}) = _$GameSessionImpl;
 
@@ -294,6 +313,8 @@ abstract class _GameSession implements GameSession {
   List<Player> get players;
   @override
   String get activityId;
+  @override
+  bool get playing;
   @override
   String? get userId;
   @override

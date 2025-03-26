@@ -121,22 +121,36 @@ class UserActions extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        spacing: 28.w,
+  Widget build(BuildContext context) => Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          PrimaryButton(
-            onPressed: () {
-              context.router.push(const LevelSelectorRoute());
-            },
-            label: "Jugar",
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            spacing: 28.w,
+            children: [
+              PrimaryButton(
+                onPressed: () {
+                  context.router.push(const LevelSelectorRoute());
+                },
+                label: "Jugar",
+              ),
+              PrimaryOutlineButton(
+                onPressed: () {
+                  context.router.push(const JoinSessionRoute());
+                },
+                label: "Unirse a una clase",
+              ),
+            ],
           ),
-          PrimaryOutlineButton(
-            onPressed: () {
-              context.router.push(const JoinSessionRoute());
-            },
-            label: "Unirse a una clase",
-          ),
+          if (user is Teacher) ...[
+            SizedBox(height: 28.h),
+            PrimaryOutlineButton(
+              onPressed: () {
+                context.router.push(const CreateSessionRoute());
+              },
+              label: "Crear una sesión de juego",
+            ),
+          ],
         ],
       );
 }
