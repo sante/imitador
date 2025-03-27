@@ -6,6 +6,8 @@ import 'package:flame/events.dart';
 import 'package:flutter/material.dart' hide PointerMoveEvent;
 import 'package:flutter/services.dart';
 import 'package:imitador/core/common/constants.dart';
+import 'package:imitador/core/common/logger.dart';
+import 'package:imitador/core/device/microbit_controller.dart';
 import 'package:imitador/game/components/buttons/rounded_button.dart';
 import 'package:imitador/game/components/graph/graph_component.dart';
 import 'package:imitador/game/components/sprites/sparky.dart';
@@ -24,7 +26,12 @@ class GameLevelPage extends Component
   late final Sparky _sparky;
   late final TextComponent _helperText;
   late final RoundedButton _playButton;
+  late RoundedButton _connectButton;
+  late RoundedButton _disconnectButton;
   bool finishedSampling = false;
+  bool usingMicrobit = false;
+  StreamSubscription<double>? _microbitSubscription;
+  final MicrobitController _microbitController = MicrobitController();
   void Function(List<Pair<double, double>>) onFinishedWithResult;
 
   GameLevelPage({
@@ -34,9 +41,12 @@ class GameLevelPage extends Component
 
   @override
   Future<void> onLoad() async {
-    // TODO: implement onLoad
     super.onLoad();
     final gameInitialSize = game.size;
+
+    // Initialize microbit controller
+    await _microbitController.initialize();
+
     addAll([
       _graph = GraphComponent(
         fixedExpressions: game.level.expressions,
@@ -71,8 +81,31 @@ class GameLevelPage extends Component
         borderColor: const Color(0xffedffab),
       )
         ..anchor = Anchor.centerRight
-        ..position = Vector2(gameInitialSize.x / 2, gameInitialSize.y - 100),
+        ..position =
+            Vector2(gameInitialSize.x / 2 - 80, gameInitialSize.y - 100),
     ]);
+
+    // Add connect button to the component - initially visible
+    _connectButton = RoundedButton(
+      text: 'Conectar micro:bit',
+      action: toggleMicrobit,
+      color: const Color(0xff6ca1de),
+      borderColor: const Color(0xffabdeff),
+    )
+      ..anchor = Anchor.centerLeft
+      ..position = Vector2(gameInitialSize.x / 2 + 80, gameInitialSize.y - 100);
+    add(_connectButton);
+
+    // Create disconnect button but don't add it yet
+    _disconnectButton = RoundedButton(
+      text: 'Desconectar micro:bit',
+      action: toggleMicrobit,
+      color: const Color(0xff6ca1de),
+      borderColor: const Color(0xffabdeff),
+    )
+      ..anchor = Anchor.centerLeft
+      ..position = Vector2(gameInitialSize.x / 2 + 80, gameInitialSize.y - 100);
+    // We'll add this button only when needed
   }
 
   void addPositionValue(Vector2 position) {
@@ -88,17 +121,21 @@ class GameLevelPage extends Component
 
   @override
   void onPointerMove(PointerMoveEvent event) {
-    final newX = (event.localPosition.x)
-        .clamp(_sparky.size.x / 2, game.size.x - _sparky.size.x / 2);
-    _sparky.position = Vector2(newX, _sparky.position.y);
-    _graph.updateCurrentPosition(toScaledPosition(newX));
+    if (!usingMicrobit) {
+      final newX = (event.localPosition.x)
+          .clamp(_sparky.size.x / 2, game.size.x - _sparky.size.x / 2);
+      _sparky.position = Vector2(newX, _sparky.position.y);
+      _graph.updateCurrentPosition(toScaledPosition(newX));
+    }
   }
 
   @override
   void onDragUpdate(DragUpdateEvent event) {
-    final newX =
-        event.canvasEndPosition.x.clamp(0.0, game.size.x - _sparky.size.x);
-    _sparky.position = Vector2(newX, _sparky.position.y);
+    if (!usingMicrobit) {
+      final newX =
+          event.canvasEndPosition.x.clamp(0.0, game.size.x - _sparky.size.x);
+      _sparky.position = Vector2(newX, _sparky.position.y);
+    }
   }
 
   @override
@@ -131,5 +168,56 @@ class GameLevelPage extends Component
     _helperText.text =
         'Muestreo finalizado, presiona espacio para comenzar de nuevo o enter para continuar';
     finishedSampling = true;
+  }
+
+  /// Toggle between using micro:bit and mouse input
+  Future<void> toggleMicrobit() async {
+    if (usingMicrobit) {
+      // Disconnect microbit
+      await _microbitController.disconnect();
+      _microbitSubscription?.cancel();
+      _microbitSubscription = null;
+      usingMicrobit = false;
+
+      // Switch buttons
+      remove(_disconnectButton);
+      add(_connectButton);
+
+      _helperText.text = 'Usando el mouse para controlar';
+    } else {
+      // Connect to microbit
+      final connected = await _microbitController.connect();
+      if (connected) {
+        usingMicrobit = true;
+
+        // Switch buttons
+        remove(_connectButton);
+        add(_disconnectButton);
+
+        _helperText.text = 'Usando micro:bit para controlar';
+
+        // Subscribe to microbit data stream
+        _microbitSubscription = _microbitController.dataStream.listen((value) {
+          // Convert value from 0-1 to screen coordinates
+          final screenWidth = game.size.x - _sparky.size.x / 2;
+          final newX = (value * screenWidth)
+              .clamp(_sparky.size.x / 2, game.size.x - _sparky.size.x / 2);
+
+          // Update sprite position
+          _sparky.position = Vector2(newX, _sparky.position.y);
+          _graph.updateCurrentPosition(newX);
+        });
+      } else {
+        _helperText.text = 'Error al conectar con micro:bit';
+      }
+    }
+  }
+
+  @override
+  void onRemove() {
+    // Clean up resources
+    _microbitSubscription?.cancel();
+    _microbitController.dispose();
+    super.onRemove();
   }
 }
