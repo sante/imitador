@@ -11,5 +11,6 @@ class GameSessionSectionState with _$GameSessionSectionState {
     @Default(null) String? gameId,
     @Default(false) bool isConnected,
     @Default(null) Activity? activity,
+    @Default(null) String? creatorId,
   }) = _GameSessionSectionState;
 }

@@ -111,6 +111,9 @@ flutter:
     - assets/images/rating_4.png
     - assets/images/rating_4_5.png
     - assets/images/rating_5.png
+    - assets/images/medal_bronze.png
+    - assets/images/medal_gold.png
+    - assets/images/medal_silver.png
     - environments/
 
 flutter_gen:

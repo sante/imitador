@@ -6,6 +6,7 @@ class GameSessionRemoteSource {
   final HttpServiceDio _httpService;
 
   static const _urlJoin = '/v1/gameSessions/join';
+  static const _urlCreate = '/v1/gameSessions/create';
 
   GameSessionRemoteSource(this._httpService);
 
@@ -16,4 +17,10 @@ class GameSessionRemoteSource {
         serializer: (data) => GameSessionJoinResponse.fromJson(data),
       ))
           .getDataOrThrow();
+
+  Future<GameSessionJoinResponse> createGameSession(String activityId, String teacherId) async => (await _httpService.postAndProcessResponse(
+    _urlCreate,
+    data: GameSessionCreateRequest(activityId: activityId, teacherId: teacherId).toJson(),
+    serializer: (data) => GameSessionJoinResponse.fromJson(data),
+  )).getDataOrThrow();
 }

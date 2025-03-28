@@ -56,7 +56,8 @@ class SessionActivityLevelScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) =>
-      BlocBuilder<GameSessionSectionCubit, GameSessionSectionState>(
+      BlocSelector<GameSessionSectionCubit, GameSessionSectionState, Level?>(
+        selector: (state) => state.currentLevel,
         builder: (context, state) => _LevelContentScreen(
           onFinishedWithResult: (samples) {
             context
@@ -64,7 +65,7 @@ class SessionActivityLevelScreen extends StatelessWidget {
                 .addAttemptFromSamples(samples);
             context.router.replace(const SessionActivityResultsRoute());
           },
-          level: state.currentLevel!,
+          level: state!,
         ),
       );
 }

@@ -26,7 +26,7 @@ final dummyLevels = [
     secondsDuration: 10,
     minPosition: 0,
     maxPosition: 10,
-    expressions: [],
+    positionExpressions: [],
   ),
   Level(
     id: '2',
@@ -35,7 +35,7 @@ final dummyLevels = [
     secondsDuration: 10,
     minPosition: 0,
     maxPosition: 10,
-    expressions: [],
+    positionExpressions: [],
   ),
   Level(
     id: '3',
@@ -44,13 +44,13 @@ final dummyLevels = [
     secondsDuration: 10,
     minPosition: 0,
     maxPosition: 10,
-    expressions: [],
+    positionExpressions: [],
   ),
   Level(
     id: '4',
     name: "Se mueve se mueve",
     difficulty: null,
-    expressions: [],
+    positionExpressions: [],
     secondsDuration: 10,
     minPosition: 0,
     maxPosition: 10,

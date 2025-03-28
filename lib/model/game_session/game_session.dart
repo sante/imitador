@@ -8,7 +8,7 @@ class GameSession with _$GameSession {
   const factory GameSession({
     required String id,
     required String code,
-    required Teacher teacher,
+    required SessionTeacher teacher,
     required List<Player> players,
     required String activityId,
     required bool playing,
@@ -21,15 +21,15 @@ class GameSession with _$GameSession {
 }
 
 @freezed
-class Teacher with _$Teacher {
-  const factory Teacher({
+class SessionTeacher with _$SessionTeacher {
+  const factory SessionTeacher({
     required String id,
     required String name,
     String? socketId,
-  }) = _Teacher;
+  }) = _SessionTeacher;
 
-  factory Teacher.fromJson(Map<String, dynamic> json) =>
-      _$TeacherFromJson(json);
+  factory SessionTeacher.fromJson(Map<String, dynamic> json) =>
+      _$SessionTeacherFromJson(json);
 }
 
 @freezed

@@ -24,6 +24,7 @@ mixin _$GameSessionSectionState {
   String? get gameId => throw _privateConstructorUsedError;
   bool get isConnected => throw _privateConstructorUsedError;
   Activity? get activity => throw _privateConstructorUsedError;
+  String? get creatorId => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
@@ -34,7 +35,8 @@ mixin _$GameSessionSectionState {
             User? user,
             String? gameId,
             bool isConnected,
-            Activity? activity)
+            Activity? activity,
+            String? creatorId)
         state,
   }) =>
       throw _privateConstructorUsedError;
@@ -48,7 +50,8 @@ mixin _$GameSessionSectionState {
             User? user,
             String? gameId,
             bool isConnected,
-            Activity? activity)?
+            Activity? activity,
+            String? creatorId)?
         state,
   }) =>
       throw _privateConstructorUsedError;
@@ -62,7 +65,8 @@ mixin _$GameSessionSectionState {
             User? user,
             String? gameId,
             bool isConnected,
-            Activity? activity)?
+            Activity? activity,
+            String? creatorId)?
         state,
     required TResult orElse(),
   }) =>
@@ -103,7 +107,8 @@ abstract class $GameSessionSectionStateCopyWith<$Res> {
       User? user,
       String? gameId,
       bool isConnected,
-      Activity? activity});
+      Activity? activity,
+      String? creatorId});
 
   $GameSessionCopyWith<$Res>? get session;
   $LevelCopyWith<$Res>? get currentLevel;
@@ -133,6 +138,7 @@ class _$GameSessionSectionStateCopyWithImpl<$Res,
     Object? gameId = freezed,
     Object? isConnected = null,
     Object? activity = freezed,
+    Object? creatorId = freezed,
   }) {
     return _then(_value.copyWith(
       code: freezed == code
@@ -167,6 +173,10 @@ class _$GameSessionSectionStateCopyWithImpl<$Res,
           ? _value.activity
           : activity // ignore: cast_nullable_to_non_nullable
               as Activity?,
+      creatorId: freezed == creatorId
+          ? _value.creatorId
+          : creatorId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -236,7 +246,8 @@ abstract class _$$GameSessionSectionStateImplCopyWith<$Res>
       User? user,
       String? gameId,
       bool isConnected,
-      Activity? activity});
+      Activity? activity,
+      String? creatorId});
 
   @override
   $GameSessionCopyWith<$Res>? get session;
@@ -269,6 +280,7 @@ class __$$GameSessionSectionStateImplCopyWithImpl<$Res>
     Object? gameId = freezed,
     Object? isConnected = null,
     Object? activity = freezed,
+    Object? creatorId = freezed,
   }) {
     return _then(_$GameSessionSectionStateImpl(
       code: freezed == code
@@ -303,6 +315,10 @@ class __$$GameSessionSectionStateImplCopyWithImpl<$Res>
           ? _value.activity
           : activity // ignore: cast_nullable_to_non_nullable
               as Activity?,
+      creatorId: freezed == creatorId
+          ? _value.creatorId
+          : creatorId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -318,7 +334,8 @@ class _$GameSessionSectionStateImpl implements _GameSessionSectionState {
       this.user = null,
       this.gameId = null,
       this.isConnected = false,
-      this.activity = null})
+      this.activity = null,
+      this.creatorId = null})
       : _attempts = attempts;
 
   @override
@@ -351,10 +368,13 @@ class _$GameSessionSectionStateImpl implements _GameSessionSectionState {
   @override
   @JsonKey()
   final Activity? activity;
+  @override
+  @JsonKey()
+  final String? creatorId;
 
   @override
   String toString() {
-    return 'GameSessionSectionState.state(code: $code, session: $session, attempts: $attempts, currentLevel: $currentLevel, user: $user, gameId: $gameId, isConnected: $isConnected, activity: $activity)';
+    return 'GameSessionSectionState.state(code: $code, session: $session, attempts: $attempts, currentLevel: $currentLevel, user: $user, gameId: $gameId, isConnected: $isConnected, activity: $activity, creatorId: $creatorId)';
   }
 
   @override
@@ -372,7 +392,9 @@ class _$GameSessionSectionStateImpl implements _GameSessionSectionState {
             (identical(other.isConnected, isConnected) ||
                 other.isConnected == isConnected) &&
             (identical(other.activity, activity) ||
-                other.activity == activity));
+                other.activity == activity) &&
+            (identical(other.creatorId, creatorId) ||
+                other.creatorId == creatorId));
   }
 
   @override
@@ -385,7 +407,8 @@ class _$GameSessionSectionStateImpl implements _GameSessionSectionState {
       user,
       gameId,
       isConnected,
-      activity);
+      activity,
+      creatorId);
 
   @JsonKey(ignore: true)
   @override
@@ -405,11 +428,12 @@ class _$GameSessionSectionStateImpl implements _GameSessionSectionState {
             User? user,
             String? gameId,
             bool isConnected,
-            Activity? activity)
+            Activity? activity,
+            String? creatorId)
         state,
   }) {
     return state(code, session, attempts, currentLevel, user, gameId,
-        isConnected, activity);
+        isConnected, activity, creatorId);
   }
 
   @override
@@ -423,11 +447,12 @@ class _$GameSessionSectionStateImpl implements _GameSessionSectionState {
             User? user,
             String? gameId,
             bool isConnected,
-            Activity? activity)?
+            Activity? activity,
+            String? creatorId)?
         state,
   }) {
     return state?.call(code, session, attempts, currentLevel, user, gameId,
-        isConnected, activity);
+        isConnected, activity, creatorId);
   }
 
   @override
@@ -441,13 +466,14 @@ class _$GameSessionSectionStateImpl implements _GameSessionSectionState {
             User? user,
             String? gameId,
             bool isConnected,
-            Activity? activity)?
+            Activity? activity,
+            String? creatorId)?
         state,
     required TResult orElse(),
   }) {
     if (state != null) {
       return state(code, session, attempts, currentLevel, user, gameId,
-          isConnected, activity);
+          isConnected, activity, creatorId);
     }
     return orElse();
   }
@@ -490,7 +516,8 @@ abstract class _GameSessionSectionState implements GameSessionSectionState {
       final User? user,
       final String? gameId,
       final bool isConnected,
-      final Activity? activity}) = _$GameSessionSectionStateImpl;
+      final Activity? activity,
+      final String? creatorId}) = _$GameSessionSectionStateImpl;
 
   @override
   String? get code;
@@ -508,6 +535,8 @@ abstract class _GameSessionSectionState implements GameSessionSectionState {
   bool get isConnected;
   @override
   Activity? get activity;
+  @override
+  String? get creatorId;
   @override
   @JsonKey(ignore: true)
   _$$GameSessionSectionStateImplCopyWith<_$GameSessionSectionStateImpl>

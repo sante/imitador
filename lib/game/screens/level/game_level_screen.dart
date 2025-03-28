@@ -13,6 +13,7 @@ import 'package:imitador/game/components/graph/graph_component.dart';
 import 'package:imitador/game/components/sprites/sparky.dart';
 import 'package:imitador/game/simon_game.dart';
 import 'package:imitador/model/enum/difficulty.dart';
+import 'package:math_expressions/math_expressions.dart';
 
 class GameLevelPage extends Component
     with
@@ -49,7 +50,9 @@ class GameLevelPage extends Component
 
     addAll([
       _graph = GraphComponent(
-        fixedExpressions: game.level.expressions,
+        fixedExpressions: game.level.positionExpressions
+            .map((it) => Parser().parse(it))
+            .toList(),
         onFinishedSampling: finishSampling,
         secondsDuration: game.level.secondsDuration.toInt(),
         distanceRange: Pair(game.level.minPosition, game.level.maxPosition),

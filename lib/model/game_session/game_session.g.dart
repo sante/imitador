@@ -10,7 +10,7 @@ _$GameSessionImpl _$$GameSessionImplFromJson(Map<String, dynamic> json) =>
     _$GameSessionImpl(
       id: json['id'] as String,
       code: json['code'] as String,
-      teacher: Teacher.fromJson(json['teacher'] as Map<String, dynamic>),
+      teacher: SessionTeacher.fromJson(json['teacher'] as Map<String, dynamic>),
       players: (json['players'] as List<dynamic>)
           .map((e) => Player.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -32,14 +32,15 @@ Map<String, dynamic> _$$GameSessionImplToJson(_$GameSessionImpl instance) =>
       'userName': instance.userName,
     };
 
-_$TeacherImpl _$$TeacherImplFromJson(Map<String, dynamic> json) =>
-    _$TeacherImpl(
+_$SessionTeacherImpl _$$SessionTeacherImplFromJson(Map<String, dynamic> json) =>
+    _$SessionTeacherImpl(
       id: json['id'] as String,
       name: json['name'] as String,
       socketId: json['socketId'] as String?,
     );
 
-Map<String, dynamic> _$$TeacherImplToJson(_$TeacherImpl instance) =>
+Map<String, dynamic> _$$SessionTeacherImplToJson(
+        _$SessionTeacherImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

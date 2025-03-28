@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:imitador/core/repository/session_repository.dart';
 import 'package:imitador/model/level/level.dart';
-import 'package:imitador/ui/screens/create_session/create_session_screen.dart';
+import 'package:imitador/ui/screens/game_session/create_session_screen.dart';
 import 'package:imitador/ui/screens/game_session/game_session_lobby_screen.dart';
 import 'package:imitador/ui/screens/game_session/game_session_test_screen.dart';
 import 'package:imitador/ui/screens/join_session/join_session_screen.dart';

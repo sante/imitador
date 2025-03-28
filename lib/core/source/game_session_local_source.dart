@@ -10,6 +10,7 @@ class GameSessionLocalSource extends HiveBaseSource<String, GameSession> {
   static const _storageGameSessionPrefix = 'GameSessionLocalSource';
   static const _keySessionCode = '$_storageGameSessionPrefix.code';
   static const _keyGameId = '$_storageGameSessionPrefix.gameId';
+  static const _keyCreatorId = '$_storageGameSessionPrefix.creatorId';
 
   late SourceOfTruth<String, String> _gameSessionCodeStorage;
   late SourceOfTruth<String, String> _gameIdStorage;
@@ -29,11 +30,16 @@ class GameSessionLocalSource extends HiveBaseSource<String, GameSession> {
 
   Stream<String?> getGameId() => _gameIdStorage.reader(_keyGameId);
 
+  Stream<String?> getCreatorId() => _gameIdStorage.reader(_keyCreatorId);
+
   Future<void> saveGameSessionCode(String? code) =>
       _gameSessionCodeStorage.write(_keySessionCode, code);
 
   Future<void> saveGameId(String? gameId) =>
       _gameIdStorage.write(_keyGameId, gameId);
+
+  Future<void> saveCreatorId(String? creatorId) =>
+      _gameIdStorage.write(_keyCreatorId, creatorId);
 
   Future<void> processSocketEvent(
       ServerGameEvents event, Map<String, dynamic> data) async {

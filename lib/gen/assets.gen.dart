@@ -32,6 +32,18 @@ class $AssetsImagesGen {
   AssetGenImage get iconTeacher =>
       const AssetGenImage('assets/images/icon_teacher.png');
 
+  /// File path: assets/images/medal_bronze.png
+  AssetGenImage get medalBronze =>
+      const AssetGenImage('assets/images/medal_bronze.png');
+
+  /// File path: assets/images/medal_gold.png
+  AssetGenImage get medalGold =>
+      const AssetGenImage('assets/images/medal_gold.png');
+
+  /// File path: assets/images/medal_silver.png
+  AssetGenImage get medalSilver =>
+      const AssetGenImage('assets/images/medal_silver.png');
+
   /// File path: assets/images/rating_0_5.png
   AssetGenImage get rating05 =>
       const AssetGenImage('assets/images/rating_0_5.png');
@@ -82,6 +94,9 @@ class $AssetsImagesGen {
         backgroundSimple,
         iconStudent,
         iconTeacher,
+        medalBronze,
+        medalGold,
+        medalSilver,
         rating05,
         rating1,
         rating15,

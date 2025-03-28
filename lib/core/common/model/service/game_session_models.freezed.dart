@@ -162,6 +162,182 @@ abstract class _GameSessionJoinRequest implements GameSessionJoinRequest {
       get copyWith => throw _privateConstructorUsedError;
 }
 
+GameSessionCreateRequest _$GameSessionCreateRequestFromJson(
+    Map<String, dynamic> json) {
+  return _GameSessionCreateRequest.fromJson(json);
+}
+
+/// @nodoc
+mixin _$GameSessionCreateRequest {
+  @JsonKey(name: 'activityId')
+  String get activityId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'teacherId')
+  String get teacherId => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $GameSessionCreateRequestCopyWith<GameSessionCreateRequest> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $GameSessionCreateRequestCopyWith<$Res> {
+  factory $GameSessionCreateRequestCopyWith(GameSessionCreateRequest value,
+          $Res Function(GameSessionCreateRequest) then) =
+      _$GameSessionCreateRequestCopyWithImpl<$Res, GameSessionCreateRequest>;
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'activityId') String activityId,
+      @JsonKey(name: 'teacherId') String teacherId});
+}
+
+/// @nodoc
+class _$GameSessionCreateRequestCopyWithImpl<$Res,
+        $Val extends GameSessionCreateRequest>
+    implements $GameSessionCreateRequestCopyWith<$Res> {
+  _$GameSessionCreateRequestCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? activityId = null,
+    Object? teacherId = null,
+  }) {
+    return _then(_value.copyWith(
+      activityId: null == activityId
+          ? _value.activityId
+          : activityId // ignore: cast_nullable_to_non_nullable
+              as String,
+      teacherId: null == teacherId
+          ? _value.teacherId
+          : teacherId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$GameSessionCreateRequestImplCopyWith<$Res>
+    implements $GameSessionCreateRequestCopyWith<$Res> {
+  factory _$$GameSessionCreateRequestImplCopyWith(
+          _$GameSessionCreateRequestImpl value,
+          $Res Function(_$GameSessionCreateRequestImpl) then) =
+      __$$GameSessionCreateRequestImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'activityId') String activityId,
+      @JsonKey(name: 'teacherId') String teacherId});
+}
+
+/// @nodoc
+class __$$GameSessionCreateRequestImplCopyWithImpl<$Res>
+    extends _$GameSessionCreateRequestCopyWithImpl<$Res,
+        _$GameSessionCreateRequestImpl>
+    implements _$$GameSessionCreateRequestImplCopyWith<$Res> {
+  __$$GameSessionCreateRequestImplCopyWithImpl(
+      _$GameSessionCreateRequestImpl _value,
+      $Res Function(_$GameSessionCreateRequestImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? activityId = null,
+    Object? teacherId = null,
+  }) {
+    return _then(_$GameSessionCreateRequestImpl(
+      activityId: null == activityId
+          ? _value.activityId
+          : activityId // ignore: cast_nullable_to_non_nullable
+              as String,
+      teacherId: null == teacherId
+          ? _value.teacherId
+          : teacherId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+@JsonSerializable()
+class _$GameSessionCreateRequestImpl implements _GameSessionCreateRequest {
+  _$GameSessionCreateRequestImpl(
+      {@JsonKey(name: 'activityId') required this.activityId,
+      @JsonKey(name: 'teacherId') required this.teacherId});
+
+  factory _$GameSessionCreateRequestImpl.fromJson(Map<String, dynamic> json) =>
+      _$$GameSessionCreateRequestImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'activityId')
+  final String activityId;
+  @override
+  @JsonKey(name: 'teacherId')
+  final String teacherId;
+
+  @override
+  String toString() {
+    return 'GameSessionCreateRequest(activityId: $activityId, teacherId: $teacherId)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GameSessionCreateRequestImpl &&
+            (identical(other.activityId, activityId) ||
+                other.activityId == activityId) &&
+            (identical(other.teacherId, teacherId) ||
+                other.teacherId == teacherId));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, activityId, teacherId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GameSessionCreateRequestImplCopyWith<_$GameSessionCreateRequestImpl>
+      get copyWith => __$$GameSessionCreateRequestImplCopyWithImpl<
+          _$GameSessionCreateRequestImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$GameSessionCreateRequestImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _GameSessionCreateRequest implements GameSessionCreateRequest {
+  factory _GameSessionCreateRequest(
+          {@JsonKey(name: 'activityId') required final String activityId,
+          @JsonKey(name: 'teacherId') required final String teacherId}) =
+      _$GameSessionCreateRequestImpl;
+
+  factory _GameSessionCreateRequest.fromJson(Map<String, dynamic> json) =
+      _$GameSessionCreateRequestImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'activityId')
+  String get activityId;
+  @override
+  @JsonKey(name: 'teacherId')
+  String get teacherId;
+  @override
+  @JsonKey(ignore: true)
+  _$$GameSessionCreateRequestImplCopyWith<_$GameSessionCreateRequestImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
 GameSessionJoinResponse _$GameSessionJoinResponseFromJson(
     Map<String, dynamic> json) {
   return _GameSessionJoinResponse.fromJson(json);
@@ -171,6 +347,8 @@ GameSessionJoinResponse _$GameSessionJoinResponseFromJson(
 mixin _$GameSessionJoinResponse {
   String get id => throw _privateConstructorUsedError;
   String get activityId => throw _privateConstructorUsedError;
+  String get teacherId => throw _privateConstructorUsedError;
+  String get code => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -184,7 +362,7 @@ abstract class $GameSessionJoinResponseCopyWith<$Res> {
           $Res Function(GameSessionJoinResponse) then) =
       _$GameSessionJoinResponseCopyWithImpl<$Res, GameSessionJoinResponse>;
   @useResult
-  $Res call({String id, String activityId});
+  $Res call({String id, String activityId, String teacherId, String code});
 }
 
 /// @nodoc
@@ -203,6 +381,8 @@ class _$GameSessionJoinResponseCopyWithImpl<$Res,
   $Res call({
     Object? id = null,
     Object? activityId = null,
+    Object? teacherId = null,
+    Object? code = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -212,6 +392,14 @@ class _$GameSessionJoinResponseCopyWithImpl<$Res,
       activityId: null == activityId
           ? _value.activityId
           : activityId // ignore: cast_nullable_to_non_nullable
+              as String,
+      teacherId: null == teacherId
+          ? _value.teacherId
+          : teacherId // ignore: cast_nullable_to_non_nullable
+              as String,
+      code: null == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -226,7 +414,7 @@ abstract class _$$GameSessionJoinResponseImplCopyWith<$Res>
       __$$GameSessionJoinResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String activityId});
+  $Res call({String id, String activityId, String teacherId, String code});
 }
 
 /// @nodoc
@@ -244,6 +432,8 @@ class __$$GameSessionJoinResponseImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? activityId = null,
+    Object? teacherId = null,
+    Object? code = null,
   }) {
     return _then(_$GameSessionJoinResponseImpl(
       id: null == id
@@ -254,6 +444,14 @@ class __$$GameSessionJoinResponseImplCopyWithImpl<$Res>
           ? _value.activityId
           : activityId // ignore: cast_nullable_to_non_nullable
               as String,
+      teacherId: null == teacherId
+          ? _value.teacherId
+          : teacherId // ignore: cast_nullable_to_non_nullable
+              as String,
+      code: null == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -262,7 +460,11 @@ class __$$GameSessionJoinResponseImplCopyWithImpl<$Res>
 
 @JsonSerializable()
 class _$GameSessionJoinResponseImpl implements _GameSessionJoinResponse {
-  _$GameSessionJoinResponseImpl({required this.id, required this.activityId});
+  _$GameSessionJoinResponseImpl(
+      {required this.id,
+      required this.activityId,
+      required this.teacherId,
+      required this.code});
 
   factory _$GameSessionJoinResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$GameSessionJoinResponseImplFromJson(json);
@@ -271,10 +473,14 @@ class _$GameSessionJoinResponseImpl implements _GameSessionJoinResponse {
   final String id;
   @override
   final String activityId;
+  @override
+  final String teacherId;
+  @override
+  final String code;
 
   @override
   String toString() {
-    return 'GameSessionJoinResponse(id: $id, activityId: $activityId)';
+    return 'GameSessionJoinResponse(id: $id, activityId: $activityId, teacherId: $teacherId, code: $code)';
   }
 
   @override
@@ -284,12 +490,15 @@ class _$GameSessionJoinResponseImpl implements _GameSessionJoinResponse {
             other is _$GameSessionJoinResponseImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.activityId, activityId) ||
-                other.activityId == activityId));
+                other.activityId == activityId) &&
+            (identical(other.teacherId, teacherId) ||
+                other.teacherId == teacherId) &&
+            (identical(other.code, code) || other.code == code));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, activityId);
+  int get hashCode => Object.hash(runtimeType, id, activityId, teacherId, code);
 
   @JsonKey(ignore: true)
   @override
@@ -309,7 +518,9 @@ class _$GameSessionJoinResponseImpl implements _GameSessionJoinResponse {
 abstract class _GameSessionJoinResponse implements GameSessionJoinResponse {
   factory _GameSessionJoinResponse(
       {required final String id,
-      required final String activityId}) = _$GameSessionJoinResponseImpl;
+      required final String activityId,
+      required final String teacherId,
+      required final String code}) = _$GameSessionJoinResponseImpl;
 
   factory _GameSessionJoinResponse.fromJson(Map<String, dynamic> json) =
       _$GameSessionJoinResponseImpl.fromJson;
@@ -318,6 +529,10 @@ abstract class _GameSessionJoinResponse implements GameSessionJoinResponse {
   String get id;
   @override
   String get activityId;
+  @override
+  String get teacherId;
+  @override
+  String get code;
   @override
   @JsonKey(ignore: true)
   _$$GameSessionJoinResponseImplCopyWith<_$GameSessionJoinResponseImpl>

@@ -17,11 +17,25 @@ sealed class GameSessionJoinRequest with _$GameSessionJoinRequest {
 }
 
 @freezed
+sealed class GameSessionCreateRequest with _$GameSessionCreateRequest {
+  @JsonSerializable()
+  factory GameSessionCreateRequest({
+    @JsonKey(name: 'activityId') required String activityId,
+    @JsonKey(name: 'teacherId') required String teacherId,
+  }) = _GameSessionCreateRequest;
+
+  factory GameSessionCreateRequest.fromJson(Map<String, dynamic> json) =>
+      _$GameSessionCreateRequestFromJson(json);
+}
+
+@freezed
 class GameSessionJoinResponse with _$GameSessionJoinResponse {
   @JsonSerializable()
   factory GameSessionJoinResponse({
     required String id,
     required String activityId,
+    required String teacherId,
+    required String code,
   }) = _GameSessionJoinResponse;
 
   factory GameSessionJoinResponse.fromJson(Map<String, dynamic> json) =>

@@ -22,7 +22,7 @@ GameSession _$GameSessionFromJson(Map<String, dynamic> json) {
 mixin _$GameSession {
   String get id => throw _privateConstructorUsedError;
   String get code => throw _privateConstructorUsedError;
-  Teacher get teacher => throw _privateConstructorUsedError;
+  SessionTeacher get teacher => throw _privateConstructorUsedError;
   List<Player> get players => throw _privateConstructorUsedError;
   String get activityId => throw _privateConstructorUsedError;
   bool get playing => throw _privateConstructorUsedError;
@@ -44,14 +44,14 @@ abstract class $GameSessionCopyWith<$Res> {
   $Res call(
       {String id,
       String code,
-      Teacher teacher,
+      SessionTeacher teacher,
       List<Player> players,
       String activityId,
       bool playing,
       String? userId,
       String? userName});
 
-  $TeacherCopyWith<$Res> get teacher;
+  $SessionTeacherCopyWith<$Res> get teacher;
 }
 
 /// @nodoc
@@ -88,7 +88,7 @@ class _$GameSessionCopyWithImpl<$Res, $Val extends GameSession>
       teacher: null == teacher
           ? _value.teacher
           : teacher // ignore: cast_nullable_to_non_nullable
-              as Teacher,
+              as SessionTeacher,
       players: null == players
           ? _value.players
           : players // ignore: cast_nullable_to_non_nullable
@@ -114,8 +114,8 @@ class _$GameSessionCopyWithImpl<$Res, $Val extends GameSession>
 
   @override
   @pragma('vm:prefer-inline')
-  $TeacherCopyWith<$Res> get teacher {
-    return $TeacherCopyWith<$Res>(_value.teacher, (value) {
+  $SessionTeacherCopyWith<$Res> get teacher {
+    return $SessionTeacherCopyWith<$Res>(_value.teacher, (value) {
       return _then(_value.copyWith(teacher: value) as $Val);
     });
   }
@@ -132,7 +132,7 @@ abstract class _$$GameSessionImplCopyWith<$Res>
   $Res call(
       {String id,
       String code,
-      Teacher teacher,
+      SessionTeacher teacher,
       List<Player> players,
       String activityId,
       bool playing,
@@ -140,7 +140,7 @@ abstract class _$$GameSessionImplCopyWith<$Res>
       String? userName});
 
   @override
-  $TeacherCopyWith<$Res> get teacher;
+  $SessionTeacherCopyWith<$Res> get teacher;
 }
 
 /// @nodoc
@@ -175,7 +175,7 @@ class __$$GameSessionImplCopyWithImpl<$Res>
       teacher: null == teacher
           ? _value.teacher
           : teacher // ignore: cast_nullable_to_non_nullable
-              as Teacher,
+              as SessionTeacher,
       players: null == players
           ? _value._players
           : players // ignore: cast_nullable_to_non_nullable
@@ -222,7 +222,7 @@ class _$GameSessionImpl implements _GameSession {
   @override
   final String code;
   @override
-  final Teacher teacher;
+  final SessionTeacher teacher;
   final List<Player> _players;
   @override
   List<Player> get players {
@@ -293,7 +293,7 @@ abstract class _GameSession implements GameSession {
   const factory _GameSession(
       {required final String id,
       required final String code,
-      required final Teacher teacher,
+      required final SessionTeacher teacher,
       required final List<Player> players,
       required final String activityId,
       required final bool playing,
@@ -308,7 +308,7 @@ abstract class _GameSession implements GameSession {
   @override
   String get code;
   @override
-  Teacher get teacher;
+  SessionTeacher get teacher;
   @override
   List<Player> get players;
   @override
@@ -325,33 +325,35 @@ abstract class _GameSession implements GameSession {
       throw _privateConstructorUsedError;
 }
 
-Teacher _$TeacherFromJson(Map<String, dynamic> json) {
-  return _Teacher.fromJson(json);
+SessionTeacher _$SessionTeacherFromJson(Map<String, dynamic> json) {
+  return _SessionTeacher.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Teacher {
+mixin _$SessionTeacher {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get socketId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $TeacherCopyWith<Teacher> get copyWith => throw _privateConstructorUsedError;
+  $SessionTeacherCopyWith<SessionTeacher> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $TeacherCopyWith<$Res> {
-  factory $TeacherCopyWith(Teacher value, $Res Function(Teacher) then) =
-      _$TeacherCopyWithImpl<$Res, Teacher>;
+abstract class $SessionTeacherCopyWith<$Res> {
+  factory $SessionTeacherCopyWith(
+          SessionTeacher value, $Res Function(SessionTeacher) then) =
+      _$SessionTeacherCopyWithImpl<$Res, SessionTeacher>;
   @useResult
   $Res call({String id, String name, String? socketId});
 }
 
 /// @nodoc
-class _$TeacherCopyWithImpl<$Res, $Val extends Teacher>
-    implements $TeacherCopyWith<$Res> {
-  _$TeacherCopyWithImpl(this._value, this._then);
+class _$SessionTeacherCopyWithImpl<$Res, $Val extends SessionTeacher>
+    implements $SessionTeacherCopyWith<$Res> {
+  _$SessionTeacherCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -383,21 +385,22 @@ class _$TeacherCopyWithImpl<$Res, $Val extends Teacher>
 }
 
 /// @nodoc
-abstract class _$$TeacherImplCopyWith<$Res> implements $TeacherCopyWith<$Res> {
-  factory _$$TeacherImplCopyWith(
-          _$TeacherImpl value, $Res Function(_$TeacherImpl) then) =
-      __$$TeacherImplCopyWithImpl<$Res>;
+abstract class _$$SessionTeacherImplCopyWith<$Res>
+    implements $SessionTeacherCopyWith<$Res> {
+  factory _$$SessionTeacherImplCopyWith(_$SessionTeacherImpl value,
+          $Res Function(_$SessionTeacherImpl) then) =
+      __$$SessionTeacherImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String id, String name, String? socketId});
 }
 
 /// @nodoc
-class __$$TeacherImplCopyWithImpl<$Res>
-    extends _$TeacherCopyWithImpl<$Res, _$TeacherImpl>
-    implements _$$TeacherImplCopyWith<$Res> {
-  __$$TeacherImplCopyWithImpl(
-      _$TeacherImpl _value, $Res Function(_$TeacherImpl) _then)
+class __$$SessionTeacherImplCopyWithImpl<$Res>
+    extends _$SessionTeacherCopyWithImpl<$Res, _$SessionTeacherImpl>
+    implements _$$SessionTeacherImplCopyWith<$Res> {
+  __$$SessionTeacherImplCopyWithImpl(
+      _$SessionTeacherImpl _value, $Res Function(_$SessionTeacherImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -407,7 +410,7 @@ class __$$TeacherImplCopyWithImpl<$Res>
     Object? name = null,
     Object? socketId = freezed,
   }) {
-    return _then(_$TeacherImpl(
+    return _then(_$SessionTeacherImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -426,11 +429,12 @@ class __$$TeacherImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$TeacherImpl implements _Teacher {
-  const _$TeacherImpl({required this.id, required this.name, this.socketId});
+class _$SessionTeacherImpl implements _SessionTeacher {
+  const _$SessionTeacherImpl(
+      {required this.id, required this.name, this.socketId});
 
-  factory _$TeacherImpl.fromJson(Map<String, dynamic> json) =>
-      _$$TeacherImplFromJson(json);
+  factory _$SessionTeacherImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SessionTeacherImplFromJson(json);
 
   @override
   final String id;
@@ -441,14 +445,14 @@ class _$TeacherImpl implements _Teacher {
 
   @override
   String toString() {
-    return 'Teacher(id: $id, name: $name, socketId: $socketId)';
+    return 'SessionTeacher(id: $id, name: $name, socketId: $socketId)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TeacherImpl &&
+            other is _$SessionTeacherImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.socketId, socketId) ||
@@ -462,24 +466,26 @@ class _$TeacherImpl implements _Teacher {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$TeacherImplCopyWith<_$TeacherImpl> get copyWith =>
-      __$$TeacherImplCopyWithImpl<_$TeacherImpl>(this, _$identity);
+  _$$SessionTeacherImplCopyWith<_$SessionTeacherImpl> get copyWith =>
+      __$$SessionTeacherImplCopyWithImpl<_$SessionTeacherImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$TeacherImplToJson(
+    return _$$SessionTeacherImplToJson(
       this,
     );
   }
 }
 
-abstract class _Teacher implements Teacher {
-  const factory _Teacher(
+abstract class _SessionTeacher implements SessionTeacher {
+  const factory _SessionTeacher(
       {required final String id,
       required final String name,
-      final String? socketId}) = _$TeacherImpl;
+      final String? socketId}) = _$SessionTeacherImpl;
 
-  factory _Teacher.fromJson(Map<String, dynamic> json) = _$TeacherImpl.fromJson;
+  factory _SessionTeacher.fromJson(Map<String, dynamic> json) =
+      _$SessionTeacherImpl.fromJson;
 
   @override
   String get id;
@@ -489,7 +495,7 @@ abstract class _Teacher implements Teacher {
   String? get socketId;
   @override
   @JsonKey(ignore: true)
-  _$$TeacherImplCopyWith<_$TeacherImpl> get copyWith =>
+  _$$SessionTeacherImplCopyWith<_$SessionTeacherImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

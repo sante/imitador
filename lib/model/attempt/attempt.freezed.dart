@@ -26,8 +26,7 @@ mixin _$Attempt {
   List<double> get plotPointsX => throw _privateConstructorUsedError;
   List<double> get plotPointsY => throw _privateConstructorUsedError;
   InterfaceType get interfaceType => throw _privateConstructorUsedError;
-  @LevelExpressionsConverter()
-  List<Expression> get expressions => throw _privateConstructorUsedError;
+  List<String> get expressions => throw _privateConstructorUsedError;
   String get levelId => throw _privateConstructorUsedError;
   Level get level => throw _privateConstructorUsedError;
   String? get playerId => throw _privateConstructorUsedError;
@@ -50,7 +49,7 @@ abstract class $AttemptCopyWith<$Res> {
       List<double> plotPointsX,
       List<double> plotPointsY,
       InterfaceType interfaceType,
-      @LevelExpressionsConverter() List<Expression> expressions,
+      List<String> expressions,
       String levelId,
       Level level,
       String? playerId,
@@ -112,7 +111,7 @@ class _$AttemptCopyWithImpl<$Res, $Val extends Attempt>
       expressions: null == expressions
           ? _value.expressions
           : expressions // ignore: cast_nullable_to_non_nullable
-              as List<Expression>,
+              as List<String>,
       levelId: null == levelId
           ? _value.levelId
           : levelId // ignore: cast_nullable_to_non_nullable
@@ -155,7 +154,7 @@ abstract class _$$AttemptImplCopyWith<$Res> implements $AttemptCopyWith<$Res> {
       List<double> plotPointsX,
       List<double> plotPointsY,
       InterfaceType interfaceType,
-      @LevelExpressionsConverter() List<Expression> expressions,
+      List<String> expressions,
       String levelId,
       Level level,
       String? playerId,
@@ -216,7 +215,7 @@ class __$$AttemptImplCopyWithImpl<$Res>
       expressions: null == expressions
           ? _value._expressions
           : expressions // ignore: cast_nullable_to_non_nullable
-              as List<Expression>,
+              as List<String>,
       levelId: null == levelId
           ? _value.levelId
           : levelId // ignore: cast_nullable_to_non_nullable
@@ -247,7 +246,7 @@ class _$AttemptImpl implements _Attempt {
       required final List<double> plotPointsX,
       required final List<double> plotPointsY,
       required this.interfaceType,
-      @LevelExpressionsConverter() required final List<Expression> expressions,
+      required final List<String> expressions,
       required this.levelId,
       required this.level,
       required this.playerId,
@@ -283,10 +282,9 @@ class _$AttemptImpl implements _Attempt {
 
   @override
   final InterfaceType interfaceType;
-  final List<Expression> _expressions;
+  final List<String> _expressions;
   @override
-  @LevelExpressionsConverter()
-  List<Expression> get expressions {
+  List<String> get expressions {
     if (_expressions is EqualUnmodifiableListView) return _expressions;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_expressions);
@@ -368,7 +366,7 @@ abstract class _Attempt implements Attempt {
       required final List<double> plotPointsX,
       required final List<double> plotPointsY,
       required final InterfaceType interfaceType,
-      @LevelExpressionsConverter() required final List<Expression> expressions,
+      required final List<String> expressions,
       required final String levelId,
       required final Level level,
       required final String? playerId,
@@ -389,8 +387,7 @@ abstract class _Attempt implements Attempt {
   @override
   InterfaceType get interfaceType;
   @override
-  @LevelExpressionsConverter()
-  List<Expression> get expressions;
+  List<String> get expressions;
   @override
   String get levelId;
   @override

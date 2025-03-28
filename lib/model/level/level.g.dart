@@ -15,8 +15,8 @@ _$LevelImpl _$$LevelImplFromJson(Map<String, dynamic> json) => _$LevelImpl(
       secondsDuration: (json['duration'] as num).toDouble(),
       type: $enumDecodeNullable(_$LevelTypeEnumMap, json['type']) ??
           LevelType.position,
-      expressions: (json['expressions'] as List<dynamic>)
-          .map((e) => const ExpressionConverter().fromJson(e as String))
+      positionExpressions: (json['positionExpressions'] as List<dynamic>)
+          .map((e) => e as String)
           .toList(),
     );
 
@@ -29,8 +29,7 @@ Map<String, dynamic> _$$LevelImplToJson(_$LevelImpl instance) =>
       'maxPosition': instance.maxPosition,
       'duration': instance.secondsDuration,
       'type': _$LevelTypeEnumMap[instance.type]!,
-      'expressions':
-          instance.expressions.map(const ExpressionConverter().toJson).toList(),
+      'positionExpressions': instance.positionExpressions,
     };
 
 const _$DifficultyEnumMap = {

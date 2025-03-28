@@ -33,11 +33,22 @@ class GameSessionRepository {
 
     await _gameSessionLocalSource.saveGameSessionCode(code);
     await _gameSessionLocalSource.saveGameId(response.id);
+    await _gameSessionLocalSource.saveCreatorId(response.teacherId);
 
     return response;
   }
 
+  Future<void> createGameSession(String activityId, String teacherId) async {
+    final response = await _gameSessionRemoteSource.createGameSession(activityId, teacherId);
+
+    await _gameSessionLocalSource.saveGameSessionCode(response.code);
+    await _gameSessionLocalSource.saveGameId(response.id);
+    await _gameSessionLocalSource.saveCreatorId(response.teacherId);
+  }
+
   Stream<String?> getGameId() => _gameSessionLocalSource.getGameId();
+
+  Stream<String?> getCreatorId() => _gameSessionLocalSource.getCreatorId();
 
   Future<void> clearGameSessionData() async {
     await _gameSessionLocalSource.clearGameSessionData();

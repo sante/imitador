@@ -6,6 +6,7 @@ import 'package:imitador/gen/assets.gen.dart';
 import 'package:imitador/model/activity/activity.dart';
 import 'package:imitador/model/enum/user_type.dart';
 import 'package:imitador/ui/theme/app_theme.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class LevelCard extends StatelessWidget {
   final String label;
@@ -36,10 +37,12 @@ class LevelCard extends StatelessWidget {
 class ActivityCard extends StatelessWidget {
   final Activity activity;
   final VoidCallback onPressed;
+  final bool selected;
 
   const ActivityCard({
     required this.activity,
     required this.onPressed,
+    this.selected = false,
     super.key,
   });
 
@@ -64,6 +67,12 @@ class ActivityCard extends StatelessWidget {
                   color: context.theme.colorScheme.primary.getShade(400),
                 ),
               ),
+              if (selected)
+                PhosphorIcon(
+                  PhosphorIcons.check(),
+                  color: context.theme.colorScheme.primary.getShade(400),
+                  size: 24.r,
+                ),
             ],
           ),
         ),

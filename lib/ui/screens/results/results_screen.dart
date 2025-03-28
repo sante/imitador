@@ -250,7 +250,8 @@ class GraphPainter extends CustomPainter {
             .zip(attempt.plotPointsY, (x, y) => Pair(x, y))
             .toList(),
         secondsDuration: attempt.level.secondsDuration,
-        fixedExpressions: attempt.expressions,
+        fixedExpressions:
+            attempt.expressions.map((it) => Parser().parse(it)).toList(),
         effectiveTimeSize: size.width,
         objectivePaint: objectivePaint,
         range: Pair(attempt.level.minPosition, attempt.level.maxPosition),

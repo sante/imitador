@@ -1,9 +1,12 @@
 import 'package:imitador/core/repository/activity_repository.dart';
+import 'package:imitador/core/repository/attempt_repository.dart';
 import 'package:imitador/core/repository/game_session_repository.dart';
 import 'package:imitador/core/repository/level_repository.dart';
 import 'package:imitador/core/repository/session_repository.dart';
 import 'package:imitador/core/source/activity/activity_local_source.dart';
 import 'package:imitador/core/source/activity/activity_remote_source.dart';
+import 'package:imitador/core/source/attempt/attempt_local_source.dart';
+import 'package:imitador/core/source/attempt/attempt_remote_source.dart';
 import 'package:imitador/core/source/auth_local_source.dart';
 import 'package:imitador/core/source/auth_remote_source.dart';
 import 'package:imitador/core/source/common/auth_interceptor.dart';
@@ -40,6 +43,7 @@ extension _GetItDiModuleExtensions on GetIt {
     registerLazySingleton(() => LevelRepository(get(), get()));
     registerLazySingleton(() => ActivityRepository(get(), get()));
     registerLazySingleton(() => GameSessionRepository(get(), get()));
+    registerLazySingleton(() => AttemptRepository(get(), get()));
   }
 
   void _setupSources() {
@@ -47,6 +51,8 @@ extension _GetItDiModuleExtensions on GetIt {
     registerLazySingleton(() => AuthRemoteSource(get()));
     registerLazySingleton(() => LevelRemoteSource(get()));
     registerLazySingleton(() => LevelLocalSource());
+    registerLazySingleton(() => AttemptRemoteSource(get()));
+    registerLazySingleton(() => AttemptLocalSource());
     registerLazySingleton(() => ActivityRemoteSource(get()));
     registerLazySingleton(() => ActivityLocalSource());
     registerLazySingleton(() => GameSessionRemoteSource(get()));
