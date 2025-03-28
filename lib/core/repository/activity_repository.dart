@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:imitador/core/source/activity/activity_local_source.dart';
 import 'package:imitador/core/source/activity/activity_remote_source.dart';
-import 'package:imitador/core/source/level/level_local_source.dart';
-import 'package:imitador/core/source/level/level_remote_source.dart';
 import 'package:imitador/model/activity/activity.dart';
 import 'package:imitador/model/level/level.dart';
 import 'package:stock/stock.dart';
@@ -28,12 +26,14 @@ class ActivityRepository {
           ),
         );
 
-  Future<List<Activity>?> getDirectActivities() =>
-      _activityRemoteSource.getActivities();
-
   Future<Activity> getActivityById(String id) async {
     final activities = await _store.fresh(null);
     return activities.firstWhere((element) => element.id == id);
+  }
+
+  // Get activity by id from API
+  Future<Activity> getSessionActivityById(String id) async {
+    return _activityRemoteSource.getActivityById(id);
   }
 
   void refresh() => _store.fresh(null);

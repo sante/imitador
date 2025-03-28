@@ -147,6 +147,7 @@ class SecondaryIconButton extends StatelessWidget {
         icon: PhosphorIcon(
           icon,
           color: context.theme.customColors.textColor?.getShade(500),
+          size: 21.r,
         ),
       );
 }

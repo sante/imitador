@@ -12,6 +12,7 @@ import 'package:imitador/model/attempt/attempt.dart';
 import 'package:imitador/model/enum/play_session_type.dart';
 import 'package:imitador/ui/router/app_router.dart';
 import 'package:imitador/ui/section/activity/activity_section_cubit.dart';
+import 'package:imitador/ui/section/game_session/game_session_section_cubit.dart';
 import 'package:imitador/ui/section/level/level_section_cubit.dart';
 import 'package:imitador/ui/theme/app_theme.dart';
 import 'package:imitador/ui/theme/components/buttons.dart';
@@ -68,6 +69,39 @@ class ActivityResultsScreen extends StatelessWidget {
       );
 }
 
+@RoutePage()
+class SessionActivityResultsScreen extends StatelessWidget {
+  const SessionActivityResultsScreen({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) =>
+      BlocBuilder<GameSessionSectionCubit, GameSessionSectionState>(
+        builder: (context, state) {
+          if (state.activity == null || state.currentLevel == null) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          final levelIndex = state.activity?.levels.indexOf(
+            state.currentLevel!,
+          );
+          final isLastLevel = levelIndex == state.activity!.levels.length - 1;
+          return _ResultsContentScreen(
+            attempt: state.attempts.last,
+            canSelectLevel: true,
+            sessionType: PlaySessionType.gameSession,
+            onNextLevel: !isLastLevel
+                ? () {
+                    context.read<GameSessionSectionCubit>().setCurrentLevel(
+                        state.activity!.levels[levelIndex! + 1]);
+                    context.router.replace(const SessionActivityLevelRoute());
+                  }
+                : null,
+          );
+        },
+      );
+}
+
 class _ResultsContentScreen extends StatelessWidget {
   final Attempt attempt;
   final bool canSelectLevel;
@@ -107,13 +141,15 @@ class _ResultsContentScreen extends StatelessWidget {
                       children: [
                         Text(
                           attempt.level.name,
-                          style: context.theme.textStyles.headlineSmall!.copyWith(
+                          style:
+                              context.theme.textStyles.headlineSmall!.copyWith(
                             color: context.theme.colorScheme.surface,
                           ),
                         ),
                         Text(
                           scoreMessage(attempt.score),
-                          style: context.theme.textStyles.headlineLarge!.copyWith(
+                          style:
+                              context.theme.textStyles.headlineLarge!.copyWith(
                             color: context.theme.colorScheme.surface,
                           ),
                         ),
@@ -132,10 +168,11 @@ class _ResultsContentScreen extends StatelessWidget {
                     PrimaryOutlineButton(
                       onPressed: () {
                         context.replaceRoute(switch (sessionType) {
-                          PlaySessionType.activity => const ActivityLevelRoute(),
+                          PlaySessionType.activity =>
+                            const ActivityLevelRoute(),
                           PlaySessionType.level => const LevelRoute(),
-                          // TODO: Handle this case.
-                          _ => throw UnimplementedError(),
+                          PlaySessionType.gameSession =>
+                            const SessionActivityLevelRoute(),
                         });
                       },
                       trailingIcon: PhosphorIcons.arrowsClockwise(),
@@ -147,6 +184,8 @@ class _ResultsContentScreen extends StatelessWidget {
                           context.router.navigate(switch (sessionType) {
                             PlaySessionType.activity =>
                               const ActivityLevelSelectorRoute(),
+                            PlaySessionType.gameSession =>
+                              const SessionLevelSelectorRoute(),
                             // TODO: Handle this case.
                             _ => throw UnimplementedError(),
                           });
@@ -171,20 +210,21 @@ class _ResultsContentScreen extends StatelessWidget {
 String scoreMessage(int score) => "Muy bien"; // TODO add real cases
 
 Image starsImage(double stars) => Image.asset(
-    switch (stars) {
-      < 1 => Assets.images.rating05,
-      < 1.5 => Assets.images.rating1,
-      < 2 => Assets.images.rating15,
-      < 2.5 => Assets.images.rating2,
-      < 3 => Assets.images.rating25,
-      < 3.5 => Assets.images.rating3,
-      < 4 => Assets.images.rating35,
-      < 4.5 => Assets.images.rating4,
-      < 5 => Assets.images.rating45,
-      _ => Assets.images.rating5,
-    }
-        .path,
-height: 72.h,);
+      switch (stars) {
+        < 1 => Assets.images.rating05,
+        < 1.5 => Assets.images.rating1,
+        < 2 => Assets.images.rating15,
+        < 2.5 => Assets.images.rating2,
+        < 3 => Assets.images.rating25,
+        < 3.5 => Assets.images.rating3,
+        < 4 => Assets.images.rating35,
+        < 4.5 => Assets.images.rating4,
+        < 5 => Assets.images.rating45,
+        _ => Assets.images.rating5,
+      }
+          .path,
+      height: 72.h,
+    );
 
 class GraphPainter extends CustomPainter {
   final pointPaint = const PaletteEntry(Color(0xffC7EF00)).paint()
@@ -201,22 +241,22 @@ class GraphPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     drawGraph(
-      canvas: canvas,
-      size: Vector2(size.width, size.height),
-      axisLinePaint: Paint()..color = Colors.black,
-      pointPaint: pointPaint,
-      yAxisXOffset: 0,
-      samples: attempt.plotPointsX
-          .zip(attempt.plotPointsY, (x, y) => Pair(x, y))
-          .toList(),
-      secondsDuration: attempt.level.secondsDuration,
-      fixedExpressions: attempt.expressions,
-      effectiveTimeSize: size.width,
-      objectivePaint: objectivePaint,
-      range: Pair(attempt.level.minPosition, attempt.level.maxPosition),
-      mathContext: mathContext,
-      fontColor: Colors.black
-    );
+        canvas: canvas,
+        size: Vector2(size.width, size.height),
+        axisLinePaint: Paint()..color = Colors.black,
+        pointPaint: pointPaint,
+        yAxisXOffset: 0,
+        samples: attempt.plotPointsX
+            .zip(attempt.plotPointsY, (x, y) => Pair(x, y))
+            .toList(),
+        secondsDuration: attempt.level.secondsDuration,
+        fixedExpressions:
+            attempt.expressions.map((it) => Parser().parse(it)).toList(),
+        effectiveTimeSize: size.width,
+        objectivePaint: objectivePaint,
+        range: Pair(attempt.level.minPosition, attempt.level.maxPosition),
+        mathContext: mathContext,
+        fontColor: Colors.black);
   }
 
   @override

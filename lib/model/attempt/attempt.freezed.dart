@@ -26,11 +26,11 @@ mixin _$Attempt {
   List<double> get plotPointsX => throw _privateConstructorUsedError;
   List<double> get plotPointsY => throw _privateConstructorUsedError;
   InterfaceType get interfaceType => throw _privateConstructorUsedError;
-  @LevelExpressionsConverter()
-  List<Expression> get expressions => throw _privateConstructorUsedError;
+  List<String> get expressions => throw _privateConstructorUsedError;
   String get levelId => throw _privateConstructorUsedError;
   Level get level => throw _privateConstructorUsedError;
   String? get playerId => throw _privateConstructorUsedError;
+  String? get gameSessionId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -49,10 +49,11 @@ abstract class $AttemptCopyWith<$Res> {
       List<double> plotPointsX,
       List<double> plotPointsY,
       InterfaceType interfaceType,
-      @LevelExpressionsConverter() List<Expression> expressions,
+      List<String> expressions,
       String levelId,
       Level level,
-      String? playerId});
+      String? playerId,
+      String? gameSessionId});
 
   $LevelCopyWith<$Res> get level;
 }
@@ -80,6 +81,7 @@ class _$AttemptCopyWithImpl<$Res, $Val extends Attempt>
     Object? levelId = null,
     Object? level = null,
     Object? playerId = freezed,
+    Object? gameSessionId = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -109,7 +111,7 @@ class _$AttemptCopyWithImpl<$Res, $Val extends Attempt>
       expressions: null == expressions
           ? _value.expressions
           : expressions // ignore: cast_nullable_to_non_nullable
-              as List<Expression>,
+              as List<String>,
       levelId: null == levelId
           ? _value.levelId
           : levelId // ignore: cast_nullable_to_non_nullable
@@ -121,6 +123,10 @@ class _$AttemptCopyWithImpl<$Res, $Val extends Attempt>
       playerId: freezed == playerId
           ? _value.playerId
           : playerId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      gameSessionId: freezed == gameSessionId
+          ? _value.gameSessionId
+          : gameSessionId // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -148,10 +154,11 @@ abstract class _$$AttemptImplCopyWith<$Res> implements $AttemptCopyWith<$Res> {
       List<double> plotPointsX,
       List<double> plotPointsY,
       InterfaceType interfaceType,
-      @LevelExpressionsConverter() List<Expression> expressions,
+      List<String> expressions,
       String levelId,
       Level level,
-      String? playerId});
+      String? playerId,
+      String? gameSessionId});
 
   @override
   $LevelCopyWith<$Res> get level;
@@ -178,6 +185,7 @@ class __$$AttemptImplCopyWithImpl<$Res>
     Object? levelId = null,
     Object? level = null,
     Object? playerId = freezed,
+    Object? gameSessionId = freezed,
   }) {
     return _then(_$AttemptImpl(
       id: freezed == id
@@ -207,7 +215,7 @@ class __$$AttemptImplCopyWithImpl<$Res>
       expressions: null == expressions
           ? _value._expressions
           : expressions // ignore: cast_nullable_to_non_nullable
-              as List<Expression>,
+              as List<String>,
       levelId: null == levelId
           ? _value.levelId
           : levelId // ignore: cast_nullable_to_non_nullable
@@ -219,6 +227,10 @@ class __$$AttemptImplCopyWithImpl<$Res>
       playerId: freezed == playerId
           ? _value.playerId
           : playerId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      gameSessionId: freezed == gameSessionId
+          ? _value.gameSessionId
+          : gameSessionId // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -234,10 +246,11 @@ class _$AttemptImpl implements _Attempt {
       required final List<double> plotPointsX,
       required final List<double> plotPointsY,
       required this.interfaceType,
-      @LevelExpressionsConverter() required final List<Expression> expressions,
+      required final List<String> expressions,
       required this.levelId,
       required this.level,
-      required this.playerId})
+      required this.playerId,
+      this.gameSessionId})
       : _plotPointsX = plotPointsX,
         _plotPointsY = plotPointsY,
         _expressions = expressions;
@@ -269,10 +282,9 @@ class _$AttemptImpl implements _Attempt {
 
   @override
   final InterfaceType interfaceType;
-  final List<Expression> _expressions;
+  final List<String> _expressions;
   @override
-  @LevelExpressionsConverter()
-  List<Expression> get expressions {
+  List<String> get expressions {
     if (_expressions is EqualUnmodifiableListView) return _expressions;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_expressions);
@@ -284,10 +296,12 @@ class _$AttemptImpl implements _Attempt {
   final Level level;
   @override
   final String? playerId;
+  @override
+  final String? gameSessionId;
 
   @override
   String toString() {
-    return 'Attempt(id: $id, score: $score, stars: $stars, plotPointsX: $plotPointsX, plotPointsY: $plotPointsY, interfaceType: $interfaceType, expressions: $expressions, levelId: $levelId, level: $level, playerId: $playerId)';
+    return 'Attempt(id: $id, score: $score, stars: $stars, plotPointsX: $plotPointsX, plotPointsY: $plotPointsY, interfaceType: $interfaceType, expressions: $expressions, levelId: $levelId, level: $level, playerId: $playerId, gameSessionId: $gameSessionId)';
   }
 
   @override
@@ -309,7 +323,9 @@ class _$AttemptImpl implements _Attempt {
             (identical(other.levelId, levelId) || other.levelId == levelId) &&
             (identical(other.level, level) || other.level == level) &&
             (identical(other.playerId, playerId) ||
-                other.playerId == playerId));
+                other.playerId == playerId) &&
+            (identical(other.gameSessionId, gameSessionId) ||
+                other.gameSessionId == gameSessionId));
   }
 
   @JsonKey(ignore: true)
@@ -325,7 +341,8 @@ class _$AttemptImpl implements _Attempt {
       const DeepCollectionEquality().hash(_expressions),
       levelId,
       level,
-      playerId);
+      playerId,
+      gameSessionId);
 
   @JsonKey(ignore: true)
   @override
@@ -349,10 +366,11 @@ abstract class _Attempt implements Attempt {
       required final List<double> plotPointsX,
       required final List<double> plotPointsY,
       required final InterfaceType interfaceType,
-      @LevelExpressionsConverter() required final List<Expression> expressions,
+      required final List<String> expressions,
       required final String levelId,
       required final Level level,
-      required final String? playerId}) = _$AttemptImpl;
+      required final String? playerId,
+      final String? gameSessionId}) = _$AttemptImpl;
 
   factory _Attempt.fromJson(Map<String, dynamic> json) = _$AttemptImpl.fromJson;
 
@@ -369,14 +387,15 @@ abstract class _Attempt implements Attempt {
   @override
   InterfaceType get interfaceType;
   @override
-  @LevelExpressionsConverter()
-  List<Expression> get expressions;
+  List<String> get expressions;
   @override
   String get levelId;
   @override
   Level get level;
   @override
   String? get playerId;
+  @override
+  String? get gameSessionId;
   @override
   @JsonKey(ignore: true)
   _$$AttemptImplCopyWith<_$AttemptImpl> get copyWith =>

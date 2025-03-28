@@ -6,6 +6,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:imitador/core/common/helper/attempt_helper.dart';
 import 'package:imitador/core/di/di_provider.dart';
 import 'package:imitador/core/repository/activity_repository.dart';
+import 'package:imitador/core/repository/attempt_repository.dart';
 import 'package:imitador/core/repository/session_repository.dart';
 import 'package:imitador/model/activity/activity.dart';
 import 'package:imitador/model/attempt/attempt.dart';
@@ -19,6 +20,7 @@ part 'activity_section_cubit.freezed.dart';
 class ActivitySectionCubit extends Cubit<ActivitySectionState> {
   final SessionRepository _sessionRepository = DiProvider.get();
   final ActivityRepository _activityRepository = DiProvider.get();
+  final AttemptRepository _attemptRepository = DiProvider.get();
   final String activityId;
 
   StreamSubscription? _authSubscription;
@@ -56,6 +58,7 @@ class ActivitySectionCubit extends Cubit<ActivitySectionState> {
         player: state.user,
         level: state.currentLevel!,
       );
+      _attemptRepository.saveAttempt(attempt);
 
       emit(state.copyWith(attempts: [...state.attempts, attempt]));
     }

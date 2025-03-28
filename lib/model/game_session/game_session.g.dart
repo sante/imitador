@@ -10,25 +10,67 @@ _$GameSessionImpl _$$GameSessionImplFromJson(Map<String, dynamic> json) =>
     _$GameSessionImpl(
       id: json['id'] as String,
       code: json['code'] as String,
-      teacherId: json['teacherId'] as String,
-      activityId: json['activityId'] as String,
-      activity: Activity.fromJson(json['activity'] as Map<String, dynamic>),
-      students: (json['students'] as List<dynamic>)
-          .map((e) => User.fromJson(e as Map<String, dynamic>))
+      teacher: SessionTeacher.fromJson(json['teacher'] as Map<String, dynamic>),
+      players: (json['players'] as List<dynamic>)
+          .map((e) => Player.fromJson(e as Map<String, dynamic>))
           .toList(),
-      attempts: (json['attempts'] as List<dynamic>?)
-              ?.map((e) => Attempt.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          const [],
+      activityId: json['activityId'] as String,
+      playing: json['playing'] as bool,
+      userId: json['userId'] as String?,
+      userName: json['userName'] as String?,
     );
 
 Map<String, dynamic> _$$GameSessionImplToJson(_$GameSessionImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'code': instance.code,
-      'teacherId': instance.teacherId,
+      'teacher': instance.teacher,
+      'players': instance.players,
       'activityId': instance.activityId,
-      'activity': instance.activity,
-      'students': instance.students,
-      'attempts': instance.attempts,
+      'playing': instance.playing,
+      'userId': instance.userId,
+      'userName': instance.userName,
+    };
+
+_$SessionTeacherImpl _$$SessionTeacherImplFromJson(Map<String, dynamic> json) =>
+    _$SessionTeacherImpl(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      socketId: json['socketId'] as String?,
+    );
+
+Map<String, dynamic> _$$SessionTeacherImplToJson(
+        _$SessionTeacherImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'socketId': instance.socketId,
+    };
+
+_$PlayerImpl _$$PlayerImplFromJson(Map<String, dynamic> json) => _$PlayerImpl(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      socketId: json['socketId'] as String,
+      score: (json['score'] as List<dynamic>?)
+          ?.map((e) => Score.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$PlayerImplToJson(_$PlayerImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'socketId': instance.socketId,
+      'score': instance.score,
+    };
+
+_$ScoreImpl _$$ScoreImplFromJson(Map<String, dynamic> json) => _$ScoreImpl(
+      levelId: json['levelId'] as String,
+      score: (json['score'] as num).toInt(),
+    );
+
+Map<String, dynamic> _$$ScoreImplToJson(_$ScoreImpl instance) =>
+    <String, dynamic>{
+      'levelId': instance.levelId,
+      'score': instance.score,
     };

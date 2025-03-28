@@ -28,8 +28,7 @@ mixin _$Level {
   @JsonKey(name: "duration")
   double get secondsDuration => throw _privateConstructorUsedError;
   LevelType get type => throw _privateConstructorUsedError;
-  @ExpressionConverter()
-  List<Expression> get expressions => throw _privateConstructorUsedError;
+  List<String> get positionExpressions => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -49,7 +48,7 @@ abstract class $LevelCopyWith<$Res> {
       double maxPosition,
       @JsonKey(name: "duration") double secondsDuration,
       LevelType type,
-      @ExpressionConverter() List<Expression> expressions});
+      List<String> positionExpressions});
 }
 
 /// @nodoc
@@ -72,7 +71,7 @@ class _$LevelCopyWithImpl<$Res, $Val extends Level>
     Object? maxPosition = null,
     Object? secondsDuration = null,
     Object? type = null,
-    Object? expressions = null,
+    Object? positionExpressions = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -103,10 +102,10 @@ class _$LevelCopyWithImpl<$Res, $Val extends Level>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as LevelType,
-      expressions: null == expressions
-          ? _value.expressions
-          : expressions // ignore: cast_nullable_to_non_nullable
-              as List<Expression>,
+      positionExpressions: null == positionExpressions
+          ? _value.positionExpressions
+          : positionExpressions // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 }
@@ -126,7 +125,7 @@ abstract class _$$LevelImplCopyWith<$Res> implements $LevelCopyWith<$Res> {
       double maxPosition,
       @JsonKey(name: "duration") double secondsDuration,
       LevelType type,
-      @ExpressionConverter() List<Expression> expressions});
+      List<String> positionExpressions});
 }
 
 /// @nodoc
@@ -147,7 +146,7 @@ class __$$LevelImplCopyWithImpl<$Res>
     Object? maxPosition = null,
     Object? secondsDuration = null,
     Object? type = null,
-    Object? expressions = null,
+    Object? positionExpressions = null,
   }) {
     return _then(_$LevelImpl(
       id: null == id
@@ -178,10 +177,10 @@ class __$$LevelImplCopyWithImpl<$Res>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as LevelType,
-      expressions: null == expressions
-          ? _value._expressions
-          : expressions // ignore: cast_nullable_to_non_nullable
-              as List<Expression>,
+      positionExpressions: null == positionExpressions
+          ? _value._positionExpressions
+          : positionExpressions // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -197,8 +196,8 @@ class _$LevelImpl implements _Level {
       required this.maxPosition,
       @JsonKey(name: "duration") required this.secondsDuration,
       this.type = LevelType.position,
-      @ExpressionConverter() required final List<Expression> expressions})
-      : _expressions = expressions;
+      required final List<String> positionExpressions})
+      : _positionExpressions = positionExpressions;
 
   factory _$LevelImpl.fromJson(Map<String, dynamic> json) =>
       _$$LevelImplFromJson(json);
@@ -219,18 +218,18 @@ class _$LevelImpl implements _Level {
   @override
   @JsonKey()
   final LevelType type;
-  final List<Expression> _expressions;
+  final List<String> _positionExpressions;
   @override
-  @ExpressionConverter()
-  List<Expression> get expressions {
-    if (_expressions is EqualUnmodifiableListView) return _expressions;
+  List<String> get positionExpressions {
+    if (_positionExpressions is EqualUnmodifiableListView)
+      return _positionExpressions;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_expressions);
+    return EqualUnmodifiableListView(_positionExpressions);
   }
 
   @override
   String toString() {
-    return 'Level(id: $id, name: $name, difficulty: $difficulty, minPosition: $minPosition, maxPosition: $maxPosition, secondsDuration: $secondsDuration, type: $type, expressions: $expressions)';
+    return 'Level(id: $id, name: $name, difficulty: $difficulty, minPosition: $minPosition, maxPosition: $maxPosition, secondsDuration: $secondsDuration, type: $type, positionExpressions: $positionExpressions)';
   }
 
   @override
@@ -250,7 +249,7 @@ class _$LevelImpl implements _Level {
                 other.secondsDuration == secondsDuration) &&
             (identical(other.type, type) || other.type == type) &&
             const DeepCollectionEquality()
-                .equals(other._expressions, _expressions));
+                .equals(other._positionExpressions, _positionExpressions));
   }
 
   @JsonKey(ignore: true)
@@ -264,7 +263,7 @@ class _$LevelImpl implements _Level {
       maxPosition,
       secondsDuration,
       type,
-      const DeepCollectionEquality().hash(_expressions));
+      const DeepCollectionEquality().hash(_positionExpressions));
 
   @JsonKey(ignore: true)
   @override
@@ -282,15 +281,14 @@ class _$LevelImpl implements _Level {
 
 abstract class _Level implements Level {
   factory _Level(
-          {required final String id,
-          required final String name,
-          required final Difficulty? difficulty,
-          required final double minPosition,
-          required final double maxPosition,
-          @JsonKey(name: "duration") required final double secondsDuration,
-          final LevelType type,
-          @ExpressionConverter() required final List<Expression> expressions}) =
-      _$LevelImpl;
+      {required final String id,
+      required final String name,
+      required final Difficulty? difficulty,
+      required final double minPosition,
+      required final double maxPosition,
+      @JsonKey(name: "duration") required final double secondsDuration,
+      final LevelType type,
+      required final List<String> positionExpressions}) = _$LevelImpl;
 
   factory _Level.fromJson(Map<String, dynamic> json) = _$LevelImpl.fromJson;
 
@@ -310,8 +308,7 @@ abstract class _Level implements Level {
   @override
   LevelType get type;
   @override
-  @ExpressionConverter()
-  List<Expression> get expressions;
+  List<String> get positionExpressions;
   @override
   @JsonKey(ignore: true)
   _$$LevelImplCopyWith<_$LevelImpl> get copyWith =>

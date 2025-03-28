@@ -18,10 +18,11 @@ class Attempt with _$Attempt {
     required List<double> plotPointsX,
     required List<double> plotPointsY,
     required InterfaceType interfaceType,
-    @LevelExpressionsConverter() required LevelExpressions expressions,
+    required List<String> expressions,
     required String levelId,
     required Level level,
     required String? playerId,
+    String? gameSessionId,
   }) = _Attempt;
 
   factory Attempt.fromJson(Map<String, dynamic> json) =>

@@ -7,6 +7,7 @@ import 'package:imitador/game/simon_game.dart';
 import 'package:imitador/model/level/level.dart';
 import 'package:imitador/ui/router/app_router.dart';
 import 'package:imitador/ui/section/activity/activity_section_cubit.dart';
+import 'package:imitador/ui/section/game_session/game_session_section_cubit.dart';
 import 'package:imitador/ui/section/level/level_section_cubit.dart';
 
 @RoutePage()
@@ -47,6 +48,28 @@ class ActivityLevelScreen extends StatelessWidget {
       );
 }
 
+@RoutePage()
+class SessionActivityLevelScreen extends StatelessWidget {
+  const SessionActivityLevelScreen({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) =>
+      BlocSelector<GameSessionSectionCubit, GameSessionSectionState, Level?>(
+        selector: (state) => state.currentLevel,
+        builder: (context, state) => _LevelContentScreen(
+          onFinishedWithResult: (samples) {
+            context
+                .read<GameSessionSectionCubit>()
+                .addAttemptFromSamples(samples);
+            context.router.replace(const SessionActivityResultsRoute());
+          },
+          level: state!,
+        ),
+      );
+}
+
 class _LevelContentScreen extends StatelessWidget {
   final void Function(List<Pair<double, double>> samples) onFinishedWithResult;
   final Level level;
@@ -58,8 +81,7 @@ class _LevelContentScreen extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) =>
-      GameWidget(
+  Widget build(BuildContext context) => GameWidget(
         game: SimonGame(
           level: level,
           onFinishedWithResult: onFinishedWithResult,

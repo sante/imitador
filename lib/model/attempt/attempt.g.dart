@@ -18,11 +18,13 @@ _$AttemptImpl _$$AttemptImplFromJson(Map<String, dynamic> json) =>
           .map((e) => (e as num).toDouble())
           .toList(),
       interfaceType: $enumDecode(_$InterfaceTypeEnumMap, json['interfaceType']),
-      expressions: const LevelExpressionsConverter()
-          .fromJson(json['expressions'] as List<String>),
+      expressions: (json['expressions'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
       levelId: json['levelId'] as String,
       level: Level.fromJson(json['level'] as Map<String, dynamic>),
       playerId: json['playerId'] as String?,
+      gameSessionId: json['gameSessionId'] as String?,
     );
 
 Map<String, dynamic> _$$AttemptImplToJson(_$AttemptImpl instance) =>
@@ -33,11 +35,11 @@ Map<String, dynamic> _$$AttemptImplToJson(_$AttemptImpl instance) =>
       'plotPointsX': instance.plotPointsX,
       'plotPointsY': instance.plotPointsY,
       'interfaceType': _$InterfaceTypeEnumMap[instance.interfaceType]!,
-      'expressions':
-          const LevelExpressionsConverter().toJson(instance.expressions),
+      'expressions': instance.expressions,
       'levelId': instance.levelId,
       'level': instance.level,
       'playerId': instance.playerId,
+      'gameSessionId': instance.gameSessionId,
     };
 
 const _$InterfaceTypeEnumMap = {

@@ -26,7 +26,7 @@ final dummyLevels = [
     secondsDuration: 10,
     minPosition: 0,
     maxPosition: 10,
-    expressions: [],
+    positionExpressions: [],
   ),
   Level(
     id: '2',
@@ -35,7 +35,7 @@ final dummyLevels = [
     secondsDuration: 10,
     minPosition: 0,
     maxPosition: 10,
-    expressions: [],
+    positionExpressions: [],
   ),
   Level(
     id: '3',
@@ -44,13 +44,13 @@ final dummyLevels = [
     secondsDuration: 10,
     minPosition: 0,
     maxPosition: 10,
-    expressions: [],
+    positionExpressions: [],
   ),
   Level(
     id: '4',
     name: "Se mueve se mueve",
     difficulty: null,
-    expressions: [],
+    positionExpressions: [],
     secondsDuration: 10,
     minPosition: 0,
     maxPosition: 10,
@@ -99,10 +99,11 @@ class SessionLevelSelectorScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<GameSessionSectionCubit, GameSessionSectionState>(
       builder: (context, state) => _LevelSelectorContentScreen(
-        levels: state.session.activity.levels,
+        levels: state.activity?.levels ?? [],
         user: state.user,
-        activity: state.session.activity,
+        activity: state.activity,
         sessionType: PlaySessionType.gameSession,
+        isLoading: state.activity == null,
       ),
     );
   }
@@ -145,12 +146,14 @@ class _LevelSelectorContentScreen extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     spacing: 60.h,
                     children: [
-                      if (activity != null) Text(
-                        activity!.name,
-                        style: context.theme.textStyles.headlineLarge!.copyWith(
-                          color: context.theme.colorScheme.onSurface,
+                      if (activity != null)
+                        Text(
+                          activity!.name,
+                          style:
+                              context.theme.textStyles.headlineLarge!.copyWith(
+                            color: context.theme.colorScheme.onSurface,
+                          ),
                         ),
-                      ),
                       Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,8 +162,7 @@ class _LevelSelectorContentScreen extends StatelessWidget {
                           if (randomLevels.isNotEmpty)
                             Text(
                               'Juegos libres',
-                              style: context
-                                  .theme.textStyles.headlineMedium!
+                              style: context.theme.textStyles.headlineMedium!
                                   .copyWith(
                                 color: context.theme.colorScheme.onSurface,
                               ),
@@ -180,8 +182,7 @@ class _LevelSelectorContentScreen extends StatelessWidget {
                           children: [
                             Text(
                               'Niveles',
-                              style: context
-                                  .theme.textStyles.headlineMedium!
+                              style: context.theme.textStyles.headlineMedium!
                                   .copyWith(
                                 color: context.theme.colorScheme.onSurface,
                               ),
@@ -244,11 +245,16 @@ class _LevelCards extends StatelessWidget {
                   case PlaySessionType.activity:
                     context.read<ActivitySectionCubit>().setCurrentLevel(it);
                     break;
+                  case PlaySessionType.gameSession:
+                    context.read<GameSessionSectionCubit>().setCurrentLevel(it);
+                    break;
                   default: //TODO: Add other cases
                     break;
                 }
                 context.router.push(switch (sessionType) {
                   PlaySessionType.activity => const ActivityLevelRoute(),
+                  PlaySessionType.gameSession =>
+                    const SessionActivityLevelRoute(),
                   _ =>
                     LevelSectionRoute(level: it), // TODO: Add other navigations
                 });
