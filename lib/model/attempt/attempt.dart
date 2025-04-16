@@ -1,9 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:imitador/model/enum/interface_type.dart';
 import 'package:imitador/model/level/level.dart';
-import 'package:math_expressions/math_expressions.dart';
-
-import '../level_expression/level_expression.dart';
 
 part 'attempt.freezed.dart';
 

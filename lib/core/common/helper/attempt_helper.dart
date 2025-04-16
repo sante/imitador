@@ -1,10 +1,15 @@
+import 'dart:math';
+
 import 'package:dartx/dartx.dart';
 import 'package:imitador/core/common/helper/expressions_helper.dart';
+import 'package:imitador/core/common/logger.dart';
 import 'package:imitador/model/attempt/attempt.dart';
 import 'package:imitador/model/enum/interface_type.dart';
 import 'package:imitador/model/level/level.dart';
 import 'package:imitador/model/user/user.dart';
 import 'package:math_expressions/math_expressions.dart';
+
+const maxScore = 1000;
 
 Attempt attemptFromSamples({
   required List<Pair<double, double>> samples,
@@ -14,8 +19,13 @@ Attempt attemptFromSamples({
   final expressions =
       level.positionExpressions.map((it) => Parser().parse(it)).toList();
   final distance = expressions.getDistance(samples);
-  final score = distance;
-  final stars = getScore(score);
+  Logger.d("Distance from samples: $distance");
+  final score = maxScore -
+      (distance /
+              sqrt(((level.maxPosition - level.minPosition) / 2).abs()) *
+              maxScore)
+          .round();
+  final stars = getStars(score);
   final attempt = Attempt(
     score: score.round(),
     stars: stars,
@@ -31,11 +41,12 @@ Attempt attemptFromSamples({
   return attempt;
 }
 
-int getScore(double distance) => switch (distance) {
+int getStars(int score) => switch (score) {
 // TODO figure out points partition
-      < 1.5 => 4,
-      < 3.5 => 3,
-      < 6 => 2,
-      < 10 => 1,
-      _ => 0,
+      < 200 => 0,
+      < 350 => 1,
+      < 600 => 2,
+      < 800 => 3,
+      < 900 => 4,
+      _ => 5,
     };
