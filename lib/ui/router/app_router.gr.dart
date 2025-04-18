@@ -118,6 +118,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const LogInScreen(),
       );
     },
+    MicrobitSetupRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const MicrobitSetupScreen(),
+      );
+    },
     SessionActivityLevelRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -445,6 +451,20 @@ class LogInRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'LogInRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [MicrobitSetupScreen]
+class MicrobitSetupRoute extends PageRouteInfo<void> {
+  const MicrobitSetupRoute({List<PageRouteInfo>? children})
+      : super(
+          MicrobitSetupRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'MicrobitSetupRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

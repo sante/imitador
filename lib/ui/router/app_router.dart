@@ -10,6 +10,7 @@ import 'package:imitador/ui/screens/level/level_screen.dart';
 import 'package:imitador/ui/screens/level_selector/level_selector_screen.dart';
 import 'package:imitador/ui/screens/log_in/log_in_screen.dart';
 import 'package:imitador/ui/screens/settings/settings_screen.dart';
+import 'package:imitador/ui/screens/settings/microbit_setup_screen.dart';
 import 'package:imitador/ui/screens/sign_up/sign_up_data_screen.dart';
 import 'package:imitador/ui/screens/sign_up/sign_up_type_screen.dart';
 import 'package:imitador/ui/screens/splash/splash_screen.dart';
@@ -65,6 +66,10 @@ class AppRouter extends _$AppRouter {
               AutoRoute(
                 page: SettingsRoute.page,
                 path: "settings",
+              ),
+              AutoRoute(
+                page: MicrobitSetupRoute.page,
+                path: "microbitSetup",
               ),
               AutoRoute(
                 page: SignUpSectionRoute.page,
