@@ -65,7 +65,18 @@ class LevelSelectorScreen extends StatelessWidget {
   Widget build(BuildContext context) =>
       BlocBuilder<GlobalSectionCubit, GlobalSectionState>(
         builder: (context, state) => _LevelSelectorContentScreen(
-          levels: state.levels ?? [],
+          levels: [
+            Level(
+              id: "freeMovement",
+              name: "Movimiento Libre (práctica)",
+              difficulty: null,
+              minPosition: 0,
+              maxPosition: 10,
+              secondsDuration: 10,
+              positionExpressions: [],
+            ),
+            ...state.levels ?? [],
+          ],
           user: state.user,
           activities: state.activities ?? [],
         ),
