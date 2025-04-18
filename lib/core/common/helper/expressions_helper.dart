@@ -241,10 +241,11 @@ extension ExpressionListExtensions on List<Expression> {
     forEachIndexed((expression, index) {
       final expressionSamples = samples
           .filter((sample) =>
-              sample.first <= (index + 1) * secondsDuration / length)
+              (sample.first <= (index + 1) * secondsDuration / length) &&
+              (sample.first >= (index) * secondsDuration / length))
           .toList();
-      errors.add(expression.getDistanceSqr(expressionSamples));
+      errors.add(expression.getDistance(expressionSamples));
     });
-    return sqrt(errors.sum() / samples.length);
+    return errors.sum() / length;
   }
 }
