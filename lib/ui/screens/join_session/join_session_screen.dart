@@ -6,6 +6,10 @@ import 'package:imitador/core/common/extension/context_extensions.dart';
 import 'package:imitador/ui/router/app_router.dart';
 import 'package:imitador/ui/theme/app_text_field.dart';
 import 'package:imitador/ui/theme/app_theme.dart';
+import 'package:imitador/ui/theme/components/buttons.dart';
+import 'package:imitador/ui/theme/components/error_view.dart';
+import 'package:imitador/ui/theme/components/scaffold.dart';
+import 'package:imitador/ui/theme/components/sheet_container.dart';
 
 import 'join_session_cubit.dart';
 
@@ -38,109 +42,78 @@ class _JoinSessionContentScreenState extends State<_JoinSessionContentScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        body: Padding(
-          padding: EdgeInsets.symmetric(vertical: 67.h, horizontal: 104.w),
-          child: SizedBox(
-            width: double.infinity,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  spacing: 52.h,
-                  children: [
-                    Text(
-                      context.localizations.game_title.toUpperCase(),
-                      style: context.theme.textStyles.titleLarge!.copyWith(
-                        fontSize: 40.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
+  Widget build(BuildContext context) => MotionScaffold(
+        showTitle: false,
+        extendBodyBehindAppBar: true,
+        backRoute: const WelcomeRoute(),
+        body: Center(
+          child: SheetContainer(
+            maxWidth: 604.w,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 72.w, vertical: 40.h),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                spacing: 52.h,
+                children: [
+                  Text(
+                    "Unite a la sesión",
+                    style: context.theme.textStyles.titleMedium!.copyWith(
+                      fontSize: 40.sp,
+                      fontWeight: FontWeight.bold,
                     ),
-                    Text(
-                      "Ingresa el código de la sesión",
-                      style: context.theme.textStyles.titleMedium!.copyWith(
-                        fontSize: 40.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    "Ingresá el código de 4 dígitos que te brindó tu profesor para empezar a jugar y competir con tus compañeros.",
+                    textAlign: TextAlign.center,
+                    style: context.theme.textTheme.bodyMedium?.copyWith(
+                      color: Colors.black,
                     ),
-                    SizedBox(
-                      width: 394.w,
-                      child: BlocBuilder<JoinSessionCubit, JoinSessionState>(
-                        builder: (context, state) {
-                          if (state.error != null) {
-                            return Text(
-                              state.error!,
-                              style: TextStyle(color: Colors.red),
-                            );
-                          }
-
-                          return Column(
-                            spacing: 52.h,
+                  ),
+                  BlocBuilder<JoinSessionCubit, JoinSessionState>(
+                    builder: (context, state) {
+                      return Column(
+                        spacing: 40.h,
+                        children: [
+                          Column(
+                            spacing: 16.h,
                             children: [
                               AppTextField(
                                 controller: codeController,
                                 label: "Código",
+                                textColor: Colors.black,
                                 onChanged: (code) {
                                   _cubit.setCode(code);
                                 },
                               ),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: ElevatedButton(
-                                  onPressed: state.isLoading
-                                      ? null
-                                      : () async {
-                                          final response =
-                                              await _cubit.joinGameSession();
-                                          if (response != null &&
-                                              context.mounted) {
-                                            context.router.replace(
-                                                const GameSessionSectionRoute());
-                                          }
-                                        },
-                                  style: context.theme.buttonsStyle.filledButton
-                                      .copyWith(
-                                    fixedSize: WidgetStatePropertyAll(
-                                      Size(120.w, 56.h),
-                                    ),
-                                    textStyle: WidgetStatePropertyAll(
-                                      context.theme.textStyles.bodyLarge,
-                                    ),
-                                  ),
-                                  child: state.isLoading
-                                      ? CircularProgressIndicator(
-                                          color: context
-                                              .theme.colorScheme.onPrimary,
-                                        )
-                                      : const Text("Unirse"),
-                                ),
-                              ),
+                              if (state.error != null)
+                                ErrorView(error: state.error!),
                             ],
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: context.theme.buttonsStyle.filledButton.copyWith(
-                        fixedSize: WidgetStatePropertyAll(Size(56.r, 56.r))),
-                    child: Icon(
-                      Icons.settings,
-                      color: context.theme.colorScheme.onPrimary,
-                      size: 16.r,
-                    ),
+                          ),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: PrimaryButton(
+                              label: "Unirse",
+                              onPressed: state.isLoading || state.code.isEmpty
+                                  ? null
+                                  : () async {
+                                      final response =
+                                          await _cubit.joinGameSession();
+                                      if (response != null && context.mounted) {
+                                        context.router.replace(
+                                            const GameSessionSectionRoute());
+                                      }
+                                    },
+                            ),
+                          ),
+                        ],
+                      );
+                    },
                   ),
-                )
-              ],
+                ],
+              ),
             ),
           ),
         ),

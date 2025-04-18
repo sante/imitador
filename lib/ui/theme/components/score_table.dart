@@ -6,10 +6,12 @@ import 'package:imitador/gen/assets.gen.dart';
 
 class ScoreTable extends StatelessWidget {
   final Map<String, int> scores;
+  final bool finalResults;
 
   const ScoreTable({
-    super.key,
     required this.scores,
+    this.finalResults = false,
+    super.key,
   });
 
   @override
@@ -18,7 +20,7 @@ class ScoreTable extends StatelessWidget {
         spacing: 40.h,
         children: [
           Text(
-            "Resultados",
+            "Resultados ${finalResults ? "finales" : "parciales"}",
             style: context.theme.textTheme.headlineLarge,
           ),
           SingleChildScrollView(
@@ -31,7 +33,7 @@ class ScoreTable extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         spacing: 12.w,
                         children: [
-                          scoreLeading(index),
+                          if (finalResults) scoreLeading(index),
                           Flexible(
                             flex: 2,
                             child: Align(

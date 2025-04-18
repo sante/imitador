@@ -40,6 +40,8 @@ class AppButtonsStyle extends ThemeExtension<AppButtonsStyle> {
       padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
       shadowColor: _colorScheme.primary,
       minimumSize: Size(240.w, 48.h),
+      disabledBackgroundColor: _colorScheme.primary.getShade(100),
+      disabledForegroundColor: _customColors.textColor?.getShade(200),
     );
 
     outlineButton = OutlinedButton.styleFrom(

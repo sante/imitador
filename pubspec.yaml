@@ -65,6 +65,8 @@ dependencies:
   path_provider: ^2.1.5
   phosphor_flutter: 2.1.0
   socket_io_client: ^3.0.2
+  flutter_svg: 2.0.17
+  vector_graphics: ^1.1.18
 
 dev_dependencies:
   flutter_test:
@@ -116,9 +118,14 @@ flutter:
     - assets/images/medal_bronze.png
     - assets/images/medal_gold.png
     - assets/images/medal_silver.png
+    - assets/icons/ic_error.svg
+    - assets/icons/ic_person.svg
     - environments/
 
 flutter_gen:
+  integrations:
+    image: true
+    flutter_svg: true
   assets:
     exclude:
       - environments/*
