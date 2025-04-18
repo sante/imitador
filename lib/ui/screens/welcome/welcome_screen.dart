@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imitador/core/common/extension/context_extensions.dart';
 import 'package:imitador/gen/assets.gen.dart';
+import 'package:imitador/model/enum/difficulty.dart';
 import 'package:imitador/model/user/user.dart';
 import 'package:imitador/ui/router/app_router.dart';
 import 'package:imitador/ui/section/global/global_section_cubit.dart';
@@ -12,6 +13,9 @@ import 'package:imitador/ui/theme/components/buttons.dart';
 import 'package:imitador/ui/theme/components/scaffold.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:imitador/ui/theme/components/sheet_container.dart';
+import 'package:imitador/model/level/level.dart';
+import 'package:imitador/ui/theme/components/cards.dart';
+import 'package:imitador/model/activity/activity.dart';
 
 @RoutePage()
 class WelcomeScreen extends StatelessWidget {
@@ -20,6 +24,46 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => _WelcomeContentScreen();
 }
+
+final freeMovementLevel = Level(
+  id: "freeMovement",
+  name: "Movimiento Libre (práctica)",
+  difficulty: null,
+  minPosition: 0,
+  maxPosition: 10,
+  secondsDuration: 10,
+  positionExpressions: [],
+);
+
+final easyLevel = Level(
+  id: "easy",
+  name: "Fácil",
+  difficulty: Difficulty.easy,
+  minPosition: 0,
+  maxPosition: 10,
+  secondsDuration: 10,
+  positionExpressions: [],
+);
+
+final mediumLevel = Level(
+  id: "medium",
+  name: "Medio",
+  difficulty: Difficulty.medium,
+  minPosition: 0,
+  maxPosition: 10,
+  secondsDuration: 10,
+  positionExpressions: [],
+);
+
+final hardLevel = Level(
+  id: "hard",
+  name: "Difícil",
+  difficulty: Difficulty.hard,
+  secondsDuration: 10,
+  minPosition: 0,
+  maxPosition: 10,
+  positionExpressions: [],
+);
 
 class _WelcomeContentScreen extends StatelessWidget {
   @override
@@ -73,6 +117,8 @@ class _WelcomeContentScreen extends StatelessWidget {
 class _AuthenticatedMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final activities =
+        context.watch<GlobalSectionCubit>().state.activities ?? [];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -93,25 +139,38 @@ class _AuthenticatedMenu extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 16.h),
-                  SizedBox(
-                    width: 290.w,
-                    height: 205.h,
-                    child: SheetContainer(
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              Assets.images.menus.connectedDots.path,
-                              width: 118.w,
-                              height: 109.h,
-                            ),
-                            SizedBox(height: 12.h),
-                            Text(
-                              'UNIRSE',
-                              style: context.theme.textStyles.headlineSmall,
-                            ),
-                          ],
+                  InkWell(
+                    onTap: () {
+                      if (context.read<GlobalSectionCubit>().state.user
+                          is Teacher) {
+                        context.router.push(const CreateSessionRoute());
+                      } else {
+                        context.router.push(const JoinSessionRoute());
+                      }
+                    },
+                    child: SizedBox(
+                      width: 290.w,
+                      height: 205.h,
+                      child: SheetContainer(
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                Assets.images.menus.connectedDots.path,
+                                width: 118.w,
+                                height: 109.h,
+                              ),
+                              SizedBox(height: 12.h),
+                              Text(
+                                context.read<GlobalSectionCubit>().state.user
+                                        is Teacher
+                                    ? 'CREAR'
+                                    : 'UNIRSE',
+                                style: context.theme.textStyles.headlineSmall,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -136,6 +195,12 @@ class _AuthenticatedMenu extends StatelessWidget {
                   Row(
                     children: [
                       Expanded(
+                          child: InkWell(
+                        onTap: () {
+                          context.router.push(
+                            LevelSectionRoute(level: freeMovementLevel),
+                          );
+                        },
                         child: SizedBox(
                           height: 205.h,
                           width: 290.w,
@@ -164,7 +229,7 @@ class _AuthenticatedMenu extends StatelessWidget {
                             ),
                           ),
                         ),
-                      ),
+                      )),
                       SizedBox(width: 24.w),
                       Expanded(
                         child: SizedBox(
@@ -174,16 +239,23 @@ class _AuthenticatedMenu extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Expanded(
-                                child: SheetContainer(
-                                  child: Center(
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 12.w),
-                                      child: Text(
-                                        'Nivel fácil',
-                                        textAlign: TextAlign.center,
-                                        style: context
-                                            .theme.textStyles.headlineSmall,
+                                child: InkWell(
+                                  onTap: () {
+                                    context.router.push(
+                                      LevelSectionRoute(level: easyLevel),
+                                    );
+                                  },
+                                  child: SheetContainer(
+                                    child: Center(
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 12.w),
+                                        child: Text(
+                                          'Nivel fácil',
+                                          textAlign: TextAlign.center,
+                                          style: context
+                                              .theme.textStyles.headlineSmall,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -191,16 +263,23 @@ class _AuthenticatedMenu extends StatelessWidget {
                               ),
                               SizedBox(height: 8.h),
                               Expanded(
-                                child: SheetContainer(
-                                  child: Center(
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 12.w),
-                                      child: Text(
-                                        'Nivel medio',
-                                        textAlign: TextAlign.center,
-                                        style: context
-                                            .theme.textStyles.headlineSmall,
+                                child: InkWell(
+                                  onTap: () {
+                                    context.router.push(
+                                      LevelSectionRoute(level: mediumLevel),
+                                    );
+                                  },
+                                  child: SheetContainer(
+                                    child: Center(
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 12.w),
+                                        child: Text(
+                                          'Nivel medio',
+                                          textAlign: TextAlign.center,
+                                          style: context
+                                              .theme.textStyles.headlineSmall,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -208,16 +287,23 @@ class _AuthenticatedMenu extends StatelessWidget {
                               ),
                               SizedBox(height: 8.h),
                               Expanded(
-                                child: SheetContainer(
-                                  child: Center(
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 12.w),
-                                      child: Text(
-                                        'Nivel difícil',
-                                        textAlign: TextAlign.center,
-                                        style: context
-                                            .theme.textStyles.headlineSmall,
+                                child: InkWell(
+                                  onTap: () {
+                                    context.router.push(
+                                      LevelSectionRoute(level: hardLevel),
+                                    );
+                                  },
+                                  child: SheetContainer(
+                                    child: Center(
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 12.w),
+                                        child: Text(
+                                          'Nivel difícil',
+                                          textAlign: TextAlign.center,
+                                          style: context
+                                              .theme.textStyles.headlineSmall,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -248,20 +334,38 @@ class _AuthenticatedMenu extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _ClassGameCard(
-                  title: '¿Qué regularidades hay?',
-                  image: Assets.images.menus.notebook.path),
-              _ClassGameCard(
-                  title: 'Se mueve se mueve',
-                  image: Assets.images.menus.lines.path),
-              _ClassGameCard(
-                  title: 'El cruce', image: Assets.images.menus.lamp.path),
-              _ClassGameCard(
-                  title: 'Análisis de gráfica x(t)',
-                  image: Assets.images.menus.paperPlaneWithLine.path),
-              _ClassGameCard(
-                  title: 'Análisis de gráficas x(t) y v(t)',
-                  image: Assets.images.menus.setSquareWithQuestion.path),
+              ...[
+                {
+                  'title': '¿Qué regularidades hay?',
+                  'image': Assets.images.menus.notebook.path
+                },
+                {
+                  'title': 'Se mueve se mueve',
+                  'image': Assets.images.menus.lines.path
+                },
+                {'title': 'El cruce', 'image': Assets.images.menus.lamp.path},
+                {
+                  'title': 'Análisis de una gráfica de x(t)',
+                  'image': Assets.images.menus.paperPlaneWithLine.path
+                },
+                {
+                  'title': 'Análisis de gráficas de x(t) y de v(t)',
+                  'image': Assets.images.menus.setSquareWithQuestion.path
+                },
+              ].map((game) {
+                final activity = activities.cast<Activity?>().firstWhere(
+                      (a) =>
+                          a != null &&
+                          a.name.trim().toLowerCase() ==
+                              game['title']!.trim().toLowerCase(),
+                      orElse: () => null,
+                    );
+                return _ClassGameCard(
+                  title: game['title']!,
+                  image: game['image']!,
+                  activity: activity,
+                );
+              }).toList(),
             ],
           ),
         ),
@@ -273,35 +377,50 @@ class _AuthenticatedMenu extends StatelessWidget {
 class _ClassGameCard extends StatelessWidget {
   final String title;
   final String image;
-  const _ClassGameCard({required this.title, required this.image});
+  final Activity? activity;
+  const _ClassGameCard(
+      {required this.title, required this.image, this.activity});
 
   @override
   Widget build(BuildContext context) {
+    final cardContent = SheetContainer(
+      child: Center(
+        child: Column(
+          spacing: 14.h,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              image,
+              width: 100.w,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.w),
+              child: Text(
+                title,
+                textAlign: TextAlign.center,
+                style: context.theme.textStyles.headlineSmall,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+    if (activity != null) {
+      return InkWell(
+        onTap: () {
+          context.router.push(ActivitySectionRoute(activityId: activity!.id));
+        },
+        child: SizedBox(
+          width: 227.w,
+          height: 250.h,
+          child: cardContent,
+        ),
+      );
+    }
     return SizedBox(
       width: 227.w,
       height: 250.h,
-      child: SheetContainer(
-        child: Center(
-          child: Column(
-            spacing: 14.h,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                image,
-                width: 100.w,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.w),
-                child: Text(
-                  title,
-                  textAlign: TextAlign.center,
-                  style: context.theme.textStyles.headlineSmall,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      child: cardContent,
     );
   }
 }
