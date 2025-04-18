@@ -27,13 +27,13 @@ class LevelSectionCubit extends Cubit<LevelSectionState> {
     required Level level,
   }) : super(LevelSectionState.state(
           level: level.copyWith(
-            positionExpressions: level.positionExpressions.isNotEmpty
+            positionExpressions: level.id != "freeMovement" ? (level.positionExpressions.isNotEmpty
                 ? level.positionExpressions
                 : generateByDifficulty(
                     range: Pair(level.minPosition, level.maxPosition),
                     secondsDuration: level.secondsDuration,
                     difficulty: level.difficulty!,
-                  ).map((it) => it.toString()).toList(),
+                  ).map((it) => it.toString()).toList()) : [],
           ),
         )) {
     _initStreams();

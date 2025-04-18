@@ -21,8 +21,12 @@ class LevelScreen extends StatelessWidget {
       BlocBuilder<LevelSectionCubit, LevelSectionState>(
         builder: (context, state) => _LevelContentScreen(
           onFinishedWithResult: (samples) {
-            context.read<LevelSectionCubit>().addAttemptFromSamples(samples);
-            context.router.replace(const LevelResultsRoute());
+            if (state.level.id == "freeMovement") {
+              context.router.maybePop();
+            } else {
+              context.read<LevelSectionCubit>().addAttemptFromSamples(samples);
+              context.router.replace(const LevelResultsRoute());
+            }
           },
           level: state.level,
         ),
