@@ -60,8 +60,8 @@ class $AssetsImagesGen {
   AssetGenImage get medalSilver =>
       const AssetGenImage('assets/images/medal_silver.png');
 
-  /// Directory path: assets/images/microbit
-  $AssetsImagesMicrobitGen get microbit => const $AssetsImagesMicrobitGen();
+  /// Directory path: assets/images/menus
+  $AssetsImagesMenusGen get menus => const $AssetsImagesMenusGen();
 
   /// File path: assets/images/rating_0_5.png
   AssetGenImage get rating05 =>
@@ -130,19 +130,50 @@ class $AssetsImagesGen {
       ];
 }
 
-class $AssetsImagesMicrobitGen {
-  const $AssetsImagesMicrobitGen();
+class $AssetsImagesMenusGen {
+  const $AssetsImagesMenusGen();
 
-  /// File path: assets/images/microbit/connect_microbit.webp
-  AssetGenImage get connectMicrobit =>
-      const AssetGenImage('assets/images/microbit/connect_microbit.webp');
+  /// File path: assets/images/menus/connected_dots.png
+  AssetGenImage get connectedDots =>
+      const AssetGenImage('assets/images/menus/connected_dots.png');
 
-  /// File path: assets/images/microbit/select_microbit.webp
-  AssetGenImage get selectMicrobit =>
-      const AssetGenImage('assets/images/microbit/select_microbit.webp');
+  /// File path: assets/images/menus/cube.png
+  AssetGenImage get cube => const AssetGenImage('assets/images/menus/cube.png');
+
+  /// File path: assets/images/menus/graph.png
+  AssetGenImage get graph =>
+      const AssetGenImage('assets/images/menus/graph.png');
+
+  /// File path: assets/images/menus/lamp.png
+  AssetGenImage get lamp => const AssetGenImage('assets/images/menus/lamp.png');
+
+  /// File path: assets/images/menus/lines.png
+  AssetGenImage get lines =>
+      const AssetGenImage('assets/images/menus/lines.png');
+
+  /// File path: assets/images/menus/notebook.png
+  AssetGenImage get notebook =>
+      const AssetGenImage('assets/images/menus/notebook.png');
+
+  /// File path: assets/images/menus/paper_plane_with_line.png
+  AssetGenImage get paperPlaneWithLine =>
+      const AssetGenImage('assets/images/menus/paper_plane_with_line.png');
+
+  /// File path: assets/images/menus/set_square_with_question.png
+  AssetGenImage get setSquareWithQuestion =>
+      const AssetGenImage('assets/images/menus/set_square_with_question.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [connectMicrobit, selectMicrobit];
+  List<AssetGenImage> get values => [
+        connectedDots,
+        cube,
+        graph,
+        lamp,
+        lines,
+        notebook,
+        paperPlaneWithLine,
+        setSquareWithQuestion
+      ];
 }
 
 class Assets {
