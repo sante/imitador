@@ -28,79 +28,108 @@ class MotionScaffold extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(simpleBackground
-                  ? Assets.images.backgroundSimple.path
-                  : Assets.images.background.path),
-              fit: BoxFit.cover),
-        ),
-        child: Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            title: showTitle
-                ? RichText(
-                    text: TextSpan(
-                      text: "Mission: ",
-                      style: context.theme.textStyles.headlineMedium?.copyWith(
-                        color: context.theme.colorScheme.onSurface,
-                        textBaseline: TextBaseline.alphabetic,
+  Widget build(BuildContext context) => Stack(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              gradient: RadialGradient(
+                colors: [
+                  Color(0xFF343434),
+                  Color(0xFF333333),
+                  Color(0xFF202020),
+                ],
+                radius: 0.6,
+                center: Alignment.center,
+              ),
+            ),
+          ),
+          if (simpleBackground)
+            Positioned(
+              top: 20.h,
+              right: 20.w,
+              width: 1200.w,
+              height: 800.w,
+              child: Image.asset(
+                Assets.images.backgroundIconsSimple.path,
+                fit: BoxFit.contain,
+              ),
+            )
+          else
+            Image.asset(
+              Assets.images.backgroundIcons.path,
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: double.infinity,
+            ),
+          Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              title: showTitle
+                  ? RichText(
+                      text: TextSpan(
+                        text: "Mission: ",
+                        style:
+                            context.theme.textStyles.headlineMedium?.copyWith(
+                          color: context.theme.colorScheme.onSurface,
+                          textBaseline: TextBaseline.alphabetic,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: "Motion",
+                            style: context.theme.textStyles.headlineLarge
+                                ?.copyWith(
+                              color: context.theme.colorScheme.onSurface,
+                              textBaseline: TextBaseline.alphabetic,
+                            ),
+                          ),
+                        ],
                       ),
-                      children: [
-                        TextSpan(
-                          text: "Motion",
+                    )
+                  : null,
+              actions: [
+                Padding(
+                  padding: EdgeInsets.only(right: 48.w),
+                  child: Row(
+                    spacing: 24.w,
+                    children: [
+                      if (message != null)
+                        Text(
+                          message!,
                           style:
                               context.theme.textStyles.headlineLarge?.copyWith(
                             color: context.theme.colorScheme.onSurface,
                             textBaseline: TextBaseline.alphabetic,
                           ),
                         ),
-                      ],
-                    ),
-                  )
-                : null,
-            actions: [
-              Padding(
-                padding: EdgeInsets.only(right: 48.w),
-                child: Row(
-                  spacing: 24.w,
-                  children: [
-                    if (message != null)
-                      Text(
-                        message!,
-                        style: context.theme.textTheme.headlineSmall?.copyWith(
-                          color: context.theme.colorScheme.onSurface,
+                      if (action != null)
+                        SecondaryIconButton(
+                          icon: actionIcon!,
+                          onPressed: action,
+                        ),
+                    ],
+                  ),
+                ),
+              ],
+              centerTitle: true,
+              backgroundColor: Colors.transparent,
+              leadingWidth: 100.w,
+              leading: backRoute != null
+                  ? Padding(
+                      padding: EdgeInsets.only(left: 48.w),
+                      child: Center(
+                        child: SecondaryIconButton(
+                          icon: PhosphorIcons.arrowLeft(),
+                          onPressed: () {
+                            context.router.replace(backRoute!);
+                          },
                         ),
                       ),
-                    if (action != null)
-                      SecondaryIconButton(
-                        icon: actionIcon!,
-                        onPressed: action,
-                      ),
-                  ],
-                ),
-              ),
-            ],
-            centerTitle: true,
+                    )
+                  : null,
+            ),
+            body: body,
             backgroundColor: Colors.transparent,
-            leadingWidth: 100.w,
-            leading: backRoute != null
-                ? Padding(
-                    padding: EdgeInsets.only(left: 48.w),
-                    child: Center(
-                      child: SecondaryIconButton(
-                        icon: PhosphorIcons.arrowLeft(),
-                        onPressed: () {
-                          context.router.replace(backRoute!);
-                        },
-                      ),
-                    ),
-                  )
-                : null,
           ),
-          body: body,
-          backgroundColor: Colors.transparent,
-        ),
+        ],
       );
 }

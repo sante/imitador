@@ -12,17 +12,17 @@ import 'package:flutter/widgets.dart';
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
-  /// File path: assets/images/background.png
-  AssetGenImage get background =>
-      const AssetGenImage('assets/images/background.png');
+  /// File path: assets/images/background_icons.png
+  AssetGenImage get backgroundIcons =>
+      const AssetGenImage('assets/images/background_icons.png');
+
+  /// File path: assets/images/background_icons_simple.png
+  AssetGenImage get backgroundIconsSimple =>
+      const AssetGenImage('assets/images/background_icons_simple.png');
 
   /// File path: assets/images/background_sheet.png
   AssetGenImage get backgroundSheet =>
       const AssetGenImage('assets/images/background_sheet.png');
-
-  /// File path: assets/images/background_simple.png
-  AssetGenImage get backgroundSimple =>
-      const AssetGenImage('assets/images/background_simple.png');
 
   /// File path: assets/images/icon_student.png
   AssetGenImage get iconStudent =>
@@ -89,9 +89,9 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
-        background,
+        backgroundIcons,
+        backgroundIconsSimple,
         backgroundSheet,
-        backgroundSimple,
         iconStudent,
         iconTeacher,
         medalBronze,
@@ -114,7 +114,11 @@ class $AssetsImagesGen {
 class Assets {
   Assets._();
 
+  static const String aGitkeep = 'assets/.gitkeep';
   static const $AssetsImagesGen images = $AssetsImagesGen();
+
+  /// List of all assets
+  static List<String> get values => [aGitkeep];
 }
 
 class AssetGenImage {
