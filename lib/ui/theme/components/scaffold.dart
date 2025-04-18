@@ -45,8 +45,8 @@ class MotionScaffold extends StatelessWidget {
           ),
           if (simpleBackground)
             Positioned(
-              top: 20,
-              right: 20,
+              top: 20.h,
+              right: 20.w,
               width: 1200.w,
               height: 800.w,
               child: Image.asset(
