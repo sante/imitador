@@ -47,6 +47,9 @@ class $AssetsImagesGen {
   /// Directory path: assets/images/menus
   $AssetsImagesMenusGen get menus => const $AssetsImagesMenusGen();
 
+  /// Directory path: assets/images/microbit
+  $AssetsImagesMicrobitGen get microbit => const $AssetsImagesMicrobitGen();
+
   /// File path: assets/images/rating_0_5.png
   AssetGenImage get rating05 =>
       const AssetGenImage('assets/images/rating_0_5.png');
@@ -158,6 +161,21 @@ class $AssetsImagesMenusGen {
         paperPlaneWithLine,
         setSquareWithQuestion
       ];
+}
+
+class $AssetsImagesMicrobitGen {
+  const $AssetsImagesMicrobitGen();
+
+  /// File path: assets/images/microbit/connect_microbit.webp
+  AssetGenImage get connectMicrobit =>
+      const AssetGenImage('assets/images/microbit/connect_microbit.webp');
+
+  /// File path: assets/images/microbit/select_microbit.webp
+  AssetGenImage get selectMicrobit =>
+      const AssetGenImage('assets/images/microbit/select_microbit.webp');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [connectMicrobit, selectMicrobit];
 }
 
 class Assets {
