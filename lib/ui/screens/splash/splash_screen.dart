@@ -6,6 +6,7 @@ import 'package:imitador/gen/assets.gen.dart';
 import 'package:imitador/ui/router/app_router.dart';
 import 'package:imitador/ui/theme/app_theme.dart';
 import 'package:imitador/ui/theme/components/buttons.dart';
+import 'package:imitador/ui/theme/components/scaffold.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 @RoutePage()
@@ -13,14 +14,10 @@ class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
   @override
-  Widget build(BuildContext context) => Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(Assets.images.background.path),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Padding(
+  Widget build(BuildContext context) => MotionScaffold(
+        showTitle: false,
+        simpleBackground: false,
+        body: Padding(
           padding: EdgeInsets.symmetric(vertical: 141.h),
           child: Column(
             mainAxisSize: MainAxisSize.min,
