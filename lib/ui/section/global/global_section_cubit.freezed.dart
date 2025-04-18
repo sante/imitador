@@ -16,27 +16,46 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$GlobalSectionState {
+  MicrobitController get microbitController =>
+      throw _privateConstructorUsedError;
+  bool get usingMicrobit => throw _privateConstructorUsedError;
+  String? get microbitError => throw _privateConstructorUsedError;
   User? get user => throw _privateConstructorUsedError;
   List<Level>? get levels => throw _privateConstructorUsedError;
   List<Activity>? get activities => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            User? user, List<Level>? levels, List<Activity>? activities)
+            MicrobitController microbitController,
+            bool usingMicrobit,
+            String? microbitError,
+            User? user,
+            List<Level>? levels,
+            List<Activity>? activities)
         state,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
-            User? user, List<Level>? levels, List<Activity>? activities)?
+            MicrobitController microbitController,
+            bool usingMicrobit,
+            String? microbitError,
+            User? user,
+            List<Level>? levels,
+            List<Activity>? activities)?
         state,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            User? user, List<Level>? levels, List<Activity>? activities)?
+            MicrobitController microbitController,
+            bool usingMicrobit,
+            String? microbitError,
+            User? user,
+            List<Level>? levels,
+            List<Activity>? activities)?
         state,
     required TResult orElse(),
   }) =>
@@ -69,7 +88,13 @@ abstract class $GlobalSectionStateCopyWith<$Res> {
           GlobalSectionState value, $Res Function(GlobalSectionState) then) =
       _$GlobalSectionStateCopyWithImpl<$Res, GlobalSectionState>;
   @useResult
-  $Res call({User? user, List<Level>? levels, List<Activity>? activities});
+  $Res call(
+      {MicrobitController microbitController,
+      bool usingMicrobit,
+      String? microbitError,
+      User? user,
+      List<Level>? levels,
+      List<Activity>? activities});
 
   $UserCopyWith<$Res>? get user;
 }
@@ -87,11 +112,26 @@ class _$GlobalSectionStateCopyWithImpl<$Res, $Val extends GlobalSectionState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? microbitController = null,
+    Object? usingMicrobit = null,
+    Object? microbitError = freezed,
     Object? user = freezed,
     Object? levels = freezed,
     Object? activities = freezed,
   }) {
     return _then(_value.copyWith(
+      microbitController: null == microbitController
+          ? _value.microbitController
+          : microbitController // ignore: cast_nullable_to_non_nullable
+              as MicrobitController,
+      usingMicrobit: null == usingMicrobit
+          ? _value.usingMicrobit
+          : usingMicrobit // ignore: cast_nullable_to_non_nullable
+              as bool,
+      microbitError: freezed == microbitError
+          ? _value.microbitError
+          : microbitError // ignore: cast_nullable_to_non_nullable
+              as String?,
       user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -129,7 +169,13 @@ abstract class _$$GlobalSectionStateStateImplCopyWith<$Res>
       __$$GlobalSectionStateStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({User? user, List<Level>? levels, List<Activity>? activities});
+  $Res call(
+      {MicrobitController microbitController,
+      bool usingMicrobit,
+      String? microbitError,
+      User? user,
+      List<Level>? levels,
+      List<Activity>? activities});
 
   @override
   $UserCopyWith<$Res>? get user;
@@ -148,11 +194,26 @@ class __$$GlobalSectionStateStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? microbitController = null,
+    Object? usingMicrobit = null,
+    Object? microbitError = freezed,
     Object? user = freezed,
     Object? levels = freezed,
     Object? activities = freezed,
   }) {
     return _then(_$GlobalSectionStateStateImpl(
+      microbitController: null == microbitController
+          ? _value.microbitController
+          : microbitController // ignore: cast_nullable_to_non_nullable
+              as MicrobitController,
+      usingMicrobit: null == usingMicrobit
+          ? _value.usingMicrobit
+          : usingMicrobit // ignore: cast_nullable_to_non_nullable
+              as bool,
+      microbitError: freezed == microbitError
+          ? _value.microbitError
+          : microbitError // ignore: cast_nullable_to_non_nullable
+              as String?,
       user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -173,12 +234,23 @@ class __$$GlobalSectionStateStateImplCopyWithImpl<$Res>
 
 class _$GlobalSectionStateStateImpl implements _GlobalSectionStateState {
   const _$GlobalSectionStateStateImpl(
-      {this.user = null,
+      {required this.microbitController,
+      this.usingMicrobit = false,
+      this.microbitError = null,
+      this.user = null,
       final List<Level>? levels = null,
       final List<Activity>? activities = null})
       : _levels = levels,
         _activities = activities;
 
+  @override
+  final MicrobitController microbitController;
+  @override
+  @JsonKey()
+  final bool usingMicrobit;
+  @override
+  @JsonKey()
+  final String? microbitError;
   @override
   @JsonKey()
   final User? user;
@@ -206,7 +278,7 @@ class _$GlobalSectionStateStateImpl implements _GlobalSectionStateState {
 
   @override
   String toString() {
-    return 'GlobalSectionState.state(user: $user, levels: $levels, activities: $activities)';
+    return 'GlobalSectionState.state(microbitController: $microbitController, usingMicrobit: $usingMicrobit, microbitError: $microbitError, user: $user, levels: $levels, activities: $activities)';
   }
 
   @override
@@ -214,6 +286,12 @@ class _$GlobalSectionStateStateImpl implements _GlobalSectionStateState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GlobalSectionStateStateImpl &&
+            (identical(other.microbitController, microbitController) ||
+                other.microbitController == microbitController) &&
+            (identical(other.usingMicrobit, usingMicrobit) ||
+                other.usingMicrobit == usingMicrobit) &&
+            (identical(other.microbitError, microbitError) ||
+                other.microbitError == microbitError) &&
             (identical(other.user, user) || other.user == user) &&
             const DeepCollectionEquality().equals(other._levels, _levels) &&
             const DeepCollectionEquality()
@@ -223,6 +301,9 @@ class _$GlobalSectionStateStateImpl implements _GlobalSectionStateState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      microbitController,
+      usingMicrobit,
+      microbitError,
       user,
       const DeepCollectionEquality().hash(_levels),
       const DeepCollectionEquality().hash(_activities));
@@ -238,32 +319,50 @@ class _$GlobalSectionStateStateImpl implements _GlobalSectionStateState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            User? user, List<Level>? levels, List<Activity>? activities)
+            MicrobitController microbitController,
+            bool usingMicrobit,
+            String? microbitError,
+            User? user,
+            List<Level>? levels,
+            List<Activity>? activities)
         state,
   }) {
-    return state(user, levels, activities);
+    return state(microbitController, usingMicrobit, microbitError, user, levels,
+        activities);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
-            User? user, List<Level>? levels, List<Activity>? activities)?
+            MicrobitController microbitController,
+            bool usingMicrobit,
+            String? microbitError,
+            User? user,
+            List<Level>? levels,
+            List<Activity>? activities)?
         state,
   }) {
-    return state?.call(user, levels, activities);
+    return state?.call(microbitController, usingMicrobit, microbitError, user,
+        levels, activities);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            User? user, List<Level>? levels, List<Activity>? activities)?
+            MicrobitController microbitController,
+            bool usingMicrobit,
+            String? microbitError,
+            User? user,
+            List<Level>? levels,
+            List<Activity>? activities)?
         state,
     required TResult orElse(),
   }) {
     if (state != null) {
-      return state(user, levels, activities);
+      return state(microbitController, usingMicrobit, microbitError, user,
+          levels, activities);
     }
     return orElse();
   }
@@ -299,10 +398,19 @@ class _$GlobalSectionStateStateImpl implements _GlobalSectionStateState {
 
 abstract class _GlobalSectionStateState implements GlobalSectionState {
   const factory _GlobalSectionStateState(
-      {final User? user,
+      {required final MicrobitController microbitController,
+      final bool usingMicrobit,
+      final String? microbitError,
+      final User? user,
       final List<Level>? levels,
       final List<Activity>? activities}) = _$GlobalSectionStateStateImpl;
 
+  @override
+  MicrobitController get microbitController;
+  @override
+  bool get usingMicrobit;
+  @override
+  String? get microbitError;
   @override
   User? get user;
   @override

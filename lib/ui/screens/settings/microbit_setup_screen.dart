@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imitador/core/common/extension/context_extensions.dart';
 import 'package:imitador/gen/assets.gen.dart';
@@ -8,6 +9,7 @@ import 'package:imitador/ui/theme/components/sheet_container.dart';
 import 'package:imitador/ui/theme/components/scaffold.dart';
 import 'package:imitador/ui/theme/components/buttons.dart';
 import 'package:imitador/ui/theme/app_theme.dart';
+import 'package:imitador/ui/section/global/global_section_cubit.dart';
 
 @RoutePage()
 class MicrobitSetupScreen extends StatefulWidget {
@@ -111,7 +113,23 @@ class _MicrobitSetupScreenState extends State<MicrobitSetupScreen> {
               alignment: Alignment.centerRight,
               child: PrimaryButton(
                 label: 'Emparejar',
-                onPressed: nextStep,
+                onPressed: () async {
+                  final connected = await context
+                      .read<GlobalSectionCubit>()
+                      .connectMicrobit();
+                  if (connected) {
+                    nextStep();
+                  } else {
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                              "Error al conectar Microbit, intenta de nuevo"),
+                        ),
+                      );
+                    }
+                  }
+                },
               ),
             ),
           ],

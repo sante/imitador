@@ -8,6 +8,7 @@ import 'package:imitador/model/level/level.dart';
 import 'package:imitador/ui/router/app_router.dart';
 import 'package:imitador/ui/section/activity/activity_section_cubit.dart';
 import 'package:imitador/ui/section/game_session/game_session_section_cubit.dart';
+import 'package:imitador/ui/section/global/global_section_cubit.dart';
 import 'package:imitador/ui/section/level/level_section_cubit.dart';
 
 @RoutePage()
@@ -89,6 +90,7 @@ class _LevelContentScreen extends StatelessWidget {
         game: SimonGame(
           level: level,
           onFinishedWithResult: onFinishedWithResult,
+          globalSectionCubit: context.read<GlobalSectionCubit>(),
         ),
       );
 }

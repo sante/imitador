@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:imitador/core/common/logger.dart';
+import 'package:imitador/core/device/microbit_controller.dart';
 import 'package:imitador/core/di/di_provider.dart';
 import 'package:imitador/core/repository/activity_repository.dart';
 import 'package:imitador/core/repository/level_repository.dart';
@@ -24,7 +25,9 @@ class GlobalSectionCubit extends Cubit<GlobalSectionState> {
   StreamSubscription<List<Level>?>? _levelsSubscription;
   StreamSubscription<List<Activity>?>? _activitiesSubscription;
 
-  GlobalSectionCubit() : super(const GlobalSectionState.state()) {
+  GlobalSectionCubit() : super(GlobalSectionState.state(
+    microbitController: MicrobitController(),
+  )) {
     _initStreams();
   }
 
@@ -45,6 +48,15 @@ class GlobalSectionCubit extends Cubit<GlobalSectionState> {
     });
   }
 
+  Future<bool> connectMicrobit() async {
+    final connected = await state.microbitController.connect();
+    emit(state.copyWith(
+      usingMicrobit: connected,
+      microbitError: connected ? null : 'Error al conectar con Microbit',
+    ));
+    return connected;
+  }
+
   void logOut() async {
     await _sessionRepository.logOut();
     _levelRepository.refreshLevels();
@@ -60,6 +72,7 @@ class GlobalSectionCubit extends Cubit<GlobalSectionState> {
   Future<void> close() {
     _userSubscription?.cancel();
     _levelsSubscription?.cancel();
+    state.microbitController.disconnect();
     return super.close();
   }
 }
