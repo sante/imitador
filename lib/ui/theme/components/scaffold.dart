@@ -15,6 +15,7 @@ class MotionScaffold extends StatelessWidget {
   final bool simpleBackground;
   final String? message;
   final PageRouteInfo? backRoute;
+  final bool extendBodyBehindAppBar;
 
   const MotionScaffold({
     this.showTitle = true,
@@ -25,6 +26,7 @@ class MotionScaffold extends StatelessWidget {
     required this.body,
     this.simpleBackground = false,
     this.message,
+    this.extendBodyBehindAppBar = false,
   });
 
   @override
@@ -62,6 +64,7 @@ class MotionScaffold extends StatelessWidget {
               height: double.infinity,
             ),
           Scaffold(
+            extendBodyBehindAppBar: extendBodyBehindAppBar,
             appBar: AppBar(
               automaticallyImplyLeading: false,
               title: showTitle
