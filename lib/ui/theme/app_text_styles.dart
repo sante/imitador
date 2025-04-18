@@ -73,12 +73,12 @@ class AppTextStyles extends TextTheme {
 
   static AppTextStyles getDefaultAppStyles() => AppTextStyles.fromTextTheme(
         textTheme: GoogleFonts.russoOneTextTheme().copyWith(
-          titleLarge: russoOneTextStyle(68.sp, FontWeight.bold, 1.2),
-          titleMedium: russoOneTextStyle(56.sp, FontWeight.bold, 1.2),
-          titleSmall: russoOneTextStyle(48.sp, FontWeight.bold, 1.2),
-          headlineLarge: russoOneTextStyle(40.sp, FontWeight.bold, 1.2),
-          headlineMedium: russoOneTextStyle(32.sp, FontWeight.bold, 1.2),
-          headlineSmall: russoOneTextStyle(24.sp, FontWeight.bold, 1.2),
+          titleLarge: russoOneTextStyle(68.sp, FontWeight.normal, 1.2), //H1
+          titleMedium: russoOneTextStyle(56.sp, FontWeight.normal, 1.2), //H2
+          titleSmall: russoOneTextStyle(48.sp, FontWeight.normal, 1.2), //H3
+          headlineLarge: russoOneTextStyle(40.sp, FontWeight.normal, 1.2), //H4
+          headlineMedium: russoOneTextStyle(32.sp, FontWeight.normal, 1.2), //H5
+          headlineSmall: russoOneTextStyle(24.sp, FontWeight.normal, 1.2), //H6
           bodyLarge: spaceGroteskTextStyle(20.sp, FontWeight.normal, 1.4),
           bodyMedium: spaceGroteskTextStyle(16.sp, FontWeight.normal, 1.4),
           bodySmall: spaceGroteskTextStyle(14.sp, FontWeight.normal, 1.4),

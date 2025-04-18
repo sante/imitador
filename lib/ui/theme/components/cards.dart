@@ -6,31 +6,56 @@ import 'package:imitador/gen/assets.gen.dart';
 import 'package:imitador/model/activity/activity.dart';
 import 'package:imitador/model/enum/user_type.dart';
 import 'package:imitador/ui/theme/app_theme.dart';
+import 'package:imitador/ui/theme/components/sheet_container.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class LevelCard extends StatelessWidget {
   final String label;
   final VoidCallback onPressed;
+  final String? image;
+  final double? customHeight;
+  final double? customWidth;
 
   const LevelCard({
     required this.label,
     required this.onPressed,
     super.key,
+    this.image,
+    this.customHeight,
+    this.customWidth,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 290.w,
-      height: 205.h,
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: context.theme.buttonsStyle.outlineButton.copyWith(
-          fixedSize: WidgetStatePropertyAll(Size(290.w, 205.h)),
-        ),
-        child: Text(label),
-      ),
-    );
+    return InkWell(
+        onTap: onPressed,
+        child: SizedBox(
+          width: customWidth ?? 290.w,
+          height: customHeight ?? 205.h,
+          child: SheetContainer(
+            child: Center(
+              child: Column(
+                spacing: 14.h,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (image != null)
+                    Image.asset(
+                      image!,
+                      width: 100.w,
+                    ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8.w),
+                    child: Text(
+                      label,
+                      textAlign: TextAlign.center,
+                      style: context.theme.textStyles.headlineSmall,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ));
   }
 }
 

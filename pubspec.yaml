@@ -116,6 +116,14 @@ flutter:
     - assets/images/medal_bronze.png
     - assets/images/medal_gold.png
     - assets/images/medal_silver.png
+    - assets/images/menus/connected_dots.png
+    - assets/images/menus/cube.png
+    - assets/images/menus/graph.png
+    - assets/images/menus/lamp.png
+    - assets/images/menus/lines.png
+    - assets/images/menus/notebook.png
+    - assets/images/menus/paper_plane_with_line.png
+    - assets/images/menus/set_square_with_question.png
     - environments/
 
 flutter_gen:
