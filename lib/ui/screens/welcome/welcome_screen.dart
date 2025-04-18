@@ -72,7 +72,7 @@ class _WelcomeContentScreen extends StatelessWidget {
         builder: (context, state) => MotionScaffold(
           actionIcon: PhosphorIcons.gear(),
           showTitle: false,
-          simpleBackground: true,
+          simpleBackground: state.user != null,
           action: () {
             context.router.push(const SettingsRoute());
           },
@@ -83,31 +83,60 @@ class _WelcomeContentScreen extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 48.w),
                     child: _AuthenticatedMenu(),
                   )
-                : Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      const GuestActions(),
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        spacing: 36.h,
-                        children: [
-                          Text(
-                            "¿Todavía no tenés cuenta?",
-                            style: context.theme.textStyles.bodyLarge?.copyWith(
-                              fontWeight: FontWeight.bold,
+                : Padding(
+                    padding: EdgeInsets.symmetric(vertical: 90.h),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        RichText(
+                          text: TextSpan(
+                            text: "Mission: ",
+                            style:
+                                context.theme.textStyles.titleMedium!.copyWith(
+                              color: context.theme.colorScheme.onSurface,
                             ),
+                            children: [
+                              TextSpan(
+                                text: "Motion",
+                                style: context.theme.textStyles.titleLarge!
+                                    .copyWith(
+                                  color: context.theme.colorScheme.onSurface,
+                                ),
+                              ),
+                            ],
                           ),
-                          SecondaryButton(
-                            onPressed: () {
-                              context.router.push(const SignUpSectionRoute());
-                            },
-                            label: "Registrate",
-                          ),
+                        ),
+                        if (state.user != null) ...[
+                          UserActions(user: state.user!),
+                          Container()
                         ],
-                      )
-                    ],
+                        if (state.user == null) ...[
+                          const GuestActions(),
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            spacing: 36.h,
+                            children: [
+                              Text(
+                                "¿Todavía no tenés cuenta?",
+                                style:
+                                    context.theme.textTheme.bodyLarge?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SecondaryButton(
+                                onPressed: () {
+                                  context.router
+                                      .push(const SignUpSectionRoute());
+                                },
+                                label: "Registrate",
+                              ),
+                            ],
+                          )
+                        ]
+                      ],
+                    ),
                   ),
           ),
         ),
