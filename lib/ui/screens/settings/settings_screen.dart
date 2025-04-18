@@ -12,6 +12,7 @@ import 'package:imitador/ui/theme/components/dividers.dart';
 import 'package:imitador/ui/theme/components/inputs.dart';
 import 'package:imitador/ui/theme/components/scaffold.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:imitador/ui/theme/components/sheet_container.dart';
 
 import 'settings_cubit.dart';
 
@@ -33,64 +34,60 @@ class _SettingsContentScreen extends StatelessWidget {
         body: Center(
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 12.h),
-            child: Container(
+            child: SizedBox(
               width: 604.w,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.r),
-                color: const Color(0xFFEDF0F7),
-                image: DecorationImage(
-                  image: AssetImage(Assets.images.backgroundSheet.path),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: 40.h,
-                  horizontal: 72.w,
-                ),
-                child: Column(
-                  spacing: 40.h,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      "Configuración",
-                      style: context.theme.textStyles.headlineLarge,
-                    ),
-                    MotionDropDown(
-                      value: null,
-                      items: const ["Español", "Inglés"],
-                      hint: "Seleccione un idioma",
-                      label: "Idioma",
-                      onChanged: (_) {},
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: PrimaryButton(
-                        onPressed: () {},
-                        label: "Guardar selección",
-                        leadingIcon: PhosphorIcons.floppyDisk(),
+              child: SheetContainer(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 40.h,
+                    horizontal: 72.w,
+                  ),
+                  child: Column(
+                    spacing: 40.h,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        "Configuración",
+                        style: context.theme.textStyles.headlineLarge,
                       ),
-                    ),
-                    const DarkHorizontalDivider(),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: 40.h,
-                      children: [
-                        Text(
-                          "Conectar sensor",
-                          style: context.theme.textStyles.headlineSmall,
+                      MotionDropDown(
+                        value: null,
+                        items: const ["Español", "Inglés"],
+                        hint: "Seleccione un idioma",
+                        label: "Idioma",
+                        onChanged: (_) {},
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: PrimaryButton(
+                          onPressed: () {},
+                          label: "Guardar selección",
+                          leadingIcon: PhosphorIcons.floppyDisk(),
                         ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: PrimaryButton(
-                            onPressed: () {},
-                            label: "Conectar",
-                            leadingIcon: PhosphorIcons.usb(),
+                      ),
+                      const DarkHorizontalDivider(),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 40.h,
+                        children: [
+                          Text(
+                            "Conectar sensor",
+                            style: context.theme.textStyles.headlineSmall,
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: PrimaryButton(
+                              onPressed: () {
+                                context.router.push(const MicrobitSetupRoute());
+                              },
+                              label: "Conectar",
+                              leadingIcon: PhosphorIcons.usb(),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
