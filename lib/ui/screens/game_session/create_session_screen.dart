@@ -35,20 +35,22 @@ class _CreateSessionScreenState extends State<CreateSessionScreen> {
   @override
   Widget build(BuildContext context) {
     return MotionScaffold(
-      message: "Crear sesión de juego",
+      showTitle: false,
+      simpleBackground: true,
       body: Center(
-        child: SheetContainer(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 36.h),
-            child: BlocBuilder<GlobalSectionCubit, GlobalSectionState>(
-              builder: (context, state) => Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                spacing: 40.h,
-                children: [
-                  Text(
-                    "Selecciona una actividad",
-                    style: context.theme.textStyles.titleSmall,
-                  ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 92.w, vertical: 36.h),
+          child: BlocBuilder<GlobalSectionCubit, GlobalSectionState>(
+            builder: (context, state) => Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 40.h,
+              children: [
+                Text(
+                  "Elegí el juego para la sesión de clase",
+                  style: context.theme.textStyles.headlineLarge
+                      ?.copyWith(color: Colors.white),
+                ),
+                Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
                   _ActivityCards(
                     activities: state.activities ?? [],
                     selectedActivity: selectedActivity,
@@ -62,6 +64,7 @@ class _CreateSessionScreenState extends State<CreateSessionScreen> {
                       });
                     },
                   ),
+                  SizedBox(height: 42.h),
                   PrimaryButton(
                     onPressed: selectedActivity != null
                         ? () async {
@@ -78,8 +81,8 @@ class _CreateSessionScreenState extends State<CreateSessionScreen> {
                         : null,
                     label: "Crear sesión",
                   ),
-                ],
-              ),
+                ])
+              ],
             ),
           ),
         ),
@@ -87,6 +90,34 @@ class _CreateSessionScreenState extends State<CreateSessionScreen> {
     );
   }
 }
+
+// class _ActivityCards extends StatelessWidget {
+//   final List<Activity> activities;
+//   final void Function(Activity)? onActivitySelected;
+//   final Activity? selectedActivity;
+
+//   const _ActivityCards({
+//     required this.activities,
+//     super.key,
+//     this.onActivitySelected,
+//     this.selectedActivity,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Wrap(
+//       children: activities
+//           .map(
+//             (it) => ActivityCard(
+//               activity: it,
+//               onPressed: () => onActivitySelected?.call(it),
+//               selected: selectedActivity == it,
+//             ),
+//           )
+//           .toList(),
+//     );
+//   }
+// }
 
 class _ActivityCards extends StatelessWidget {
   final List<Activity> activities;
@@ -102,10 +133,12 @@ class _ActivityCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
+    return _SelectorRow(
       children: activities
           .map(
             (it) => ActivityCard(
+              customHeight: 250.h,
+              customWidth: 394.w,
               activity: it,
               onPressed: () => onActivitySelected?.call(it),
               selected: selectedActivity == it,
@@ -114,4 +147,23 @@ class _ActivityCards extends StatelessWidget {
           .toList(),
     );
   }
+}
+
+class _SelectorRow extends StatelessWidget {
+  final List<Widget> children;
+
+  const _SelectorRow({required this.children, super.key});
+
+  @override
+  Widget build(BuildContext context) => SizedBox(
+        width: double.infinity,
+        child: Wrap(
+          spacing: context.theme.dimensions.spacing24.w,
+          runSpacing: context.theme.dimensions.spacing24.h,
+          alignment: WrapAlignment.start,
+          crossAxisAlignment: WrapCrossAlignment.start,
+          direction: Axis.horizontal,
+          children: children,
+        ),
+      );
 }

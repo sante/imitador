@@ -65,14 +65,23 @@ final hardLevel = Level(
   positionExpressions: [],
 );
 
-class _WelcomeContentScreen extends StatelessWidget {
+class _WelcomeContentScreen extends StatefulWidget {
+  @override
+  State<_WelcomeContentScreen> createState() => _WelcomeContentScreenState();
+}
+
+class _WelcomeContentScreenState extends State<_WelcomeContentScreen> {
+  bool guestMode = false;
+
   @override
   Widget build(BuildContext context) =>
       BlocBuilder<GlobalSectionCubit, GlobalSectionState>(
         builder: (context, state) => MotionScaffold(
-          actionIcon: PhosphorIcons.gear(),
+          actionIcon:
+              state.user != null ? PhosphorIcons.user() : PhosphorIcons.gear(),
+          message: "¡Hola, ${state.user?.name ?? "invitado"}!",
           showTitle: false,
-          simpleBackground: state.user != null,
+          simpleBackground: state.user != null || guestMode,
           action: () {
             context.router.push(const SettingsRoute());
           },
@@ -83,67 +92,82 @@ class _WelcomeContentScreen extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 48.w),
                     child: _AuthenticatedMenu(),
                   )
-                : Padding(
-                    padding: EdgeInsets.symmetric(vertical: 90.h),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            text: "Mission: ",
-                            style:
-                                context.theme.textStyles.titleMedium!.copyWith(
-                              color: context.theme.colorScheme.onSurface,
-                            ),
-                            children: [
-                              TextSpan(
-                                text: "Motion",
-                                style: context.theme.textStyles.titleLarge!
+                : guestMode
+                    ? Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 48.w),
+                        child: _AuthenticatedMenu(guestMode: true),
+                      )
+                    : Padding(
+                        padding: EdgeInsets.symmetric(vertical: 90.h),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                text: "Mission: ",
+                                style: context.theme.textStyles.titleMedium!
                                     .copyWith(
                                   color: context.theme.colorScheme.onSurface,
                                 ),
+                                children: [
+                                  TextSpan(
+                                    text: "Motion",
+                                    style: context.theme.textStyles.titleLarge!
+                                        .copyWith(
+                                      color:
+                                          context.theme.colorScheme.onSurface,
+                                    ),
+                                  ),
+                                ],
                               ),
+                            ),
+                            if (state.user != null) ...[
+                              UserActions(user: state.user!),
+                              Container()
                             ],
-                          ),
-                        ),
-                        if (state.user != null) ...[
-                          UserActions(user: state.user!),
-                          Container()
-                        ],
-                        if (state.user == null) ...[
-                          const GuestActions(),
-                          Column(
-                            mainAxisSize: MainAxisSize.min,
-                            spacing: 36.h,
-                            children: [
-                              Text(
-                                "¿Todavía no tenés cuenta?",
-                                style:
-                                    context.theme.textTheme.bodyLarge?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              SecondaryButton(
-                                onPressed: () {
-                                  context.router
-                                      .push(const SignUpSectionRoute());
+                            if (state.user == null) ...[
+                              GuestActions(
+                                onPlayAsGuest: () {
+                                  setState(() {
+                                    guestMode = true;
+                                  });
                                 },
-                                label: "Registrate",
                               ),
-                            ],
-                          )
-                        ]
-                      ],
-                    ),
-                  ),
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                spacing: 36.h,
+                                children: [
+                                  Text(
+                                    "¿Todavía no tenés cuenta?",
+                                    style: context.theme.textTheme.bodyLarge
+                                        ?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SecondaryButton(
+                                    onPressed: () {
+                                      context.router
+                                          .push(const SignUpSectionRoute());
+                                    },
+                                    label: "Registrate",
+                                  ),
+                                ],
+                              )
+                            ]
+                          ],
+                        ),
+                      ),
           ),
         ),
       );
 }
 
 class _AuthenticatedMenu extends StatelessWidget {
+  final bool guestMode;
+  const _AuthenticatedMenu({this.guestMode = false, super.key});
+
   @override
   Widget build(BuildContext context) {
     final activities =
@@ -169,36 +193,41 @@ class _AuthenticatedMenu extends StatelessWidget {
                   ),
                   SizedBox(height: 16.h),
                   InkWell(
-                    onTap: () {
-                      if (context.read<GlobalSectionCubit>().state.user
-                          is Teacher) {
-                        context.router.push(const CreateSessionRoute());
-                      } else {
-                        context.router.push(const JoinSessionRoute());
-                      }
-                    },
-                    child: SizedBox(
-                      width: 290.w,
-                      height: 205.h,
-                      child: SheetContainer(
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                Assets.images.menus.connectedDots.path,
-                                width: 118.w,
-                                height: 109.h,
-                              ),
-                              SizedBox(height: 12.h),
-                              Text(
-                                context.read<GlobalSectionCubit>().state.user
-                                        is Teacher
-                                    ? 'CREAR'
-                                    : 'UNIRSE',
-                                style: context.theme.textStyles.headlineSmall,
-                              ),
-                            ],
+                    onTap: guestMode
+                        ? null
+                        : () {
+                            if (context.read<GlobalSectionCubit>().state.user
+                                is Teacher) {
+                              context.router.push(const CreateSessionRoute());
+                            } else {
+                              context.router.push(const JoinSessionRoute());
+                            }
+                          },
+                    child: Opacity(
+                      opacity: guestMode ? 0.5 : 1.0,
+                      child: SizedBox(
+                        width: 290.w,
+                        height: 205.h,
+                        child: SheetContainer(
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  Assets.images.menus.connectedDots.path,
+                                  width: 118.w,
+                                  height: 109.h,
+                                ),
+                                SizedBox(height: 12.h),
+                                Text(
+                                  context.read<GlobalSectionCubit>().state.user
+                                          is Teacher
+                                      ? 'CREAR'
+                                      : 'UNIRSE',
+                                  style: context.theme.textStyles.headlineSmall,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -210,7 +239,7 @@ class _AuthenticatedMenu extends StatelessWidget {
             SizedBox(width: 32.w),
             // Juegos libres
             Expanded(
-              flex: 4,
+              flex: 3,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -358,46 +387,7 @@ class _AuthenticatedMenu extends StatelessWidget {
           ),
         ),
         SizedBox(height: 16.h),
-        SizedBox(
-          width: double.infinity,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ...[
-                {
-                  'title': '¿Qué regularidades hay?',
-                  'image': Assets.images.menus.notebook.path
-                },
-                {
-                  'title': 'Se mueve se mueve',
-                  'image': Assets.images.menus.lines.path
-                },
-                {'title': 'El cruce', 'image': Assets.images.menus.lamp.path},
-                {
-                  'title': 'Análisis de una gráfica de x(t)',
-                  'image': Assets.images.menus.paperPlaneWithLine.path
-                },
-                {
-                  'title': 'Análisis de gráficas de x(t) y de v(t)',
-                  'image': Assets.images.menus.setSquareWithQuestion.path
-                },
-              ].map((game) {
-                final activity = activities.cast<Activity?>().firstWhere(
-                      (a) =>
-                          a != null &&
-                          a.name.trim().toLowerCase() ==
-                              game['title']!.trim().toLowerCase(),
-                      orElse: () => null,
-                    );
-                return _ClassGameCard(
-                  title: game['title']!,
-                  image: game['image']!,
-                  activity: activity,
-                );
-              }).toList(),
-            ],
-          ),
-        ),
+        _ActivityCards(activities: activities),
       ],
     );
   }
@@ -454,10 +444,56 @@ class _ClassGameCard extends StatelessWidget {
   }
 }
 
-class GuestActions extends StatelessWidget {
-  const GuestActions({
+class _ActivityCards extends StatelessWidget {
+  final List<Activity> activities;
+
+  const _ActivityCards({
+    required this.activities,
     super.key,
   });
+
+  @override
+  Widget build(BuildContext context) {
+    return _SelectorRow(
+      children: activities
+          .map(
+            (it) => ActivityCard(
+              activity: it,
+              customHeight: 250.h,
+              customWidth: 236.w,
+              showLevels: false,
+              onPressed: () {
+                context.router.push(ActivitySectionRoute(activityId: it.id));
+              },
+            ),
+          )
+          .toList(),
+    );
+  }
+}
+
+class _SelectorRow extends StatelessWidget {
+  final List<Widget> children;
+
+  const _SelectorRow({required this.children, super.key});
+
+  @override
+  Widget build(BuildContext context) => SizedBox(
+        width: double.infinity,
+        child: Wrap(
+          spacing: context.theme.dimensions.spacing24.w,
+          runSpacing: context.theme.dimensions.spacing24.h,
+          alignment: WrapAlignment.start,
+          crossAxisAlignment: WrapCrossAlignment.start,
+          direction: Axis.horizontal,
+          children: children,
+        ),
+      );
+}
+
+class GuestActions extends StatelessWidget {
+  final VoidCallback? onPlayAsGuest;
+  const GuestActions({this.onPlayAsGuest, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -472,9 +508,10 @@ class GuestActions extends StatelessWidget {
           label: context.localizations.sign_in,
         ),
         PrimaryOutlineButton(
-          onPressed: () {
-            context.router.push(const LevelSelectorRoute());
-          },
+          onPressed: onPlayAsGuest ??
+              () {
+                context.router.push(const LevelSelectorRoute());
+              },
           label: context.localizations.play_as_guest,
         ),
       ],

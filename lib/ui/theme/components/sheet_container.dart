@@ -4,10 +4,12 @@ import 'package:imitador/gen/assets.gen.dart';
 
 class SheetContainer extends StatelessWidget {
   final Widget? child;
+  final BoxBorder? border;
 
   const SheetContainer({
     super.key,
     this.child,
+    this.border,
   });
 
   @override
@@ -18,6 +20,7 @@ class SheetContainer extends StatelessWidget {
             fit: BoxFit.cover,
           ),
           color: context.theme.colorScheme.onSurface,
+          border: border,
         ),
         child: child,
       );

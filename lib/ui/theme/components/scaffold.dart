@@ -96,7 +96,7 @@ class MotionScaffold extends StatelessWidget {
                         Text(
                           message!,
                           style:
-                              context.theme.textStyles.headlineLarge?.copyWith(
+                              context.theme.textStyles.headlineSmall?.copyWith(
                             color: context.theme.colorScheme.onSurface,
                             textBaseline: TextBaseline.alphabetic,
                           ),
