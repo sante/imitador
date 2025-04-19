@@ -12,6 +12,10 @@ class AppTextField extends StatelessWidget {
   final bool obscureText;
   final TextInputType? keyboardType;
   final bool enabled;
+  final Color? labelColor;
+  final Color? backgroundColor;
+  final bool fullWidth;
+  final Color? textColor;
 
   const AppTextField({
     required this.controller,
@@ -21,13 +25,17 @@ class AppTextField extends StatelessWidget {
     this.obscureText = false,
     this.keyboardType,
     this.enabled = true,
+    this.labelColor,
+    this.backgroundColor,
+    this.fullWidth = false,
+    this.textColor,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 392.w,
+      width: fullWidth ? double.infinity : 392.w,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,7 +44,7 @@ class AppTextField extends StatelessWidget {
           Text(
             label,
             style: context.theme.textStyles.bodySmall?.copyWith(
-              color: context.theme.customColors.textColor,
+              color: labelColor ?? context.theme.customColors.textColor,
             ),
           ),
           TextField(
@@ -46,7 +54,7 @@ class AppTextField extends StatelessWidget {
             keyboardType: keyboardType,
             enabled: enabled,
             style: context.theme.textStyles.bodyMedium?.copyWith(
-              color: context.theme.colorScheme.onSurface,
+              color: textColor ?? context.theme.colorScheme.onSurface,
             ),
             decoration: InputDecoration(
               hintText: hint,
@@ -67,7 +75,8 @@ class AppTextField extends StatelessWidget {
                   width: 1,
                 ),
               ),
-              filled: false,
+              filled: backgroundColor != null,
+              fillColor: backgroundColor,
               hoverColor: null,
             ),
           ),

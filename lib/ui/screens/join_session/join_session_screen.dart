@@ -6,6 +6,9 @@ import 'package:imitador/core/common/extension/context_extensions.dart';
 import 'package:imitador/ui/router/app_router.dart';
 import 'package:imitador/ui/theme/app_text_field.dart';
 import 'package:imitador/ui/theme/app_theme.dart';
+import 'package:imitador/ui/theme/components/scaffold.dart';
+import 'package:imitador/ui/theme/components/sheet_container.dart';
+import 'package:imitador/ui/theme/components/buttons.dart';
 
 import 'join_session_cubit.dart';
 
@@ -38,109 +41,92 @@ class _JoinSessionContentScreenState extends State<_JoinSessionContentScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        body: Padding(
-          padding: EdgeInsets.symmetric(vertical: 67.h, horizontal: 104.w),
-          child: SizedBox(
-            width: double.infinity,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  spacing: 52.h,
-                  children: [
-                    Text(
-                      context.localizations.game_title.toUpperCase(),
-                      style: context.theme.textStyles.titleLarge!.copyWith(
-                        fontSize: 40.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      "Ingresa el código de la sesión",
-                      style: context.theme.textStyles.titleMedium!.copyWith(
-                        fontSize: 40.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(
-                      width: 394.w,
-                      child: BlocBuilder<JoinSessionCubit, JoinSessionState>(
-                        builder: (context, state) {
-                          if (state.error != null) {
-                            return Text(
-                              state.error!,
-                              style: TextStyle(color: Colors.red),
-                            );
-                          }
-
-                          return Column(
-                            spacing: 52.h,
-                            children: [
-                              AppTextField(
-                                controller: codeController,
-                                label: "Código",
-                                onChanged: (code) {
-                                  _cubit.setCode(code);
-                                },
-                              ),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: ElevatedButton(
-                                  onPressed: state.isLoading
-                                      ? null
-                                      : () async {
-                                          final response =
-                                              await _cubit.joinGameSession();
-                                          if (response != null &&
-                                              context.mounted) {
-                                            context.router.replace(
-                                                const GameSessionSectionRoute());
-                                          }
-                                        },
-                                  style: context.theme.buttonsStyle.filledButton
-                                      .copyWith(
-                                    fixedSize: WidgetStatePropertyAll(
-                                      Size(120.w, 56.h),
+  Widget build(BuildContext context) => MotionScaffold(
+        showTitle: false,
+        backRoute: const WelcomeRoute(),
+        body: Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 67.h, horizontal: 104.w),
+            child: SizedBox(
+              width: 604.w,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  SheetContainer(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 48.h, horizontal: 60.w),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        spacing: 12.h,
+                        children: [
+                          Text(
+                            'Unite a la sesión',
+                            style: context.theme.textStyles.titleSmall,
+                          ),
+                          SizedBox(height: 12.h),
+                          Text(
+                            'Ingresá el código de 4 dígitos que te brindó tu profesor para empezar a jugar y competir con tus compañeros.',
+                            style: context.theme.textStyles.bodyMedium,
+                          ),
+                          SizedBox(height: 12.h),
+                          BlocBuilder<JoinSessionCubit, JoinSessionState>(
+                            builder: (context, state) {
+                              return Column(
+                                spacing: 24.h,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  AppTextField(
+                                    controller: codeController,
+                                    label: 'Código',
+                                    hint: 'ej. 4568',
+                                    onChanged: (code) {
+                                      _cubit.setCode(code);
+                                    },
+                                    labelColor: Colors.grey,
+                                    backgroundColor: Colors.white,
+                                    fullWidth: true,
+                                    textColor: Colors.black,
+                                  ),
+                                  if (state.error != null)
+                                    Text(
+                                      state.error!,
+                                      style: const TextStyle(color: Colors.red),
                                     ),
-                                    textStyle: WidgetStatePropertyAll(
-                                      context.theme.textStyles.bodyLarge,
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: PrimaryButton(
+                                      label: 'Ingresar',
+                                      onPressed: state.isLoading
+                                          ? null
+                                          : () async {
+                                              final response = await _cubit
+                                                  .joinGameSession();
+                                              if (response != null &&
+                                                  context.mounted) {
+                                                context.router.replace(
+                                                    const GameSessionSectionRoute());
+                                              }
+                                            },
+                                      loading: state.isLoading
+                                          ? CircularProgressIndicator(
+                                              color: context
+                                                  .theme.colorScheme.onPrimary,
+                                            )
+                                          : null,
                                     ),
                                   ),
-                                  child: state.isLoading
-                                      ? CircularProgressIndicator(
-                                          color: context
-                                              .theme.colorScheme.onPrimary,
-                                        )
-                                      : const Text("Unirse"),
-                                ),
-                              ),
-                            ],
-                          );
-                        },
+                                ],
+                              );
+                            },
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: context.theme.buttonsStyle.filledButton.copyWith(
-                        fixedSize: WidgetStatePropertyAll(Size(56.r, 56.r))),
-                    child: Icon(
-                      Icons.settings,
-                      color: context.theme.colorScheme.onPrimary,
-                      size: 16.r,
-                    ),
                   ),
-                )
-              ],
+                ],
+              ),
             ),
           ),
         ),

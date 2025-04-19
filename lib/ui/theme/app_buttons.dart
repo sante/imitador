@@ -13,6 +13,7 @@ class AppButtonsStyle extends ThemeExtension<AppButtonsStyle> {
   final CustomColors _customColors;
   final CustomTextStyles _customTextStyles;
   final ColorScheme _colorScheme;
+  final Size? _customSize;
 
   late final ButtonStyle filledButton;
   late final ButtonStyle outlineButton;
@@ -21,25 +22,21 @@ class AppButtonsStyle extends ThemeExtension<AppButtonsStyle> {
   late final ButtonStyle secondaryOutlineButton;
   late final ButtonStyle secondaryTextButton;
 
-  AppButtonsStyle(
-    this._textTheme,
-    this._customColors,
-    this._customTextStyles,
-    this._colorScheme,
-  ) {
+  AppButtonsStyle(this._textTheme, this._customColors, this._customTextStyles,
+      this._colorScheme,
+      [this._customSize]) {
     final roundedRectangleBorder = RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10.r),
     );
 
     filledButton = FilledButton.styleFrom(
       shape: roundedRectangleBorder,
-      textStyle: _textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
-      elevation: 8.r,
+      textStyle: _textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w800),
+      elevation: 0.0,
       backgroundColor: _colorScheme.primary,
       foregroundColor: _colorScheme.onPrimary,
       padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
-      shadowColor: _colorScheme.primary,
-      minimumSize: Size(240.w, 48.h),
+      minimumSize: _customSize ?? Size(110.w, 48.h),
     );
 
     outlineButton = OutlinedButton.styleFrom(
@@ -48,18 +45,19 @@ class AppButtonsStyle extends ThemeExtension<AppButtonsStyle> {
         width: 1.r,
         color: _colorScheme.primary,
       ),
-      textStyle: _textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
-      elevation: 8.r,
+      textStyle: _textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w800),
+      elevation: 0.0,
       foregroundColor: _colorScheme.primary,
       backgroundColor: _colorScheme.surface,
       shadowColor: _colorScheme.primary,
-      minimumSize: Size(240.w, 48.h),
+      minimumSize: _customSize ?? Size(110.w, 48.h),
     );
 
     textButton = TextButton.styleFrom(
       shape: roundedRectangleBorder,
       textStyle: _customTextStyles.linkMedium,
       elevation: 0.0,
+      minimumSize: _customSize ?? Size(110.w, 48.h),
     );
 
     secondaryFilledButton = filledButton.copyWith(
@@ -92,24 +90,27 @@ class AppButtonsStyle extends ThemeExtension<AppButtonsStyle> {
   }
 
   static AppButtonsStyle getDefaultButtonTheme(
-    TextTheme textTheme,
-    CustomColors customColors,
-    CustomTextStyles customTextStyles,
-    ColorScheme colorScheme,
-  ) =>
-      AppButtonsStyle(textTheme, customColors, customTextStyles, colorScheme);
+          TextTheme textTheme,
+          CustomColors customColors,
+          CustomTextStyles customTextStyles,
+          ColorScheme colorScheme,
+          [Size? customSize]) =>
+      AppButtonsStyle(
+          textTheme, customColors, customTextStyles, colorScheme, customSize);
 
   @override
-  AppButtonsStyle copyWith() => AppButtonsStyle.getDefaultButtonTheme(
+  AppButtonsStyle copyWith({Size? customSize}) =>
+      AppButtonsStyle.getDefaultButtonTheme(
         _textTheme,
         _customColors,
         _customTextStyles,
         _colorScheme,
+        customSize ?? _customSize,
       );
 
   @override
   AppButtonsStyle lerp(AppButtonsStyle other, double t) {
-    if (other is! CustomTextStyles) {
+    if (other is! AppButtonsStyle) {
       return this;
     }
     return AppButtonsStyle(
@@ -117,6 +118,7 @@ class AppButtonsStyle extends ThemeExtension<AppButtonsStyle> {
       _customColors,
       _customTextStyles,
       _colorScheme,
+      _customSize,
     );
   }
 }
