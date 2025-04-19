@@ -12,6 +12,9 @@ class AppTextField extends StatelessWidget {
   final bool obscureText;
   final TextInputType? keyboardType;
   final bool enabled;
+  final Color? labelColor;
+  final Color? backgroundColor;
+  final bool fullWidth;
   final Color? textColor;
 
   const AppTextField({
@@ -22,6 +25,9 @@ class AppTextField extends StatelessWidget {
     this.obscureText = false,
     this.keyboardType,
     this.enabled = true,
+    this.labelColor,
+    this.backgroundColor,
+    this.fullWidth = false,
     this.textColor,
     super.key,
   });
@@ -29,6 +35,7 @@ class AppTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+      width: fullWidth ? double.infinity : 392.w,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,7 +44,7 @@ class AppTextField extends StatelessWidget {
           Text(
             label,
             style: context.theme.textStyles.bodySmall?.copyWith(
-              color: textColor ?? context.theme.customColors.textColor,
+              color: labelColor ?? context.theme.customColors.textColor,
             ),
           ),
           TextField(
@@ -68,7 +75,8 @@ class AppTextField extends StatelessWidget {
                   width: 1,
                 ),
               ),
-              filled: false,
+              filled: backgroundColor != null,
+              fillColor: backgroundColor,
               hoverColor: null,
             ),
           ),

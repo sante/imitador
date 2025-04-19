@@ -83,7 +83,6 @@ class _JoinSessionContentScreenState extends State<_JoinSessionContentScreen> {
                               AppTextField(
                                 controller: codeController,
                                 label: "Código",
-                                textColor: Colors.black,
                                 onChanged: (code) {
                                   _cubit.setCode(code);
                                 },

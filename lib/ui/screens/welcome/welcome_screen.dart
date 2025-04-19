@@ -113,7 +113,7 @@ class _WelcomeContentScreenState extends State<_WelcomeContentScreen> {
                                 ),
                                 children: [
                                   TextSpan(
-                                    text: "Motion",
+                                    text: "MOTION",
                                     style: context.theme.textStyles.titleLarge!
                                         .copyWith(
                                       color:
@@ -502,6 +502,7 @@ class GuestActions extends StatelessWidget {
       spacing: 28.w,
       children: [
         PrimaryButton(
+          customSize: Size(240.w, 38.h),
           onPressed: () {
             context.router.push(const LogInRoute());
           },
