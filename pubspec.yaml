@@ -97,7 +97,6 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
-    - assets/images/sparky.png
     - assets/images/background_icons.png
     - assets/images/background_icons_simple.png
     - assets/images/microbit/connect_microbit.webp
@@ -118,6 +117,11 @@ flutter:
     - assets/images/medal_bronze.png
     - assets/images/medal_gold.png
     - assets/images/medal_silver.png
+    - assets/images/background_wood.png
+    - assets/images/paper_ball.png
+    - assets/images/pencil.png
+    - assets/images/sharpener.png
+    - assets/images/notebook.png
     - assets/icons/ic_error.svg
     - assets/icons/ic_person.svg
     - assets/images/menus/connected_dots.png
@@ -126,6 +130,7 @@ flutter:
     - assets/images/menus/lamp.png
     - assets/images/menus/lines.png
     - assets/images/menus/notebook.png
+    - assets/images/space_bar_message.png
     - assets/images/menus/paper_plane_with_line.png
     - assets/images/menus/set_square_with_question.png
     - environments/

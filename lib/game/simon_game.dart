@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dartx/dartx.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
@@ -14,29 +16,32 @@ class SimonGame extends FlameGame with HasKeyboardHandlerComponents {
   void Function(List<Pair<double, double>> samples) onFinishedWithResult;
   final spriteOutOfBoundsSize = Constants.trackingSpriteSize / 2;
   final GlobalSectionCubit globalSectionCubit;
+  final RouterComponent _router;
 
   SimonGame({
     required this.level,
     required this.onFinishedWithResult,
     required this.globalSectionCubit,
-  });
-
-  @override
-  Color backgroundColor() {
-    return const Color(0xff202020);
-  }
+  }) : _router = RouterComponent(
+    initialRoute: 'level',
+    routes: {
+      'level': Route(() =>
+          FlameBlocProvider<GlobalSectionCubit, GlobalSectionState>(
+            create: () => globalSectionCubit,
+            children: [
+              GameLevelPage(
+                onFinishedWithResult: (samples) {
+                  onFinishedWithResult(samples);
+                },
+              ),
+            ],
+          )), // OverlayRoute
+      'confirm-dialog': OverlayRoute.existing(),
+    },
+  );
 
   @override
   Future<void> onLoad() async {
-    add(FlameBlocProvider<GlobalSectionCubit, GlobalSectionState>(
-      create: () => globalSectionCubit,
-      children: [
-        GameLevelPage(
-          onFinishedWithResult: (samples) {
-            onFinishedWithResult(samples);
-          },
-        ),
-      ],
-    ));
+    add(_router);
   }
 }

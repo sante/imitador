@@ -40,6 +40,10 @@ class $AssetsImagesGen {
   AssetGenImage get backgroundSheet =>
       const AssetGenImage('assets/images/background_sheet.png');
 
+  /// File path: assets/images/background_wood.png
+  AssetGenImage get backgroundWood =>
+      const AssetGenImage('assets/images/background_wood.png');
+
   /// File path: assets/images/icon_student.png
   AssetGenImage get iconStudent =>
       const AssetGenImage('assets/images/icon_student.png');
@@ -65,6 +69,17 @@ class $AssetsImagesGen {
 
   /// Directory path: assets/images/microbit
   $AssetsImagesMicrobitGen get microbit => const $AssetsImagesMicrobitGen();
+
+  /// File path: assets/images/notebook.png
+  AssetGenImage get notebook =>
+      const AssetGenImage('assets/images/notebook.png');
+
+  /// File path: assets/images/paper_ball.png
+  AssetGenImage get paperBall =>
+      const AssetGenImage('assets/images/paper_ball.png');
+
+  /// File path: assets/images/pencil.png
+  AssetGenImage get pencil => const AssetGenImage('assets/images/pencil.png');
 
   /// File path: assets/images/rating_0_5.png
   AssetGenImage get rating05 =>
@@ -106,19 +121,28 @@ class $AssetsImagesGen {
   AssetGenImage get rating5 =>
       const AssetGenImage('assets/images/rating_5.png');
 
-  /// File path: assets/images/sparky.png
-  AssetGenImage get sparky => const AssetGenImage('assets/images/sparky.png');
+  /// File path: assets/images/sharpener.png
+  AssetGenImage get sharpener =>
+      const AssetGenImage('assets/images/sharpener.png');
+
+  /// File path: assets/images/space_bar_message.png
+  AssetGenImage get spaceBarMessage =>
+      const AssetGenImage('assets/images/space_bar_message.png');
 
   /// List of all assets
   List<AssetGenImage> get values => [
         backgroundIcons,
         backgroundIconsSimple,
         backgroundSheet,
+        backgroundWood,
         iconStudent,
         iconTeacher,
         medalBronze,
         medalGold,
         medalSilver,
+        notebook,
+        paperBall,
+        pencil,
         rating05,
         rating1,
         rating15,
@@ -129,7 +153,8 @@ class $AssetsImagesGen {
         rating4,
         rating45,
         rating5,
-        sparky
+        sharpener,
+        spaceBarMessage
       ];
 }
 
