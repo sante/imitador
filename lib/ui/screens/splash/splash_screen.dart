@@ -35,7 +35,7 @@ class SplashScreen extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "Motion",
+                        "MOTION",
                         style: context.theme.textStyles.titleLarge?.copyWith(
                           color: context.theme.colorScheme.onSurface,
                           fontSize: 128.sp,
@@ -46,6 +46,7 @@ class SplashScreen extends StatelessWidget {
                 ),
               ),
               PrimaryButton(
+                customSize: Size(144.w, 48.h),
                 label: "Ingresar",
                 trailingIcon: PhosphorIcons.arrowRight(PhosphorIconsStyle.bold),
                 onPressed: () {

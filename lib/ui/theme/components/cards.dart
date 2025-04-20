@@ -6,31 +6,56 @@ import 'package:imitador/gen/assets.gen.dart';
 import 'package:imitador/model/activity/activity.dart';
 import 'package:imitador/model/enum/user_type.dart';
 import 'package:imitador/ui/theme/app_theme.dart';
+import 'package:imitador/ui/theme/components/sheet_container.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class LevelCard extends StatelessWidget {
   final String label;
   final VoidCallback onPressed;
+  final String? image;
+  final double? customHeight;
+  final double? customWidth;
 
   const LevelCard({
     required this.label,
     required this.onPressed,
     super.key,
+    this.image,
+    this.customHeight,
+    this.customWidth,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 290.w,
-      height: 205.h,
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: context.theme.buttonsStyle.outlineButton.copyWith(
-          fixedSize: WidgetStatePropertyAll(Size(290.w, 205.h)),
-        ),
-        child: Text(label),
-      ),
-    );
+    return InkWell(
+        onTap: onPressed,
+        child: SizedBox(
+          width: customWidth ?? 290.w,
+          height: customHeight ?? 205.h,
+          child: SheetContainer(
+            child: Center(
+              child: Column(
+                spacing: 14.h,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (image != null)
+                    Image.asset(
+                      image!,
+                      width: 100.w,
+                    ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8.w),
+                    child: Text(
+                      label,
+                      textAlign: TextAlign.center,
+                      style: context.theme.textStyles.headlineSmall,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ));
   }
 }
 
@@ -38,45 +63,91 @@ class ActivityCard extends StatelessWidget {
   final Activity activity;
   final VoidCallback onPressed;
   final bool selected;
+  final double? customHeight;
+  final double? customWidth;
+  final bool showLevels;
 
   const ActivityCard({
     required this.activity,
     required this.onPressed,
     this.selected = false,
+    this.customHeight,
+    this.customWidth,
+    this.showLevels = true,
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) => SizedBox(
-        width: 290.w,
-        height: 205.h,
-        child: ElevatedButton(
-          onPressed: onPressed,
-          style: context.theme.buttonsStyle.outlineButton.copyWith(
-            fixedSize: WidgetStatePropertyAll(Size(290.w, 205.h)),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(activity.name),
+  Widget build(BuildContext context) {
+    String? imagePath;
+    switch (activity.id) {
+      case '6e348198-9aa3-4086-8c7d-e5f47837450a':
+        imagePath = Assets.images.menus.notebook.path;
+        break;
+      case '977547be-4c31-4d14-b029-3d9c0a10340d':
+        imagePath = Assets.images.menus.lines.path;
+        break;
+      case '0ea07475-c400-4cb4-af1b-5f5bb53fa08d':
+        imagePath = Assets.images.menus.lamp.path;
+        break;
+      case 'dd98eafe-e8ad-4064-92cb-0b76434b5c4f':
+        imagePath = Assets.images.menus.paperPlaneWithLine.path;
+        break;
+      case 'f4bda7ea-d725-4a0f-96b5-755c71338bda':
+        imagePath = Assets.images.menus.setSquareWithQuestion.path;
+        break;
+      default:
+        imagePath = null;
+    }
+    final cardContent = SheetContainer(
+      border: selected
+          ? Border.all(color: context.theme.colorScheme.primary, width: 10)
+          : null,
+      child: Center(
+        child: Column(
+          spacing: 14.h,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (imagePath != null)
+              Image.asset(
+                imagePath,
+                width: 100.w,
+              ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.w),
+              child: Text(
+                activity.name,
+                textAlign: TextAlign.center,
+                style: context.theme.textStyles.headlineSmall,
+              ),
+            ),
+            if (showLevels)
               Text(
                 "${activity.levels.length} niveles",
-                style: context.theme.textStyles.bodySmall?.copyWith(
-                  color: context.theme.colorScheme.primary.getShade(400),
-                ),
+                style: context.theme.textStyles.bodySmall,
               ),
-              if (selected)
-                PhosphorIcon(
-                  PhosphorIcons.check(),
-                  color: context.theme.colorScheme.primary.getShade(400),
-                  size: 24.r,
-                ),
-            ],
-          ),
+            // if (selected)
+            //   Padding(
+            //     padding: EdgeInsets.only(top: 8.h),
+            //     child: PhosphorIcon(
+            //       PhosphorIcons.check(),
+            //       color: Colors.black,
+            //       size: 24.r,
+            //     ),
+            //   ),
+          ],
         ),
-      );
+      ),
+    );
+    return SizedBox(
+      width: customWidth ?? 290.w,
+      height: customHeight ?? 205.h,
+      child: InkWell(
+        onTap: onPressed,
+        child: cardContent,
+      ),
+    );
+  }
 }
 
 class UserTypeCard extends StatelessWidget {

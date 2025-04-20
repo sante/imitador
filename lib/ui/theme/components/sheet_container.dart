@@ -6,12 +6,14 @@ class SheetContainer extends StatelessWidget {
   final Widget? child;
   final double? maxWidth;
   final double? maxHeight;
+  final BoxBorder? border;
 
   const SheetContainer({
     super.key,
     this.child,
     this.maxWidth,
     this.maxHeight,
+    this.border,
   });
 
   @override
@@ -27,6 +29,7 @@ class SheetContainer extends StatelessWidget {
               fit: BoxFit.cover,
             ),
             color: context.theme.colorScheme.onSurface,
+            border: border,
           ),
           child: child,
         ),

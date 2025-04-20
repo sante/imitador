@@ -37,7 +37,10 @@ class BaseButton extends StatelessWidget {
                 leadingIcon!,
                 color: iconColor,
               ),
-            child,
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 2.h),
+              child: child,
+            ),
             if (trailingIcon != null)
               PhosphorIcon(
                 trailingIcon!,
@@ -54,23 +57,32 @@ class PrimaryButton extends StatelessWidget {
   final String label;
   final Widget? loading;
   final VoidCallback? onPressed;
+  final Size? customSize;
 
-  const PrimaryButton(
-      {super.key,
-      required this.label,
-      this.leadingIcon,
-      this.trailingIcon,
-      this.onPressed,
-      this.loading});
+  const PrimaryButton({
+    super.key,
+    required this.label,
+    this.leadingIcon,
+    this.trailingIcon,
+    this.onPressed,
+    this.loading,
+    this.customSize,
+  });
 
   @override
   Widget build(BuildContext context) => BaseButton(
-        style: context.theme.buttonsStyle.filledButton,
+        style: context.theme.buttonsStyle.filledButton.copyWith(
+            minimumSize: customSize != null
+                ? WidgetStatePropertyAll(customSize!)
+                : null),
         iconColor: context.theme.colorScheme.onPrimary,
         leadingIcon: leadingIcon,
         trailingIcon: trailingIcon,
         onPressed: loading == null ? onPressed : null,
-        child: loading ?? Text(label),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 2.h),
+          child: loading ?? Text(label),
+        ),
       );
 }
 
@@ -79,6 +91,7 @@ class PrimaryOutlineButton extends StatelessWidget {
   final PhosphorIconData? trailingIcon;
   final String label;
   final VoidCallback? onPressed;
+  final Size? customSize;
 
   const PrimaryOutlineButton({
     super.key,
@@ -86,16 +99,23 @@ class PrimaryOutlineButton extends StatelessWidget {
     this.leadingIcon,
     this.trailingIcon,
     this.onPressed,
+    this.customSize,
   });
 
   @override
   Widget build(BuildContext context) => BaseButton(
-        style: context.theme.buttonsStyle.outlineButton,
+        style: context.theme.buttonsStyle.outlineButton.copyWith(
+            minimumSize: customSize != null
+                ? WidgetStatePropertyAll(customSize!)
+                : null),
         iconColor: context.theme.colorScheme.primary,
         leadingIcon: leadingIcon,
         trailingIcon: trailingIcon,
         onPressed: onPressed,
-        child: Text(label),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 2.h),
+          child: Text(label),
+        ),
       );
 }
 
@@ -104,6 +124,7 @@ class SecondaryButton extends StatelessWidget {
   final PhosphorIconData? trailingIcon;
   final String label;
   final VoidCallback? onPressed;
+  final Size? customSize;
 
   const SecondaryButton({
     super.key,
@@ -111,16 +132,23 @@ class SecondaryButton extends StatelessWidget {
     this.leadingIcon,
     this.trailingIcon,
     this.onPressed,
+    this.customSize,
   });
 
   @override
   Widget build(BuildContext context) => BaseButton(
-        style: context.theme.buttonsStyle.secondaryFilledButton,
+        style: context.theme.buttonsStyle.secondaryFilledButton.copyWith(
+            minimumSize: customSize != null
+                ? WidgetStatePropertyAll(customSize!)
+                : null),
         iconColor: context.theme.colorScheme.onSecondary,
         leadingIcon: leadingIcon,
         trailingIcon: trailingIcon,
         onPressed: onPressed,
-        child: Text(label),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 2.h),
+          child: Text(label),
+        ),
       );
 }
 
