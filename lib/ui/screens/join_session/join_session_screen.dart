@@ -86,6 +86,10 @@ class _JoinSessionContentScreenState extends State<_JoinSessionContentScreen> {
                                 onChanged: (code) {
                                   _cubit.setCode(code);
                                 },
+                                backgroundColor: Colors.white,
+                                textColor: Colors.black,
+                                labelColor: Colors.grey,
+                                fullWidth: true,
                               ),
                               if (state.error != null)
                                 ErrorView(error: state.error!),
