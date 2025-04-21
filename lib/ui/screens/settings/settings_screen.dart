@@ -94,6 +94,26 @@ class _SettingsContentScreen extends StatelessWidget {
                             ),
                           ],
                         ),
+                        if (state.user != null) ...[
+                          const DarkHorizontalDivider(),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: SecondaryButton(
+                              label: "Cerrar sesión",
+                              onPressed: () async {
+                                await context
+                                    .read<GlobalSectionCubit>()
+                                    .logOut();
+                                // TODO FIXME: Probable race condition
+                                await Future.delayed(
+                                    const Duration(seconds: 1));
+                                if (context.mounted) {
+                                  context.router.replace(const WelcomeRoute());
+                                }
+                              },
+                            ),
+                          ),
+                        ],
                       ],
                     ),
                   ),

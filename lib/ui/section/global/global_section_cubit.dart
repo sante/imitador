@@ -25,9 +25,10 @@ class GlobalSectionCubit extends Cubit<GlobalSectionState> {
   StreamSubscription<List<Level>?>? _levelsSubscription;
   StreamSubscription<List<Activity>?>? _activitiesSubscription;
 
-  GlobalSectionCubit() : super(GlobalSectionState.state(
-    microbitController: MicrobitController(),
-  )) {
+  GlobalSectionCubit()
+      : super(GlobalSectionState.state(
+          microbitController: MicrobitController(),
+        )) {
     _initStreams();
   }
 
@@ -44,7 +45,8 @@ class GlobalSectionCubit extends Cubit<GlobalSectionState> {
     _activitiesSubscription =
         _activityRepository.getActivities().listen((activities) {
       emit(state.copyWith(activities: activities));
-      Logger.d('GlobalSectionCubit._initStreams: activities: ${activities?.length}');
+      Logger.d(
+          'GlobalSectionCubit._initStreams: activities: ${activities?.length}');
     });
   }
 
@@ -57,7 +59,7 @@ class GlobalSectionCubit extends Cubit<GlobalSectionState> {
     return connected;
   }
 
-  void logOut() async {
+  Future<void> logOut() async {
     await _sessionRepository.logOut();
     _levelRepository.refreshLevels();
     _activityRepository.refresh();
