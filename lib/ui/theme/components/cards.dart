@@ -109,16 +109,24 @@ class ActivityCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (imagePath != null)
-              Image.asset(
-                imagePath,
-                width: 100.w,
+              Flexible(
+                flex: 1,
+                child: Image.asset(
+                  imagePath,
+                  width: 90.w,
+                ),
               ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.w),
-              child: Text(
-                activity.name,
-                textAlign: TextAlign.center,
-                style: context.theme.textStyles.headlineSmall,
+            Flexible(
+              flex: 2,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.w),
+                child: Text(
+                  activity.name,
+                  textAlign: TextAlign.center,
+                  style: context.theme.textStyles.headlineSmall?.copyWith(
+                    fontSize: 22.sp,
+                  ),
+                ),
               ),
             ),
             if (showLevels)
@@ -126,22 +134,13 @@ class ActivityCard extends StatelessWidget {
                 "${activity.levels.length} niveles",
                 style: context.theme.textStyles.bodySmall,
               ),
-            // if (selected)
-            //   Padding(
-            //     padding: EdgeInsets.only(top: 8.h),
-            //     child: PhosphorIcon(
-            //       PhosphorIcons.check(),
-            //       color: Colors.black,
-            //       size: 24.r,
-            //     ),
-            //   ),
           ],
         ),
       ),
     );
     return SizedBox(
       width: customWidth ?? 290.w,
-      height: customHeight ?? 205.h,
+      height: customHeight ?? 215.h,
       child: InkWell(
         onTap: onPressed,
         child: cardContent,
