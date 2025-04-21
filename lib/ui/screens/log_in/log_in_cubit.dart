@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:imitador/core/di/di_provider.dart';
 import 'package:imitador/core/repository/session_repository.dart';
+import 'package:imitador/core/common/network_exceptions.dart';
 
 part 'log_in_state.dart';
 
@@ -26,7 +27,10 @@ class LogInCubit extends Cubit<LogInState> {
       await _sessionRepository.requestSignInCode(state.email);
       emit(state.copyWith(isLoading: false, codeSent: true));
     } catch (e) {
-      emit(state.copyWith(isLoading: false, error: e.toString()));
+      final errorMessage = e is NetworkException
+          ? NetworkException.getErrorMessage(e)
+          : e.toString();
+      emit(state.copyWith(isLoading: false, error: errorMessage));
     }
   }
 
@@ -39,7 +43,10 @@ class LogInCubit extends Cubit<LogInState> {
       );
       emit(state.copyWith(isLoading: false, error: null));
     } catch (e) {
-      emit(state.copyWith(isLoading: false, error: e.toString()));
+      final errorMessage = e is NetworkException
+          ? NetworkException.getErrorMessage(e)
+          : e.toString();
+      emit(state.copyWith(isLoading: false, error: errorMessage));
     }
   }
 }

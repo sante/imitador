@@ -38,13 +38,17 @@ sealed class NetworkException with _$NetworkException implements Exception {
   const factory NetworkException.unexpectedError() = UnexpectedError;
 
   static NetworkException handleResponse(int? statusCode, dynamic body) {
+    String? message;
+    if (body is Map && body['message'] != null) {
+      message = body['message'].toString();
+    }
     switch (statusCode) {
       case 400:
       case 401:
       case 403:
-        return NetworkException.unauthorizedRequest(body);
+        return NetworkException.unauthorizedRequest(message ?? body);
       case 404:
-        return const NetworkException.notFound('Not found');
+        return NetworkException.notFound(message ?? 'No encontrado');
       case 409:
         return const NetworkException.conflict();
       case 408:
@@ -56,7 +60,7 @@ sealed class NetworkException with _$NetworkException implements Exception {
       default:
         return NetworkException.defaultError(
           statusCode,
-          'Received invalid status code. body: $body',
+          message ?? (body is String ? body : body.toString()),
         );
     }
   }
@@ -100,20 +104,21 @@ sealed class NetworkException with _$NetworkException implements Exception {
 
   static String getErrorMessage(NetworkException networkExceptions) =>
       switch (networkExceptions) {
-        NotImplemented() => 'Not Implemented',
-        InternalServerError() => 'Internal Server Error',
+        NotImplemented() => 'No implementado',
+        InternalServerError() => 'Error del servidor',
         NotFound(reason: final reason) => reason,
-        ServiceUnavailable() => 'Service unavailable',
-        MethodNotAllowed() => 'Method Allowed',
-        BadRequest() => 'Bad request',
-        UnauthorizedRequest(body: final body) => 'Unauthorized request - $body',
-        UnexpectedError() => 'Unexpected error occurred',
-        NoInternetConnection() => 'No internet connection',
-        Conflict() => 'Error due to a conflict',
-        UnableToProcess() => 'Unable to process the data',
+        ServiceUnavailable() => 'Servicio no disponible',
+        MethodNotAllowed() => 'Método no autorizado',
+        BadRequest() => 'Solicitud incorrecta',
+        UnauthorizedRequest(body: final body) =>
+          body?.toString() ?? 'No autorizado',
+        UnexpectedError() => 'Error inesperado',
+        NoInternetConnection() => 'No hay conexión a internet',
+        Conflict() => 'Error debido a un conflicto',
+        UnableToProcess() => 'No se puede procesar la data',
         DefaultError(error: final String? error) =>
-          error ?? 'Unexpected error occurred',
-        FormatException() => 'Unexpected error occurred',
-        NotAcceptable() => 'Not acceptable',
+          error ?? 'Error desconocido. Intente nuevamente en unos minutos.',
+        FormatException() => 'Error de formato',
+        NotAcceptable() => 'No aceptable',
       };
 }
