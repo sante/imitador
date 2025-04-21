@@ -4,6 +4,7 @@ import 'package:flame/game.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:imitador/game/simon_game.dart';
+import 'package:imitador/gen/assets.gen.dart';
 import 'package:imitador/model/level/level.dart';
 import 'package:imitador/ui/router/app_router.dart';
 import 'package:imitador/ui/section/activity/activity_section_cubit.dart';
@@ -91,6 +92,16 @@ class _LevelContentScreen extends StatelessWidget {
           level: level,
           onFinishedWithResult: onFinishedWithResult,
           globalSectionCubit: context.read<GlobalSectionCubit>(),
+        ),
+        backgroundBuilder: (context) => Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                Assets.images.backgroundWood.path,
+              ),
+              fit: BoxFit.cover,
+            ),
+          ),
         ),
       );
 }

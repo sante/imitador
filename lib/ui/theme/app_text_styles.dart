@@ -28,6 +28,19 @@ TextStyle spaceGroteskTextStyle(
       height: height,
     );
 
+TextStyle handWritingTextStyle({
+  required double fontSize,
+  required FontWeight fontWeight,
+  double? height,
+  Color? color,
+}) =>
+    GoogleFonts.shortStack(
+      fontWeight: fontWeight,
+      fontSize: fontSize,
+      height: height,
+      color: color,
+    );
+
 class AppTextStyles extends TextTheme {
   const AppTextStyles({
     super.headlineLarge,

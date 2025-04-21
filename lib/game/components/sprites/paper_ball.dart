@@ -2,8 +2,8 @@ import 'package:flame/components.dart';
 import 'package:imitador/core/common/constants.dart';
 import 'package:imitador/game/simon_game.dart';
 
-class Sparky extends SpriteComponent with HasGameRef<SimonGame> {
-  Sparky({
+class PaperBall extends SpriteComponent with HasGameRef<SimonGame> {
+  PaperBall({
     this.updatePositionCallback,
   }) : super(size: Vector2.all(Constants.trackingSpriteSize), anchor: Anchor.center);
 
@@ -11,8 +11,7 @@ class Sparky extends SpriteComponent with HasGameRef<SimonGame> {
 
   @override
   Future<void> onLoad() async {
-    // TODO: implement onLoad
-    sprite = await Sprite.load("sparky.png");
+    sprite = await Sprite.load("paper_ball.png");
   }
 
   @override
