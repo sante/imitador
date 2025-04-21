@@ -31,16 +31,21 @@ class ErrorView extends StatelessWidget {
             children: [
               Assets.icons.icError.svg(
                 colorFilter: ColorFilter.mode(
-                  context.theme.colorScheme.error.getShade(300), BlendMode.srcIn,
+                  context.theme.colorScheme.error.getShade(300),
+                  BlendMode.srcIn,
                 ),
                 width: 24.r,
                 height: 24.r,
               ),
               SizedBox(width: 8.w),
-              Text(
-                error,
-                style: context.theme.textTheme.bodySmall?.copyWith(
-                  color: Colors.black,
+              Expanded(
+                child: Text(
+                  error,
+                  style: context.theme.textTheme.bodySmall?.copyWith(
+                    color: Colors.black,
+                  ),
+                  softWrap: true,
+                  overflow: TextOverflow.visible,
                 ),
               ),
             ],

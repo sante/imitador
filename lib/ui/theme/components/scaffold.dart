@@ -78,7 +78,7 @@ class MotionScaffold extends StatelessWidget {
                         ),
                         children: [
                           TextSpan(
-                            text: "Motion",
+                            text: "MOTION",
                             style: context.theme.textStyles.headlineLarge
                                 ?.copyWith(
                               color: context.theme.colorScheme.onSurface,

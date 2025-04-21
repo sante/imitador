@@ -10,6 +10,7 @@ import 'package:imitador/ui/theme/app_theme.dart';
 import 'package:imitador/ui/theme/components/buttons.dart';
 import 'package:imitador/ui/theme/components/scaffold.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:imitador/ui/theme/components/error_view.dart';
 
 import 'log_in_cubit.dart';
 
@@ -67,13 +68,6 @@ class _LogInContentScreenState extends State<_LogInContentScreen> {
                   width: 394.w,
                   child: BlocBuilder<LogInCubit, LogInState>(
                     builder: (context, state) {
-                      if (state.error != null) {
-                        return Text(
-                          state.error!,
-                          style: const TextStyle(color: Colors.red),
-                        );
-                      }
-
                       return Column(
                         spacing: 52.h,
                         children: [
@@ -93,6 +87,10 @@ class _LogInContentScreenState extends State<_LogInContentScreen> {
                                 _cubit.setCode(code);
                               },
                             ),
+                          ],
+                          if (state.error != null)
+                            ErrorView(error: state.error!),
+                          if (state.codeSent)
                             Align(
                               alignment: Alignment.centerRight,
                               child: PrimaryButton(
@@ -102,6 +100,8 @@ class _LogInContentScreenState extends State<_LogInContentScreen> {
                                   if (_cubit.state.error == null) {
                                     context.router
                                         .replace(const WelcomeRoute());
+                                  } else {
+                                    ErrorView(error: _cubit.state.error!);
                                   }
                                 },
                                 loading: state.isLoading
@@ -111,22 +111,23 @@ class _LogInContentScreenState extends State<_LogInContentScreen> {
                                       )
                                     : null,
                               ),
+                            )
+                          else
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: PrimaryButton(
+                                label: "Enviar código",
+                                onPressed: () async {
+                                  await _cubit.requestCode();
+                                },
+                                loading: state.isLoading
+                                    ? CircularProgressIndicator(
+                                        color:
+                                            context.theme.colorScheme.onPrimary,
+                                      )
+                                    : null,
+                              ),
                             ),
-                          ] else Align(
-                            alignment: Alignment.centerRight,
-                            child: PrimaryButton(
-                              label: "Enviar código",
-                              onPressed: () async {
-                                await _cubit.requestCode();
-                              },
-                              loading: state.isLoading
-                                  ? CircularProgressIndicator(
-                                color:
-                                context.theme.colorScheme.onPrimary,
-                              )
-                                  : null,
-                            ),
-                          ),
                         ],
                       );
                     },

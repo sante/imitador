@@ -4,6 +4,7 @@ import 'package:imitador/core/common/model/service/game_session_models.dart';
 import 'package:imitador/core/di/di_provider.dart';
 import 'package:imitador/core/repository/game_session_repository.dart';
 import 'package:imitador/core/repository/session_repository.dart';
+import 'package:imitador/core/common/network_exceptions.dart';
 
 part 'join_session_state.dart';
 
@@ -25,7 +26,10 @@ class JoinSessionCubit extends Cubit<JoinSessionState> {
       emit(state.copyWith(isLoading: false));
       return true;
     } catch (e) {
-      emit(state.copyWith(isLoading: false, error: e.toString()));
+      final errorMessage = e is NetworkException
+          ? NetworkException.getErrorMessage(e)
+          : e.toString();
+      emit(state.copyWith(isLoading: false, error: errorMessage));
       return false;
     }
   }
@@ -37,7 +41,10 @@ class JoinSessionCubit extends Cubit<JoinSessionState> {
       emit(state.copyWith(isLoading: false));
       return response;
     } catch (e) {
-      emit(state.copyWith(isLoading: false, error: e.toString()));
+      final errorMessage = e is NetworkException
+          ? NetworkException.getErrorMessage(e)
+          : e.toString();
+      emit(state.copyWith(isLoading: false, error: errorMessage));
       return null;
     }
   }

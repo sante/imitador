@@ -8,6 +8,7 @@ import 'package:imitador/core/repository/session_repository.dart';
 import 'package:imitador/model/enum/user_type.dart';
 import 'package:imitador/model/level/level.dart';
 import 'package:imitador/model/user/user.dart';
+import 'package:imitador/core/common/network_exceptions.dart';
 
 part 'sign_up_section_state.dart';
 
@@ -24,8 +25,7 @@ class SignUpSectionCubit extends Cubit<SignUpSectionState> {
     _initStreams();
   }
 
-  void _initStreams() async {
-  }
+  void _initStreams() async {}
 
   void setUserType(UserType userType) {
     emit(state.copyWith(userType: userType));
@@ -49,7 +49,10 @@ class SignUpSectionCubit extends Cubit<SignUpSectionState> {
       await _sessionRepository.requestSignUpCode(state.email);
       emit(state.copyWith(isLoading: false, codeSent: true));
     } catch (e) {
-      emit(state.copyWith(isLoading: false, error: e.toString()));
+      final errorMessage = e is NetworkException
+          ? NetworkException.getErrorMessage(e)
+          : e.toString();
+      emit(state.copyWith(isLoading: false, error: errorMessage));
     }
   }
 
@@ -64,10 +67,12 @@ class SignUpSectionCubit extends Cubit<SignUpSectionState> {
       );
       emit(state.copyWith(isLoading: false, error: null));
     } catch (e) {
-      emit(state.copyWith(isLoading: false, error: e.toString()));
+      final errorMessage = e is NetworkException
+          ? NetworkException.getErrorMessage(e)
+          : e.toString();
+      emit(state.copyWith(isLoading: false, error: errorMessage));
     }
   }
-
 
   @override
   Future<void> close() {
