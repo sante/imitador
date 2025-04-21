@@ -207,7 +207,7 @@ class _AuthenticatedMenu extends StatelessWidget {
                       opacity: guestMode ? 0.5 : 1.0,
                       child: SizedBox(
                         width: 290.w,
-                        height: 205.h,
+                        height: 215.h,
                         child: SheetContainer(
                           child: Center(
                             child: Column(
@@ -260,7 +260,7 @@ class _AuthenticatedMenu extends StatelessWidget {
                           );
                         },
                         child: SizedBox(
-                          height: 205.h,
+                          height: 215.h,
                           width: 290.w,
                           child: SheetContainer(
                             child: Center(
@@ -269,7 +269,7 @@ class _AuthenticatedMenu extends StatelessWidget {
                                 children: [
                                   Image.asset(
                                     Assets.images.menus.cube.path,
-                                    width: 100.w,
+                                    width: 90.w,
                                   ),
                                   SizedBox(height: 12.h),
                                   Padding(
@@ -389,57 +389,6 @@ class _AuthenticatedMenu extends StatelessWidget {
         SizedBox(height: 16.h),
         _ActivityCards(activities: activities),
       ],
-    );
-  }
-}
-
-class _ClassGameCard extends StatelessWidget {
-  final String title;
-  final String image;
-  final Activity? activity;
-  const _ClassGameCard(
-      {required this.title, required this.image, this.activity});
-
-  @override
-  Widget build(BuildContext context) {
-    final cardContent = SheetContainer(
-      child: Center(
-        child: Column(
-          spacing: 14.h,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              image,
-              width: 100.w,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.w),
-              child: Text(
-                title,
-                textAlign: TextAlign.center,
-                style: context.theme.textStyles.headlineSmall,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-    if (activity != null) {
-      return InkWell(
-        onTap: () {
-          context.router.push(ActivitySectionRoute(activityId: activity!.id));
-        },
-        child: SizedBox(
-          width: 227.w,
-          height: 250.h,
-          child: cardContent,
-        ),
-      );
-    }
-    return SizedBox(
-      width: 227.w,
-      height: 250.h,
-      child: cardContent,
     );
   }
 }
