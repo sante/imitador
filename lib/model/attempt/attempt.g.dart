@@ -43,6 +43,6 @@ Map<String, dynamic> _$$AttemptImplToJson(_$AttemptImpl instance) =>
     };
 
 const _$InterfaceTypeEnumMap = {
-  InterfaceType.sensor: 'sensor',
-  InterfaceType.mouse: 'mouse',
+  InterfaceType.sensor: 'SENSOR',
+  InterfaceType.mouse: 'MOUSE',
 };

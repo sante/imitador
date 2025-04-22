@@ -1,4 +1,6 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 enum InterfaceType {
-  sensor,
-  mouse,
+  @JsonValue("SENSOR") sensor,
+  @JsonValue("MOUSE") mouse,
 }
