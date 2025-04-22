@@ -27,7 +27,7 @@ Attempt attemptFromSamples({
           .round();
   final stars = getStars(score);
   final attempt = Attempt(
-    score: score.round(),
+    score: score < 0 ? 0 : score.round(),
     stars: stars,
     plotPointsX: samples.map((it) => it.first).toList(),
     plotPointsY: samples.map((it) => it.second).toList(),
