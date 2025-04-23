@@ -15,10 +15,12 @@ class LevelCard extends StatelessWidget {
   final String? image;
   final double? customHeight;
   final double? customWidth;
+  final int? stars;
 
   const LevelCard({
     required this.label,
     required this.onPressed,
+    this.stars,
     super.key,
     this.image,
     this.customHeight,
@@ -27,6 +29,10 @@ class LevelCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget? starsWidget;
+    if (stars != null && stars! > 0) {
+      starsWidget = starsImage(stars!.toDouble());
+    }
     return InkWell(
         onTap: onPressed,
         child: SizedBox(
@@ -51,6 +57,7 @@ class LevelCard extends StatelessWidget {
                       style: context.theme.textStyles.headlineSmall,
                     ),
                   ),
+                  if (starsWidget != null) starsWidget,
                 ],
               ),
             ),
@@ -58,6 +65,23 @@ class LevelCard extends StatelessWidget {
         ));
   }
 }
+
+Image starsImage(double stars) => Image.asset(
+      switch (stars) {
+        < 1 => Assets.images.rating05,
+        < 1.5 => Assets.images.rating1,
+        < 2 => Assets.images.rating15,
+        < 2.5 => Assets.images.rating2,
+        < 3 => Assets.images.rating25,
+        < 3.5 => Assets.images.rating3,
+        < 4 => Assets.images.rating35,
+        < 4.5 => Assets.images.rating4,
+        < 5 => Assets.images.rating45,
+        _ => Assets.images.rating5,
+      }
+          .path,
+      height: 48.h,
+    );
 
 class ActivityCard extends StatelessWidget {
   final Activity activity;
