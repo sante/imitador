@@ -207,7 +207,7 @@ class _AuthenticatedMenu extends StatelessWidget {
                       opacity: guestMode ? 0.5 : 1.0,
                       child: SizedBox(
                         width: 290.w,
-                        height: 215.h,
+                        height: 225.h,
                         child: SheetContainer(
                           child: Center(
                             child: Column(
@@ -260,7 +260,7 @@ class _AuthenticatedMenu extends StatelessWidget {
                           );
                         },
                         child: SizedBox(
-                          height: 215.h,
+                          height: 225.h,
                           width: 290.w,
                           child: SheetContainer(
                             child: Center(
@@ -269,7 +269,7 @@ class _AuthenticatedMenu extends StatelessWidget {
                                 children: [
                                   Image.asset(
                                     Assets.images.menus.cube.path,
-                                    width: 90.w,
+                                    width: 70.w,
                                   ),
                                   SizedBox(height: 12.h),
                                   Padding(
@@ -291,7 +291,7 @@ class _AuthenticatedMenu extends StatelessWidget {
                       SizedBox(width: 24.w),
                       Expanded(
                         child: SizedBox(
-                          height: 205.h,
+                          height: 225.h,
                           width: 290.w,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
