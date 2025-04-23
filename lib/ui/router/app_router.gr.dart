@@ -60,6 +60,14 @@ abstract class _$AppRouter extends RootStackRouter {
         child: GameSessionLobbyScreen(key: args.key),
       );
     },
+    GameSessionResultsRoute.name: (routeData) {
+      final args = routeData.argsAs<GameSessionResultsRouteArgs>(
+          orElse: () => const GameSessionResultsRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: GameSessionResultsScreen(key: args.key),
+      );
+    },
     GameSessionSectionRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -302,6 +310,36 @@ class GameSessionLobbyRouteArgs {
   @override
   String toString() {
     return 'GameSessionLobbyRouteArgs{key: $key}';
+  }
+}
+
+/// generated route for
+/// [GameSessionResultsScreen]
+class GameSessionResultsRoute
+    extends PageRouteInfo<GameSessionResultsRouteArgs> {
+  GameSessionResultsRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          GameSessionResultsRoute.name,
+          args: GameSessionResultsRouteArgs(key: key),
+          initialChildren: children,
+        );
+
+  static const String name = 'GameSessionResultsRoute';
+
+  static const PageInfo<GameSessionResultsRouteArgs> page =
+      PageInfo<GameSessionResultsRouteArgs>(name);
+}
+
+class GameSessionResultsRouteArgs {
+  const GameSessionResultsRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'GameSessionResultsRouteArgs{key: $key}';
   }
 }
 

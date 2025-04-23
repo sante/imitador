@@ -16,6 +16,7 @@ _$GameSessionImpl _$$GameSessionImplFromJson(Map<String, dynamic> json) =>
           .toList(),
       activityId: json['activityId'] as String,
       playing: json['playing'] as bool,
+      ended: json['ended'] as bool,
       userId: json['userId'] as String?,
       userName: json['userName'] as String?,
     );
@@ -28,6 +29,7 @@ Map<String, dynamic> _$$GameSessionImplToJson(_$GameSessionImpl instance) =>
       'players': instance.players,
       'activityId': instance.activityId,
       'playing': instance.playing,
+      'ended': instance.ended,
       'userId': instance.userId,
       'userName': instance.userName,
     };

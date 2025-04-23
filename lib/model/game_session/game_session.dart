@@ -12,6 +12,7 @@ class GameSession with _$GameSession {
     required List<Player> players,
     required String activityId,
     required bool playing,
+    required bool ended,
     String? userId,
     String? userName,
   }) = _GameSession;
