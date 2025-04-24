@@ -7,10 +7,11 @@ import 'package:imitador/core/common/extension/context_extensions.dart';
 import 'package:imitador/gen/assets.gen.dart';
 import 'package:imitador/model/game_session/game_session.dart';
 import 'package:imitador/ui/router/app_router.dart';
+import 'package:imitador/ui/screens/game_session/game_session_lobby_screen.dart';
 import 'package:imitador/ui/section/game_session/game_session_section_cubit.dart';
-import 'package:imitador/ui/theme/components/buttons.dart';
 import 'package:imitador/ui/theme/components/scaffold.dart';
 import 'package:imitador/ui/theme/components/sheet_container.dart';
+import 'package:imitador/ui/theme/components/score_table.dart';
 
 @RoutePage()
 class GameSessionResultsScreen extends StatelessWidget {
@@ -39,132 +40,149 @@ class TeacherResults extends StatelessWidget {
       BlocBuilder<GameSessionSectionCubit, GameSessionSectionState>(
         builder: (context, state) => Padding(
           padding: EdgeInsets.only(top: 32.h),
-          child: SheetContainer(
-            maxWidth: 1093.w,
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: 40.h,
-                horizontal: 40.w,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Resultados finales",
-                    style: context.theme.textTheme.headlineLarge,
-                  ),
-                  SizedBox(height: 40.h),
+          child: Center(
+            child: SheetContainer(
+              maxWidth: 1093.w,
+              maxHeight: 900.h,
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: 40.h,
+                  horizontal: 40.w,
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Resultados finales",
+                        style: context.theme.textTheme.headlineLarge,
+                      ),
+                      SizedBox(height: 40.h),
 
-                  // Create sorted list of players by score
-                  Builder(
-                    builder: (context) {
-                      final players = (state.session?.players ?? []);
-                      final sortedPlayers = players
-                          .map((p) =>
-                              (player: p, score: generalScore(p.score ?? [])))
-                          .sortedByDescending((it) => it.score)
-                          .toList();
+                      // Create sorted list of players by score
+                      Builder(
+                        builder: (context) {
+                          if (state.session == null) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
 
-                      if (sortedPlayers.isEmpty) {
-                        return const Center(
-                          child: Text("No hay resultados disponibles"),
-                        );
-                      }
+                          final players = (state.session?.players ?? []);
 
-                      return Column(
-                        children: [
-                          // Top 3 players with medals
-                          SizedBox(
-                            width: double.infinity,
-                            height: 210.h,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                // Second place (Silver)
-                                if (sortedPlayers.length > 1)
-                                  _buildTopPlayer(
-                                    context,
-                                    sortedPlayers[1].player.name,
-                                    sortedPlayers[1].score.toString(),
-                                    Assets.images.medalSilver.path,
-                                    36.3.w,
-                                    60.h,
-                                  ),
+                          // Only show loading if we have no players but know session exists
+                          if (players.isEmpty) {
+                            return const Center(
+                              child: Text("No hay resultados disponibles"),
+                            );
+                          }
 
-                                SizedBox(width: 40.w),
+                          final sortedPlayers = players
+                              .map((p) => (
+                                    player: p,
+                                    score: generalScore(p.score ?? [])
+                                  ))
+                              .sortedByDescending((it) => it.score)
+                              .toList();
 
-                                // First place (Gold)
-                                if (sortedPlayers.isNotEmpty)
-                                  _buildTopPlayer(
-                                    context,
-                                    sortedPlayers[0].player.name,
-                                    sortedPlayers[0].score.toString(),
-                                    Assets.images.medalGold.path,
-                                    42.5.w,
-                                    70.h,
-                                  ),
-
-                                SizedBox(width: 40.w),
-
-                                // Third place (Bronze)
-                                if (sortedPlayers.length > 2)
-                                  _buildTopPlayer(
-                                    context,
-                                    sortedPlayers[2].player.name,
-                                    sortedPlayers[2].score.toString(),
-                                    Assets.images.medalBronze.path,
-                                    31.5.w,
-                                    52.5.h,
-                                  ),
-                              ],
-                            ),
-                          ),
-
-                          SizedBox(height: 40.h),
-
-                          // Remaining players
-                          if (sortedPlayers.length > 3)
-                            Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                ...sortedPlayers.sublist(3).mapIndexed(
-                                      (index, entry) => Padding(
-                                        padding: EdgeInsets.only(bottom: 12.h),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              entry.player.name,
-                                              style: context
-                                                  .theme.textTheme.bodyMedium
-                                                  ?.copyWith(
-                                                color: context
-                                                    .theme.colorScheme.surface,
-                                              ),
-                                              textAlign: TextAlign.start,
-                                            ),
-                                            SizedBox(width: 12.w),
-                                            Text(
-                                              entry.score.toString(),
-                                              style: context
-                                                  .theme.textTheme.bodyMedium
-                                                  ?.copyWith(
-                                                color: context
-                                                    .theme.colorScheme.surface,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                          return Column(
+                            children: [
+                              // Top 3 players with medals
+                              SizedBox(
+                                width: double.infinity,
+                                height: 210.h,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    // Second place (Silver)
+                                    if (sortedPlayers.length > 1)
+                                      _buildTopPlayer(
+                                        context,
+                                        sortedPlayers[1].player.name,
+                                        sortedPlayers[1].score.toString(),
+                                        Assets.images.medalSilver.path,
+                                        44.w,
+                                        72.h,
                                       ),
-                                    ),
-                              ],
-                            ),
-                        ],
-                      );
-                    },
+
+                                    SizedBox(width: 40.w),
+
+                                    // First place (Gold)
+                                    if (sortedPlayers.isNotEmpty)
+                                      _buildTopPlayer(
+                                        context,
+                                        sortedPlayers[0].player.name,
+                                        sortedPlayers[0].score.toString(),
+                                        Assets.images.medalGold.path,
+                                        51.w,
+                                        84.h,
+                                      ),
+
+                                    SizedBox(width: 40.w),
+
+                                    // Third place (Bronze)
+                                    if (sortedPlayers.length > 2)
+                                      _buildTopPlayer(
+                                        context,
+                                        sortedPlayers[2].player.name,
+                                        sortedPlayers[2].score.toString(),
+                                        Assets.images.medalBronze.path,
+                                        38.w,
+                                        63.h,
+                                      ),
+                                  ],
+                                ),
+                              ),
+
+                              SizedBox(height: 40.h),
+
+                              // Remaining players
+                              if (sortedPlayers.length > 3)
+                                Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    ...sortedPlayers.sublist(3).mapIndexed(
+                                          (index, entry) => Padding(
+                                            padding:
+                                                EdgeInsets.only(bottom: 12.h),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  entry.player.name,
+                                                  style: context.theme.textTheme
+                                                      .bodyMedium
+                                                      ?.copyWith(
+                                                    color: context.theme
+                                                        .colorScheme.surface,
+                                                  ),
+                                                  textAlign: TextAlign.start,
+                                                ),
+                                                SizedBox(width: 12.w),
+                                                Text(
+                                                  entry.score.toString(),
+                                                  style: context
+                                                      .theme.textTheme.bodyLarge
+                                                      ?.copyWith(
+                                                    color: context.theme
+                                                        .colorScheme.surface,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                  ],
+                                ),
+                            ],
+                          );
+                        },
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ),
@@ -215,147 +233,42 @@ class PlayerResults extends StatelessWidget {
       BlocBuilder<GameSessionSectionCubit, GameSessionSectionState>(
         builder: (context, state) => Padding(
           padding: EdgeInsets.only(top: 32.h),
-          child: SheetContainer(
-            maxWidth: 764.w,
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: 40.h,
-                horizontal: 40.w,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Resultados",
-                    style: context.theme.textTheme.headlineLarge,
+          child: Center(
+            child: SheetContainer(
+              maxWidth: 604.w,
+              maxHeight: 800.h,
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: 40.h,
+                  horizontal: 40.w,
+                ),
+                child: SingleChildScrollView(
+                  child: ScoreTable(
+                    finalResults: true,
+                    scores: Map.fromEntries(
+                      (state.session?.players ?? []).map(
+                        (p) => MapEntry(
+                          p.name,
+                          generalScore(p.score ?? []),
+                        ),
+                      ),
+                    ),
                   ),
-                  SizedBox(height: 40.h),
-
-                  // Player list with scores
-                  Builder(
-                    builder: (context) {
-                      final players = (state.session?.players ?? []);
-                      final sortedPlayers = players
-                          .map((p) =>
-                              (player: p, score: generalScore(p.score ?? [])))
-                          .sortedByDescending((it) => it.score)
-                          .toList();
-
-                      if (sortedPlayers.isEmpty) {
-                        return const Center(
-                          child: Text("No hay resultados disponibles"),
-                        );
-                      }
-
-                      return Column(
-                        children: [
-                          ...sortedPlayers.mapIndexed(
-                            (index, entry) => Padding(
-                              padding: EdgeInsets.only(bottom: 12.h),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  // Medal or position number
-                                  SizedBox(
-                                    width: 60.w,
-                                    child: _getPositionWidget(index),
-                                  ),
-
-                                  // Player name
-                                  Expanded(
-                                    child: Text(
-                                      entry.player.name,
-                                      style: _getTextStyle(context, index),
-                                      textAlign: TextAlign.start,
-                                    ),
-                                  ),
-
-                                  // Score
-                                  Text(
-                                    entry.score.toString(),
-                                    style: _getTextStyle(context, index),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-
-                          SizedBox(height: 40.h),
-
-                          // Play again button
-                          PrimaryButton(
-                            label: "Jugar de nuevo",
-                            onPressed: () {
-                              // Navigate back to welcome screen or level selector
-                              context.router.navigate(const WelcomeRoute());
-                            },
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ],
+                ),
               ),
             ),
           ),
         ),
       );
 
-  Widget _getPositionWidget(int index) {
-    switch (index) {
-      case 0:
-        return Image(
-          image: AssetImage(Assets.images.medalGold.path),
-          width: 42.5.w,
-          height: 70.h,
-        );
-      case 1:
-        return Image(
-          image: AssetImage(Assets.images.medalSilver.path),
-          width: 36.3.w,
-          height: 60.h,
-        );
-      case 2:
-        return Image(
-          image: AssetImage(Assets.images.medalBronze.path),
-          width: 31.5.w,
-          height: 52.5.h,
-        );
-      default:
-        return Text(
-          (index + 1).toString(),
-          style: TextStyle(
-            fontSize: 24.sp,
-            fontWeight: FontWeight.w600,
-          ),
-        );
+  int generalScore(List<Score> scores) {
+    final Map<String, int> scoreMap = {};
+    for (var score in scores) {
+      scoreMap[score.levelId] ??= score.score;
+      if (scoreMap[score.levelId]! < score.score) {
+        scoreMap[score.levelId] = score.score;
+      }
     }
+    return scoreMap.values.sum();
   }
-
-  TextStyle? _getTextStyle(BuildContext context, int index) {
-    switch (index) {
-      case 0:
-      case 1:
-      case 2:
-        return context.theme.textTheme.headlineSmall?.copyWith(
-          color: context.theme.colorScheme.surface,
-        );
-      default:
-        return context.theme.textTheme.bodyLarge?.copyWith(
-          color: context.theme.colorScheme.surface,
-        );
-    }
-  }
-}
-
-int generalScore(List<Score> scores) {
-  final Map<String, int> scoreMap = {};
-  for (var score in scores) {
-    scoreMap[score.levelId] ??= score.score;
-    if (scoreMap[score.levelId]! < score.score) {
-      scoreMap[score.levelId] = score.score;
-    }
-  }
-  return scoreMap.values.sum();
 }
