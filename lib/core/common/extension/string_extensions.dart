@@ -47,3 +47,7 @@ extension NullableStringExtensions on String? {
   String? ifNullOrBlank(String? Function() func) =>
       this == null || this!.isEmpty ? func() : this;
 }
+
+extension ObjectListExtensions on Iterable<dynamic> {
+  List<String> get mapToString => map((e) => e.toString()).toList();
+}

@@ -28,6 +28,9 @@ class AppTheme {
       extensions: [customColors, customTextStyles, appDimension, buttonTheme],
       primaryColor: colors.primary,
       colorScheme: colors,
+      scrollbarTheme: ScrollbarThemeData(
+        thumbColor: WidgetStatePropertyAll(colors.primary),
+      ),
       dialogTheme: DialogTheme(
         backgroundColor: colors.surface,
         elevation: 2,

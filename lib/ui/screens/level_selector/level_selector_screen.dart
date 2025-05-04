@@ -30,6 +30,7 @@ final dummyLevels = [
     minPosition: 0,
     maxPosition: 10,
     positionExpressions: [],
+    speedExpressions: [],
   ),
   Level(
     id: '2',
@@ -39,6 +40,7 @@ final dummyLevels = [
     minPosition: 0,
     maxPosition: 10,
     positionExpressions: [],
+    speedExpressions: [],
   ),
   Level(
     id: '3',
@@ -48,12 +50,14 @@ final dummyLevels = [
     minPosition: 0,
     maxPosition: 10,
     positionExpressions: [],
+    speedExpressions: [],
   ),
   Level(
     id: '4',
     name: "Se mueve se mueve",
     difficulty: null,
     positionExpressions: [],
+    speedExpressions: [],
     secondsDuration: 10,
     minPosition: 0,
     maxPosition: 10,
@@ -77,6 +81,7 @@ class LevelSelectorScreen extends StatelessWidget {
               maxPosition: 10,
               secondsDuration: 10,
               positionExpressions: [],
+              speedExpressions: [],
             ),
             ...state.levels ?? [],
           ],
