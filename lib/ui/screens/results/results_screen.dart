@@ -6,9 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imitador/core/common/extension/context_extensions.dart';
+import 'package:imitador/core/common/helper/transformer_helper.dart';
 import 'package:imitador/game/components/graph/graph_component.dart';
 import 'package:imitador/gen/assets.gen.dart';
 import 'package:imitador/model/attempt/attempt.dart';
+import 'package:imitador/model/enum/level_type.dart';
 import 'package:imitador/model/enum/play_session_type.dart';
 import 'package:imitador/ui/router/app_router.dart';
 import 'package:imitador/ui/section/activity/activity_section_cubit.dart';
@@ -128,37 +130,51 @@ class _ResultsContentScreen extends StatelessWidget {
             width: 764.w,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               spacing: 40.h,
               children: [
                 SheetContainer(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 80.w,
-                      vertical: 48.h,
-                    ),
-                    child: Column(
-                      spacing: 24.h,
-                      children: [
-                        Text(
-                          attempt.level.name,
-                          style:
-                              context.theme.textStyles.headlineSmall!.copyWith(
-                            color: context.theme.colorScheme.surface,
-                          ),
+                  maxHeight: 748.h,
+                  child: Scrollbar(
+                    interactive: true,
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 80.w,
+                          vertical: 48.h,
                         ),
-                        Text(
-                          scoreMessage(attempt.score),
-                          style:
-                              context.theme.textStyles.headlineLarge!.copyWith(
-                            color: context.theme.colorScheme.surface,
-                          ),
+                        child: Column(
+                          spacing: 24.h,
+                          children: [
+                            Text(
+                              attempt.level.name,
+                              style: context.theme.textStyles.headlineSmall!
+                                  .copyWith(
+                                color: context.theme.colorScheme.surface,
+                              ),
+                            ),
+                            Text(
+                              scoreMessage(attempt.score),
+                              style: context.theme.textStyles.headlineLarge!
+                                  .copyWith(
+                                color: context.theme.colorScheme.surface,
+                              ),
+                            ),
+                            starsImage(attempt.stars.toDouble()),
+                            CustomPaint(
+                              size: Size(620.w, 442.h),
+                              painter: GraphPainter(attempt: attempt),
+                            ),
+                            CustomPaint(
+                              size: Size(620.w, 442.h),
+                              painter: GraphPainter(
+                                attempt: attempt,
+                                speed: true,
+                              ),
+                            ),
+                          ],
                         ),
-                        starsImage(attempt.stars.toDouble()),
-                        CustomPaint(
-                          size: Size(620.w, 442.h),
-                          painter: GraphPainter(attempt: attempt),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
@@ -233,30 +249,56 @@ class GraphPainter extends CustomPainter {
     ..strokeWidth = 3.0;
   final Attempt attempt;
   final mathContext = ContextModel();
+  final bool speed;
 
   GraphPainter({
     required this.attempt,
+    this.speed = false,
   });
 
   @override
   void paint(Canvas canvas, Size size) {
+    final rawSamples = attempt.plotPointsX
+        .zip(attempt.plotPointsY, (x, y) => Pair(x, y))
+        .toList();
+    final samples = switch (attempt.level.type) {
+      LevelType.position => !speed ? rawSamples : deriveSamples(rawSamples, 10),
+      LevelType.speed => speed ? rawSamples : deriveSamples(rawSamples, 10),
+    };
+
+    late final double maxSpeed;
+    late final double minSpeed;
+
+    if (speed) {
+      maxSpeed = samples.map((it) => it.second).max()?.ceilToDouble() ?? 2;
+      minSpeed = samples.map((it) => it.second).min()?.floorToDouble() ?? -2;
+    }
+
+    final range = Pair(
+      speed ? minSpeed : attempt.level.minPosition,
+      speed ? maxSpeed : attempt.level.maxPosition,
+    );
+
     drawGraph(
-        canvas: canvas,
-        size: Vector2(size.width, size.height),
-        axisLinePaint: Paint()..color = Colors.black,
-        pointPaint: pointPaint,
-        yAxisXOffset: 0,
-        samples: attempt.plotPointsX
-            .zip(attempt.plotPointsY, (x, y) => Pair(x, y))
-            .toList(),
-        secondsDuration: attempt.level.secondsDuration,
-        fixedExpressions:
-            attempt.expressions.map((it) => Parser().parse(it)).toList(),
-        effectiveTimeSize: size.width,
-        objectivePaint: objectivePaint,
-        range: Pair(attempt.level.minPosition, attempt.level.maxPosition),
-        mathContext: mathContext,
-        fontColor: Colors.black);
+      canvas: canvas,
+      size: Vector2(size.width, size.height),
+      axisLinePaint: Paint()..color = Colors.black,
+      pointPaint: pointPaint,
+      yAxisXOffset: 0,
+      samples: samples,
+      secondsDuration: attempt.level.secondsDuration,
+      fixedExpressions: (speed
+              ? attempt.level.speedExpressions
+              : attempt.level.positionExpressions)
+          .map((it) => Parser().parse(it))
+          .toList(),
+      effectiveTimeSize: size.width * horizontalPadding,
+      objectivePaint: objectivePaint,
+      range: range,
+      mathContext: mathContext,
+      fontColor: Colors.black,
+      yAxisLabel: speed ? "V(t)" : "X(t)",
+    );
   }
 
   @override

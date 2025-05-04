@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:dartx/dartx.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:imitador/core/common/extension/string_extensions.dart';
 import 'package:imitador/core/common/helper/attempt_helper.dart';
+import 'package:imitador/core/common/helper/expressions_helper.dart';
 import 'package:imitador/core/di/di_provider.dart';
 import 'package:imitador/core/repository/activity_repository.dart';
 import 'package:imitador/core/repository/attempt_repository.dart';
@@ -46,7 +48,17 @@ class ActivitySectionCubit extends Cubit<ActivitySectionState> {
   }
 
   void setCurrentLevel(Level level) {
-    emit(state.copyWith(currentLevel: level));
+    if (level.speedExpressions.isEmpty) {
+      emit(state.copyWith(
+        currentLevel: level.copyWith(
+          speedExpressions: level.positionExpressions
+              .map((it) => parseExpression(it).derive("t").simplify())
+              .mapToString,
+        ),
+      ));
+    } else {
+      emit(state.copyWith(currentLevel: level));
+    }
   }
 
   void addAttemptFromSamples(

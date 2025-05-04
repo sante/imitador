@@ -33,6 +33,7 @@ final freeMovementLevel = Level(
   maxPosition: 10,
   secondsDuration: 10,
   positionExpressions: [],
+  speedExpressions: [],
 );
 
 final easyLevel = Level(
@@ -43,6 +44,7 @@ final easyLevel = Level(
   maxPosition: 10,
   secondsDuration: 10,
   positionExpressions: [],
+  speedExpressions: [],
 );
 
 final mediumLevel = Level(
@@ -53,6 +55,7 @@ final mediumLevel = Level(
   maxPosition: 10,
   secondsDuration: 10,
   positionExpressions: [],
+  speedExpressions: [],
 );
 
 final hardLevel = Level(
@@ -63,6 +66,7 @@ final hardLevel = Level(
   minPosition: 0,
   maxPosition: 10,
   positionExpressions: [],
+  speedExpressions: [],
 );
 
 class _WelcomeContentScreen extends StatefulWidget {

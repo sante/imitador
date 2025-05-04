@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dartx/dartx.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:imitador/core/common/extension/string_extensions.dart';
 import 'package:imitador/core/common/helper/attempt_helper.dart';
 import 'package:imitador/core/common/helper/expressions_helper.dart';
 import 'package:imitador/core/di/di_provider.dart';
@@ -26,16 +27,32 @@ class LevelSectionCubit extends Cubit<LevelSectionState> {
   LevelSectionCubit({
     required Level level,
   }) : super(LevelSectionState.state(
-          level: level.copyWith(
-            positionExpressions: level.id != "freeMovement" ? (level.positionExpressions.isNotEmpty
-                ? level.positionExpressions
-                : generateByDifficulty(
-                    range: Pair(level.minPosition, level.maxPosition),
-                    secondsDuration: level.secondsDuration,
-                    difficulty: level.difficulty!,
-                  ).map((it) => it.toString()).toList()) : [],
-          ),
+          level: level,
         )) {
+    if (level.id != "freeMovement" && level.positionExpressions.isEmpty) {
+      final positionExpressions = generateByDifficulty(
+        range: Pair(level.minPosition, level.maxPosition),
+        secondsDuration: level.secondsDuration,
+        difficulty: level.difficulty!,
+      );
+      final speedExpressions =
+          positionExpressions.map((it) => it.derive("t").simplify());
+
+      emit(state.copyWith(
+        level: level.copyWith(
+          positionExpressions: positionExpressions.mapToString,
+          speedExpressions: speedExpressions.mapToString,
+        ),
+      ));
+    } else if (level.speedExpressions.isEmpty) {
+      emit(state.copyWith(
+        level: level.copyWith(
+          speedExpressions: level.positionExpressions
+              .map((it) => parseExpression(it).derive("t").simplify())
+              .mapToString,
+        ),
+      ));
+    }
     _initStreams();
   }
 

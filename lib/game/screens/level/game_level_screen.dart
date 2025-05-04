@@ -16,6 +16,7 @@ import 'package:imitador/game/components/ruler.dart';
 import 'package:imitador/game/components/sprites/paper_ball.dart';
 import 'package:imitador/game/simon_game.dart';
 import 'package:imitador/model/enum/difficulty.dart';
+import 'package:imitador/model/enum/level_type.dart';
 import 'package:imitador/ui/section/global/global_section_cubit.dart';
 import 'package:math_expressions/math_expressions.dart';
 
@@ -190,8 +191,15 @@ class GameLevelPage extends Component
   void finishSampling() {
     add(_spacebarHint);
     finishedSampling = true;
-    if (game.level.positionExpressions.isNotEmpty) {
-      onFinishedWithResult(_graph.distances);
+    if (game.level.id != "freeMovement") {
+      switch (game.level.type) {
+        case LevelType.position:
+          onFinishedWithResult(_graph.distances);
+          break;
+        case LevelType.speed:
+          onFinishedWithResult(_graph.speeds);
+          break;
+      }
     }
   }
 

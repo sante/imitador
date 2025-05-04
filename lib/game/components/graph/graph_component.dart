@@ -7,13 +7,16 @@ import 'package:flame/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:imitador/core/common/helper/transformer_helper.dart';
 import 'package:imitador/core/common/logger.dart';
 import 'package:imitador/game/simon_game.dart';
+import 'package:imitador/model/enum/level_type.dart';
 import 'package:imitador/model/level_expression/level_expression.dart';
 import 'package:imitador/ui/theme/app_text_styles.dart';
 import 'package:math_expressions/math_expressions.dart';
 
 const verticalPadding = 0.9;
+const horizontalPadding = 0.9;
 
 class GraphComponent extends PositionComponent
     with HasGameReference<SimonGame> {
@@ -22,6 +25,7 @@ class GraphComponent extends PositionComponent
   final VoidCallback? onFinishedSampling;
   final Pair<double, double> distanceRange;
   final List<Pair<double, double>> distances = [];
+  List<Pair<double, double>> speeds = [];
   double currentTime = 0;
   double currentPosition = 0;
   bool inCountdown = false;
@@ -30,7 +34,8 @@ class GraphComponent extends PositionComponent
   final pointPaint = PaletteEntry(Color(0xffC7EF00)).paint()..strokeWidth = 3.0;
   final objectivePaint = PaletteEntry(Color(0xffA882DD)).paint()
     ..strokeWidth = 3.0;
-  final currentTimePaint = PaletteEntry(Color(0xffC7EF00)).paint()..strokeWidth = 2.0;
+  final currentTimePaint = PaletteEntry(Color(0xffC7EF00)).paint()
+    ..strokeWidth = 2.0;
   final gridPaint = BasicPalette.lightGray.paint()..strokeWidth = 3.0;
   final mathContext = ContextModel();
   late double xAxisYOffset;
@@ -47,7 +52,8 @@ class GraphComponent extends PositionComponent
   FutureOr<void> onLoad() {
     Logger.d('Game width: ${game.size.x}');
     Logger.d("Canvas height: ${size.y}");
-    effectiveTimeSize = size.x - game.spriteOutOfBoundsSize;
+    effectiveTimeSize =
+        (size.x - game.spriteOutOfBoundsSize) * horizontalPadding;
 
     return super.onLoad();
   }
@@ -55,6 +61,9 @@ class GraphComponent extends PositionComponent
   void addDataPoint(double distance) {
     if (sampling) {
       distances.add(Pair(currentTime, distance));
+      if (game.level.type == LevelType.speed) {
+        speeds = deriveSamples(distances, 10);
+      }
     }
   }
 
@@ -76,7 +85,7 @@ class GraphComponent extends PositionComponent
       axisLinePaint: axisLinePaint,
       pointPaint: pointPaint,
       yAxisXOffset: game.spriteOutOfBoundsSize,
-      samples: distances,
+      samples: game.level.type == LevelType.position ? distances : speeds,
       secondsDuration: secondsDuration.toDouble(),
       currentValue: currentPosition,
       sampling: sampling,
@@ -90,6 +99,10 @@ class GraphComponent extends PositionComponent
       fontColor: Colors.black,
       drawGrid: true,
       gridPaint: gridPaint,
+      yAxisLabel: switch (game.level.type) {
+        LevelType.position => "X(t)",
+        LevelType.speed => "V(t)",
+      },
     );
   }
 
@@ -173,6 +186,31 @@ Offset toCanvasCoordinates({
   );
 }
 
+void drawTextAt({
+  required Canvas canvas,
+  required String text,
+  required double x,
+  required double y,
+  required Color color,
+  double fontSize = 16,
+}) {
+  TextSpan span = TextSpan(
+    style: handWritingTextStyle(
+      fontWeight: FontWeight.w400,
+      fontSize: fontSize.sp,
+      color: color,
+    ),
+    text: text,
+  );
+  TextPainter tp = TextPainter(
+    text: span,
+    textAlign: TextAlign.left,
+    textDirection: TextDirection.ltr,
+  );
+  tp.layout();
+  tp.paint(canvas, Offset(x, y));
+}
+
 void drawYTickAt({
   required double value,
   required Canvas canvas,
@@ -200,21 +238,12 @@ void drawYTickAt({
     axisLinePaint,
   );
   if (y.toInt() != 0) {
-    TextSpan span = TextSpan(
-      style: handWritingTextStyle(
-        fontWeight: FontWeight.w400,
-        fontSize: 16.sp,
-        color: fontColor,
-      ),
-      text: value.toInt().toString(),
-    );
-    TextPainter tp = TextPainter(
-      text: span,
-      textAlign: TextAlign.right,
-      textDirection: TextDirection.ltr,
-    );
-    tp.layout();
-    tp.paint(canvas, Offset(yAxisXOffset - 30, y - 10));
+    drawTextAt(
+        canvas: canvas,
+        text: value.toInt().toString(),
+        x: yAxisXOffset - 30,
+        y: y - 10,
+        color: fontColor);
   }
 }
 
@@ -238,10 +267,10 @@ void drawGraph({
   required ContextModel mathContext,
   bool drawGrid = false,
   Paint? gridPaint,
+  required String yAxisLabel,
 }) {
   final xAxisYOffset = size.y +
       (range.first / (range.second - range.first)) * size.y * verticalPadding;
-  // Dibujar los ejes
   drawYTickAt(
     value: range.second,
     canvas: canvas,
@@ -266,6 +295,7 @@ void drawGraph({
     drawGrid: drawGrid,
     gridPaint: gridPaint,
   ); // Min y tick
+  // Dibujar los ejes
   canvas.drawLine(
     Offset(yAxisXOffset, xAxisYOffset),
     Offset(size.x, xAxisYOffset),
@@ -276,6 +306,44 @@ void drawGraph({
     Offset(yAxisXOffset, size.y),
     axisLinePaint,
   ); // eje y
+  // Dibujar flechas
+  canvas.drawLine(
+    Offset(size.x - 10, xAxisYOffset - 5),
+    Offset(size.x, xAxisYOffset),
+    axisLinePaint,
+  );
+  canvas.drawLine(
+    Offset(size.x - 10, xAxisYOffset + 5),
+    Offset(size.x, xAxisYOffset),
+    axisLinePaint,
+  );
+  canvas.drawLine(
+    Offset(yAxisXOffset - 5, 10),
+    Offset(yAxisXOffset, 0),
+    axisLinePaint,
+  );
+  canvas.drawLine(
+    Offset(yAxisXOffset + 5, 10),
+    Offset(yAxisXOffset, 0),
+    axisLinePaint,
+  );
+
+  // Dibujar etiquetas
+  drawTextAt(
+    canvas: canvas,
+    text: yAxisLabel,
+    x: yAxisXOffset - 50,
+    y: 15,
+    color: fontColor,
+  );
+  drawTextAt(
+    canvas: canvas,
+    text: "t",
+    x: size.x - 15,
+    y: xAxisYOffset + 10,
+    color: fontColor,
+  );
+
   for (int i = range.first.ceil(); i <= range.second.floor(); i++) {
     if (i != 0) {
       drawYTickAt(

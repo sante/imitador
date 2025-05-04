@@ -20,6 +20,7 @@ sealed class Level with _$Level {
     @JsonKey(name: "duration") required double secondsDuration,
     @Default(LevelType.position) LevelType type,
     required List<String> positionExpressions,
+    required List<String> speedExpressions,
   }) = _Level;
 
   factory Level.fromJson(Map<String, dynamic> json) => _$LevelFromJson(json);

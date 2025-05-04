@@ -73,7 +73,7 @@ Expression generateConstantSpeed({
   Logger.d('Expression: $expression');
   Logger.d('Initial position: $initialPosition');
   Logger.d('Final position: $finalPosition');
-  return expression;
+  return expression.simplify();
 }
 
 Expression generateUniformlyAccelerated({
@@ -142,7 +142,7 @@ Expression generateUniformlyAccelerated({
     expression = expression + Number(difference);
   }
 
-  return expression;
+  return expression.simplify();
 }
 
 List<Expression> generateSectioned({
