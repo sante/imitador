@@ -21,7 +21,6 @@ class GameSessionResultsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<GameSessionSectionCubit, GameSessionSectionState>(
       builder: (context, state) => MotionScaffold(
-        extendBodyBehindAppBar: state.user?.id != state.creatorId,
         showTitle: false,
         backRoute: WelcomeRoute(),
         body: state.user?.id == state.creatorId
