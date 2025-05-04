@@ -17,9 +17,6 @@ import 'package:imitador/ui/theme/app_theme.dart';
 import 'package:imitador/ui/theme/components/cards.dart';
 import 'package:imitador/ui/theme/components/scaffold.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:imitador/core/repository/attempt_repository.dart';
-import 'package:imitador/core/di/di_provider.dart';
-import 'package:imitador/model/attempt/attempt.dart';
 
 final dummyLevels = [
   Level(
@@ -111,26 +108,13 @@ class SessionLevelSelectorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AttemptRepository attemptRepository = DiProvider.get();
     return BlocBuilder<GameSessionSectionCubit, GameSessionSectionState>(
-      builder: (context, state) => StreamBuilder<List<Attempt>?>(
-        stream: attemptRepository.getAttempts(),
-        builder: (context, snapshot) {
-          final allAttempts = snapshot.data ?? [];
-          final filteredAttempts = state.gameId == null
-              ? []
-              : allAttempts
-                  .where((a) => a.gameSessionId == state.gameId)
-                  .toList();
-          return _LevelSelectorContentScreen(
-            levels: state.activity?.levels ?? [],
-            user: state.user,
-            activity: state.activity,
-            sessionType: PlaySessionType.gameSession,
-            isLoading: state.activity == null,
-            attempts: filteredAttempts.cast<Attempt>(),
-          );
-        },
+      builder: (context, state) => _LevelSelectorContentScreen(
+        levels: state.activity?.levels ?? [],
+        user: state.user,
+        activity: state.activity,
+        sessionType: PlaySessionType.gameSession,
+        isLoading: state.activity == null,
       ),
     );
   }
@@ -143,7 +127,6 @@ class _LevelSelectorContentScreen extends StatelessWidget {
   final User? user;
   final bool isLoading;
   final PlaySessionType? sessionType;
-  final List<Attempt> attempts;
 
   const _LevelSelectorContentScreen({
     required this.levels,
@@ -152,7 +135,6 @@ class _LevelSelectorContentScreen extends StatelessWidget {
     this.activity,
     this.isLoading = false,
     this.sessionType,
-    this.attempts = const [],
     super.key,
   });
 
@@ -200,8 +182,6 @@ class _LevelSelectorContentScreen extends StatelessWidget {
                           _LevelCards(
                             levels: randomLevels,
                             sessionType: sessionType,
-                            attempts: attempts,
-                            user: user,
                           ),
                         ],
                       ),
@@ -222,8 +202,6 @@ class _LevelSelectorContentScreen extends StatelessWidget {
                             _LevelCards(
                               levels: fixedLevels,
                               sessionType: sessionType,
-                              attempts: attempts,
-                              user: user,
                             ),
                           ],
                         ),
@@ -259,56 +237,42 @@ class _LevelSelectorContentScreen extends StatelessWidget {
 class _LevelCards extends StatelessWidget {
   final List<Level> levels;
   final PlaySessionType? sessionType;
-  final List<Attempt> attempts;
-  final User? user;
 
   const _LevelCards({
     required this.levels,
     this.sessionType,
-    this.attempts = const [],
-    this.user,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return _SelectorRow(
-      children: levels.map(
-        (it) {
-          int? stars;
-          if (user != null) {
-            final userAttempts = attempts
-                .where((a) => a.levelId == it.id && a.playerId == user!.id)
-                .toList();
-            if (userAttempts.isNotEmpty) {
-              stars = userAttempts.map((a) => a.stars).max();
-            }
-          }
-          return LevelCard(
-            label: it.name,
-            stars: stars,
-            onPressed: () {
-              switch (sessionType) {
-                case PlaySessionType.activity:
-                  context.read<ActivitySectionCubit>().setCurrentLevel(it);
-                  break;
-                case PlaySessionType.gameSession:
-                  context.read<GameSessionSectionCubit>().setCurrentLevel(it);
-                  break;
-                default: //TODO: Add other cases
-                  break;
-              }
-              context.router.push(switch (sessionType) {
-                PlaySessionType.activity => const ActivityLevelRoute(),
-                PlaySessionType.gameSession =>
-                  const SessionActivityLevelRoute(),
-                _ =>
-                  LevelSectionRoute(level: it), // TODO: Add other navigations
-              });
-            },
-          );
-        },
-      ).toList(),
+      children: levels
+          .map(
+            (it) => LevelCard(
+              label: it.name,
+              onPressed: () {
+                switch (sessionType) {
+                  case PlaySessionType.activity:
+                    context.read<ActivitySectionCubit>().setCurrentLevel(it);
+                    break;
+                  case PlaySessionType.gameSession:
+                    context.read<GameSessionSectionCubit>().setCurrentLevel(it);
+                    break;
+                  default: //TODO: Add other cases
+                    break;
+                }
+                context.router.push(switch (sessionType) {
+                  PlaySessionType.activity => const ActivityLevelRoute(),
+                  PlaySessionType.gameSession =>
+                    const SessionActivityLevelRoute(),
+                  _ =>
+                    LevelSectionRoute(level: it), // TODO: Add other navigations
+                });
+              },
+            ),
+          )
+          .toList(),
     );
   }
 }
