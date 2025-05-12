@@ -154,7 +154,7 @@ class _ResultsContentScreen extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              scoreMessage(attempt.score),
+                              scoreMessage(attempt.stars),
                               style: context.theme.textStyles.headlineLarge!
                                   .copyWith(
                                 color: context.theme.colorScheme.surface,
@@ -223,7 +223,14 @@ class _ResultsContentScreen extends StatelessWidget {
       );
 }
 
-String scoreMessage(int score) => "Muy bien"; // TODO add real cases
+String scoreMessage(int stars) => switch (stars) {
+      0 || 1 => "Intentalo de nuevo",
+      2 => "Podés hacerlo mejor!",
+      3 => "Bien!",
+      4 => "Muy bien!",
+      5 => "Increíble!",
+      _ => "",
+    }; // TODO review with Vale
 
 Image starsImage(double stars) => Image.asset(
       switch (stars) {
