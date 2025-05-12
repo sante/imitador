@@ -62,3 +62,18 @@ List<Pair<double, double>> integrateSamples(
 
   return integratedSamples;
 }
+
+extension SampleExtensions on List<Pair<double, double>> {
+  List<Pair<double, double>> rollingAverage(int windowSize) {
+    final List<Pair<double, double>> averagedSamples = [];
+
+    for (int i = 0; i < length - windowSize - 1; i++) {
+      final window = slice(i, i + windowSize);
+      final time = window.first.first;
+      final averageValue = window.map((e) => e.second).average();
+      averagedSamples.add(Pair(time, averageValue));
+    }
+
+    return averagedSamples;
+  }
+}

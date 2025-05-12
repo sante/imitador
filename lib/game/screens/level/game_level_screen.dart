@@ -53,6 +53,7 @@ class GameLevelPage extends Component
     if (usingMicrobit) {
       _microbitSubscription =
           state.microbitController.dataStream.listen(onMicrobitData);
+      _graph.averageSamples = true;
     } else {
       _microbitSubscription?.cancel();
       _microbitSubscription = null;
@@ -97,6 +98,7 @@ class GameLevelPage extends Component
               secondsDuration: game.level.secondsDuration.toInt(),
               distanceRange:
                   Pair(game.level.minPosition, game.level.maxPosition),
+              averageSamples: usingMicrobit,
             )
               ..size = Vector2(notebookWidth - 80.w, 600.h)
               ..position = Vector2(10.w, 70.h)

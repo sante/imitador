@@ -25,6 +25,7 @@ class GraphComponent extends PositionComponent
   final VoidCallback? onFinishedSampling;
   final Pair<double, double> distanceRange;
   final List<Pair<double, double>> distances = [];
+  List<Pair<double, double>> averageDistances = [];
   List<Pair<double, double>> speeds = [];
   double currentTime = 0;
   double currentPosition = 0;
@@ -40,9 +41,11 @@ class GraphComponent extends PositionComponent
   final mathContext = ContextModel();
   late double xAxisYOffset;
   late final double effectiveTimeSize;
+  bool averageSamples;
 
   GraphComponent({
     required this.fixedExpressions,
+    required this.averageSamples,
     this.secondsDuration = 10,
     this.distanceRange = const Pair(0, 10),
     this.onFinishedSampling,
@@ -61,6 +64,9 @@ class GraphComponent extends PositionComponent
   void addDataPoint(double distance) {
     if (sampling) {
       distances.add(Pair(currentTime, distance));
+      if (averageSamples) {
+        averageDistances = distances.rollingAverage(10);
+      }
       if (game.level.type == LevelType.speed) {
         speeds = deriveSamples(distances, 10);
       }
@@ -85,7 +91,9 @@ class GraphComponent extends PositionComponent
       axisLinePaint: axisLinePaint,
       pointPaint: pointPaint,
       yAxisXOffset: game.spriteOutOfBoundsSize,
-      samples: game.level.type == LevelType.position ? distances : speeds,
+      samples: game.level.type == LevelType.position
+          ? (averageSamples ? averageDistances : distances)
+          : speeds,
       secondsDuration: secondsDuration.toDouble(),
       currentValue: currentPosition,
       sampling: sampling,
