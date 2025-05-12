@@ -90,7 +90,9 @@ class GameLevelPage extends Component
           position: Vector2(70.w, 14.h),
           children: [
             _graph = GraphComponent(
-              fixedExpressions: game.level.positionExpressions
+              fixedExpressions: (game.level.type == LevelType.position
+                      ? game.level.positionExpressions
+                      : game.level.speedExpressions)
                   .map((it) => Parser().parse(it))
                   .toList(),
               onFinishedSampling: finishSampling,
@@ -119,8 +121,10 @@ class GameLevelPage extends Component
         position: Vector2(490.w, 82.h),
       ),
       _ruler = RulerComponent(
-        size: Vector2(gameInitialSize.x - (game.spriteOutOfBoundsSize - 10.w), 90.h),
-        position: Vector2((game.spriteOutOfBoundsSize / 2) - 5.w, gameInitialSize.y),
+        size: Vector2(
+            gameInitialSize.x - (game.spriteOutOfBoundsSize - 10.w), 90.h),
+        position:
+            Vector2((game.spriteOutOfBoundsSize / 2) - 5.w, gameInitialSize.y),
         anchor: Anchor.bottomLeft,
         minDistance: game.level.minPosition,
         maxDistance: game.level.maxPosition,
@@ -128,9 +132,9 @@ class GameLevelPage extends Component
       ),
       _paperBall = PaperBall(
         updatePositionCallback: addPositionValue,
-      )..position = Vector2(
-          gameInitialSize.x / 2, gameInitialSize.y - 70.h)
-      ..anchor = Anchor.bottomCenter,
+      )
+        ..position = Vector2(gameInitialSize.x / 2, gameInitialSize.y - 70.h)
+        ..anchor = Anchor.bottomCenter,
     ]);
   }
 
