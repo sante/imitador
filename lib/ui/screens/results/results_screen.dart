@@ -297,7 +297,7 @@ class GraphPainter extends CustomPainter {
       range: range,
       mathContext: mathContext,
       fontColor: Colors.black,
-      yAxisLabel: speed ? "V(t)" : "X(t)",
+      yAxisLabel: speed ? "V(m/s)" : "X(m)",
     );
   }
 

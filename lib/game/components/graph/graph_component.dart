@@ -100,8 +100,8 @@ class GraphComponent extends PositionComponent
       drawGrid: true,
       gridPaint: gridPaint,
       yAxisLabel: switch (game.level.type) {
-        LevelType.position => "X(t)",
-        LevelType.speed => "V(t)",
+        LevelType.position => "X(m)",
+        LevelType.speed => "V(m/s)",
       },
     );
   }
@@ -328,21 +328,6 @@ void drawGraph({
     axisLinePaint,
   );
 
-  // Dibujar etiquetas
-  drawTextAt(
-    canvas: canvas,
-    text: yAxisLabel,
-    x: yAxisXOffset - 50,
-    y: 15,
-    color: fontColor,
-  );
-  drawTextAt(
-    canvas: canvas,
-    text: "t",
-    x: size.x - 15,
-    y: xAxisYOffset + 10,
-    color: fontColor,
-  );
 
   for (int i = range.first.ceil(); i <= range.second.floor(); i++) {
     if (i != 0) {
@@ -376,6 +361,21 @@ void drawGraph({
     );
   }
 
+  // Dibujar etiquetas
+  drawTextAt(
+    canvas: canvas,
+    text: yAxisLabel,
+    x: yAxisXOffset - 50.w,
+    y: 15.h,
+    color: fontColor,
+  );
+  drawTextAt(
+    canvas: canvas,
+    text: "t(s)",
+    x: size.x - 15.w,
+    y: xAxisYOffset + 10.h,
+    color: fontColor,
+  );
   // Dibujar las expresiones fijas
   fixedExpressions.forEachIndexed((expression, index) {
     final startTime = index * secondsDuration / fixedExpressions.length;
