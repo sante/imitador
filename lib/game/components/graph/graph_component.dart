@@ -65,10 +65,10 @@ class GraphComponent extends PositionComponent
     if (sampling) {
       distances.add(Pair(currentTime, distance));
       if (averageSamples) {
-        averageDistances = distances.rollingAverage(10);
+        averageDistances = distances.rollingAverage(50);
       }
       if (game.level.type == LevelType.speed) {
-        speeds = deriveSamples(distances, 10);
+        speeds = deriveSamples(distances, 50);
       }
     }
   }

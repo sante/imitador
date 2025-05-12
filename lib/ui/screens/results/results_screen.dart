@@ -269,8 +269,8 @@ class GraphPainter extends CustomPainter {
         .zip(attempt.plotPointsY, (x, y) => Pair(x, y))
         .toList();
     final samples = switch (attempt.level.type) {
-      LevelType.position => !speed ? rawSamples : deriveSamples(rawSamples, 10),
-      LevelType.speed => speed ? rawSamples : deriveSamples(rawSamples, 10),
+      LevelType.position => !speed ? rawSamples : deriveSamples(rawSamples, 50),
+      LevelType.speed => speed ? rawSamples : deriveSamples(rawSamples, 50),
     };
 
     late final double maxSpeed;
