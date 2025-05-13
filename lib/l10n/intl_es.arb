@@ -100,6 +100,7 @@
   "language_select_hint": "Seleccione un idioma",
   "language_label": "Idioma",
   "save_selection_button": "Guardar selección",
+  "language_preference_saved": "Preferencia de idioma guardada",
   "sensor_connected": "Sensor conectado",
   "connect_sensor_title": "Conectar sensor",
   "connect_button": "Conectar",

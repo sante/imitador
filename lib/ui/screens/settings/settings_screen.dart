@@ -23,7 +23,7 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocProvider(
-        create: (_) => SettingsCubit(),
+        create: (_) => SettingsCubit(context),
         child: _SettingsContentScreen(),
       );
 }
@@ -53,23 +53,118 @@ class _SettingsContentScreen extends StatelessWidget {
                           context.localizations.settings_title,
                           style: context.theme.textStyles.headlineLarge,
                         ),
-                        MotionDropDown(
-                          value: null,
-                          items: [
-                            context.localizations.language_spanish,
-                            context.localizations.language_english
-                          ],
-                          hint: context.localizations.language_select_hint,
-                          label: context.localizations.language_label,
-                          onChanged: (_) {},
-                        ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: PrimaryButton(
-                            onPressed: () {},
-                            label: context.localizations.save_selection_button,
-                            leadingIcon: PhosphorIcons.floppyDisk(),
-                          ),
+                        BlocBuilder<SettingsCubit, SettingsState>(
+                          builder: (context, settingsState) {
+                            final languageItems = [
+                              DropdownMenuItem(
+                                value: 'es',
+                                child: Text(
+                                    context.localizations.language_spanish,
+                                    style: context.theme.textStyles.bodyLarge
+                                        ?.copyWith(color: Colors.white)),
+                              ),
+                              DropdownMenuItem(
+                                value: 'en',
+                                child: Text(
+                                    context.localizations.language_english,
+                                    style: context.theme.textStyles.bodyLarge
+                                        ?.copyWith(color: Colors.white)),
+                              ),
+                            ];
+
+                            return Column(
+                              spacing: 20.h,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      context.localizations.language_label,
+                                      style: context.theme.textTheme.bodySmall,
+                                    ),
+                                    SizedBox(height: 8.h),
+                                    SizedBox(
+                                      width: 460.w,
+                                      child: DropdownButton<String>(
+                                        isExpanded: true,
+                                        icon: PhosphorIcon(
+                                          PhosphorIcons.caretDown(),
+                                          color: context
+                                              .theme.colorScheme.onPrimary,
+                                        ),
+                                        style: context
+                                            .theme.textStyles.bodyLarge
+                                            ?.copyWith(
+                                          color: context
+                                              .theme.colorScheme.onPrimary,
+                                        ),
+                                        value: settingsState.selectedLanguage,
+                                        hint: Text(context.localizations
+                                            .language_select_hint),
+                                        items: languageItems,
+                                        selectedItemBuilder: (context) => [
+                                          DropdownMenuItem(
+                                            value: 'es',
+                                            child: Text(
+                                              context.localizations
+                                                  .language_spanish,
+                                              style: context
+                                                  .theme.textStyles.bodyLarge
+                                                  ?.copyWith(
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ),
+                                          DropdownMenuItem(
+                                            value: 'en',
+                                            child: Text(
+                                              context.localizations
+                                                  .language_english,
+                                              style: context
+                                                  .theme.textStyles.bodyLarge
+                                                  ?.copyWith(
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                        onChanged: (value) {
+                                          if (value != null) {
+                                            context
+                                                .read<SettingsCubit>()
+                                                .setSelectedLanguage(value);
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: PrimaryButton(
+                                    onPressed:
+                                        settingsState.selectedLanguage == null
+                                            ? null
+                                            : () => context
+                                                .read<SettingsCubit>()
+                                                .saveLanguagePreference(),
+                                    label: context
+                                        .localizations.save_selection_button,
+                                    leadingIcon: PhosphorIcons.floppyDisk(),
+                                  ),
+                                ),
+                                if (settingsState.saveSuccess)
+                                  Text(
+                                    context.localizations
+                                        .language_preference_saved,
+                                    style: context.theme.textStyles.bodyMedium
+                                        ?.copyWith(
+                                      color: Colors.green,
+                                    ),
+                                  ),
+                              ],
+                            );
+                          },
                         ),
                         const DarkHorizontalDivider(),
                         Column(

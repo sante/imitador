@@ -64,6 +64,7 @@ dependencies:
   google_fonts: ^6.2.1
   path_provider: ^2.1.5
   phosphor_flutter: 2.1.0
+  provider: ^6.1.1
   socket_io_client: ^3.0.2
   flutter_svg: 2.0.17
   vector_graphics: ^1.1.18
