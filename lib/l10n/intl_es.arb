@@ -21,5 +21,104 @@
   "xmartlabs_projects": "Xmartlabs' projects",
   "game_title": "Mission: Motion",
   "play_as_guest": "Jugar como invitado",
-  "sign_in": "Ingresar"
+  "sign_in": "Ingresar",
+  "welcome_message_user": "¡Hola, {userName}!",
+  "@welcome_message_user": {
+    "placeholders": {
+      "userName": {
+        "type": "String"
+      }
+    }
+  },
+  "welcome_message_guest": "¡Hola, invitado!",
+  "mission": "Mission: ",
+  "motion": "MOTION",
+  "no_account_yet": "¿Todavía no tenés cuenta?",
+  "register": "Registrate",
+  "game_session": "Sesión de juego",
+  "create": "CREAR",
+  "join": "UNIRSE",
+  "free_play": "Juegos libres",
+  "free_movement_practice": "Movimiento Libre (práctica)",
+  "level_easy": "Nivel fácil",
+  "level_medium": "Nivel medio",
+  "level_hard": "Nivel difícil",
+  "in_class_games": "Juegos en clase",
+  "play": "Jugar",
+  "level_free_movement_practice_name": "Movimiento Libre (práctica)",
+  "level_easy_name": "Fácil",
+  "level_medium_name": "Medio",
+  "level_hard_name": "Difícil",
+  "choose_account_type": "Elegí tu tipo de cuenta",
+  "student": "Estudiante",
+  "teacher": "Profesor",
+  "already_have_account": "¿Ya tenés cuenta?",
+  "log_in_button": "Ingresar",
+  "welcome_student": "¡Bienvenido, Estudiante!",
+  "welcome_teacher": "¡Bienvenido, Profe!",
+  "full_name": "Nombre completo",
+  "code": "Código",
+  "create_account": "Crear cuenta",
+  "send_code": "Enviar código",
+  "waiting_for_more_players": "Esperando por más jugadores...",
+  "waiting_for_session_data": "Esperando por datos de la sesión...",
+  "copied_snackbar": "Copiado!",
+  "copy_error_snackbar": "Error al copiar.",
+  "session_code": "Código de sesión: {code}",
+  "@session_code": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "end_session": "Terminar sesión",
+  "start_game": "Empezar juego",
+  "final_results": "Resultados finales",
+  "no_results_available": "No hay resultados disponibles",
+  "choose_game_for_session": "Elegí el juego para la sesión de clase",
+  "create_session_button": "Crear sesión",
+  "hello_again": "¡Hola de nuevo!",
+  "score_message_0_1_star": "Intentalo de nuevo",
+  "score_message_2_stars": "Podés hacerlo mejor!",
+  "score_message_3_stars": "Bien!",
+  "score_message_4_stars": "Muy bien!",
+  "score_message_5_stars": "Increíble!",
+  "retry_button": "Reintentar",
+  "choose_another_level_button": "Elegir otro nivel",
+  "next_level_button": "Siguiente nivel",
+  "graph_label_velocity": "V(m/s)",
+  "graph_label_position": "X(m)",
+  "dummy_level_se_mueve": "Se mueve se mueve",
+  "levels_title": "Niveles",
+  "activities_title": "Actividades",
+  "join_session_title": "Unite a la sesión",
+  "join_session_description": "Ingresá el código de 4 dígitos que te brindó tu profesor para empezar a jugar y competir con tus compañeros.",
+  "settings_title": "Configuración",
+  "language_spanish": "Español",
+  "language_english": "Inglés",
+  "language_select_hint": "Seleccione un idioma",
+  "language_label": "Idioma",
+  "save_selection_button": "Guardar selección",
+  "language_preference_saved": "Preferencia de idioma guardada",
+  "sensor_connected": "Sensor conectado",
+  "connect_sensor_title": "Conectar sensor",
+  "connect_button": "Conectar",
+  "microbit_connect_step_1_description": "Conectá tu micro:bit a la computadora como muestra el gif",
+  "next_button": "Siguiente",
+  "microbit_connect_step_2_description": "Emparejá el micro:bit con tu navegador pulsando el botón.\\n\\nLuego te aparecerá una ventana en la parte superior de tu navegador.\\nSeleccioná el dispositivo micro:bit y hacé clic en \"Conectar\".",
+  "pair_button": "Emparejar",
+  "microbit_connection_error": "Error al conectar Microbit, intenta de nuevo",
+  "microbit_connection_success": "¡micro:bit conectado con éxito!",
+  "go_play_button": "Ir a jugar!",
+  "final_scores": "Resultados finales",
+  "partial_scores": "Resultados parciales",
+  "levels_count": "{count} niveles",
+  "@levels_count": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

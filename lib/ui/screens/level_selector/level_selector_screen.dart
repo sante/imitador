@@ -195,7 +195,7 @@ class _LevelSelectorContentScreen extends StatelessWidget {
                         children: [
                           if (randomLevels.isNotEmpty)
                             Text(
-                              'Juegos libres',
+                              context.localizations.free_play,
                               style: context.theme.textStyles.headlineMedium!
                                   .copyWith(
                                 color: context.theme.colorScheme.onSurface,
@@ -217,7 +217,7 @@ class _LevelSelectorContentScreen extends StatelessWidget {
                           spacing: 24.h,
                           children: [
                             Text(
-                              'Niveles',
+                              context.localizations.levels_title,
                               style: context.theme.textStyles.headlineMedium!
                                   .copyWith(
                                 color: context.theme.colorScheme.onSurface,
@@ -239,7 +239,7 @@ class _LevelSelectorContentScreen extends StatelessWidget {
                           spacing: 24.h,
                           children: [
                             Text(
-                              'Actividades',
+                              context.localizations.activities_title,
                               style: context.theme.textStyles.headlineMedium!
                                   .copyWith(
                                 color: context.theme.colorScheme.onSurface,

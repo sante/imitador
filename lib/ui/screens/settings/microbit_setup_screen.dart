@@ -64,12 +64,12 @@ class _MicrobitSetupScreenState extends State<MicrobitSetupScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Conectar sensor',
+              context.localizations.connect_sensor_title,
               style: context.theme.textStyles.headlineLarge,
             ),
             SizedBox(height: 16.h),
             Text(
-              'Conectá tu micro:bit a la computadora como muestra el gif',
+              context.localizations.microbit_connect_step_1_description,
               style: context.theme.textStyles.bodyLarge,
             ),
             SizedBox(height: 24.h),
@@ -84,7 +84,7 @@ class _MicrobitSetupScreenState extends State<MicrobitSetupScreen> {
             Align(
               alignment: Alignment.centerRight,
               child: PrimaryButton(
-                label: 'Siguiente',
+                label: context.localizations.next_button,
                 onPressed: nextStep,
               ),
             ),
@@ -96,12 +96,12 @@ class _MicrobitSetupScreenState extends State<MicrobitSetupScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Conectar sensor',
+              context.localizations.connect_sensor_title,
               style: context.theme.textStyles.headlineLarge,
             ),
             SizedBox(height: 16.h),
             Text(
-              'Emparejá el micro:bit con tu navegador pulsando el botón.\n\nLuego te aparecerá una ventana en la parte superior de tu navegador.\nSeleccioná el dispositivo micro:bit y hacé clic en "Conectar".',
+              context.localizations.microbit_connect_step_2_description,
               style: context.theme.textStyles.bodyLarge,
             ),
             SizedBox(height: 24.h),
@@ -112,7 +112,7 @@ class _MicrobitSetupScreenState extends State<MicrobitSetupScreen> {
             Align(
               alignment: Alignment.centerRight,
               child: PrimaryButton(
-                label: 'Emparejar',
+                label: context.localizations.pair_button,
                 onPressed: () async {
                   final connected = await context
                       .read<GlobalSectionCubit>()
@@ -122,9 +122,9 @@ class _MicrobitSetupScreenState extends State<MicrobitSetupScreen> {
                   } else {
                     if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
+                        SnackBar(
                           content: Text(
-                              "Error al conectar Microbit, intenta de nuevo"),
+                              context.localizations.microbit_connection_error),
                         ),
                       );
                     }
@@ -140,14 +140,14 @@ class _MicrobitSetupScreenState extends State<MicrobitSetupScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '¡micro:bit conectado con éxito!',
+              context.localizations.microbit_connection_success,
               style: context.theme.textStyles.headlineLarge,
             ),
             SizedBox(height: 24.h),
             Align(
               alignment: Alignment.centerRight,
               child: PrimaryButton(
-                label: 'Ir a jugar!',
+                label: context.localizations.go_play_button,
                 onPressed: () {
                   context.router.maybePop();
                 },

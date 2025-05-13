@@ -46,7 +46,7 @@ class _CreateSessionScreenState extends State<CreateSessionScreen> {
               spacing: 40.h,
               children: [
                 Text(
-                  "Elegí el juego para la sesión de clase",
+                  context.localizations.choose_game_for_session,
                   style: context.theme.textStyles.headlineLarge
                       ?.copyWith(color: Colors.white),
                 ),
@@ -79,7 +79,7 @@ class _CreateSessionScreenState extends State<CreateSessionScreen> {
                             }
                           }
                         : null,
-                    label: "Crear sesión",
+                    label: context.localizations.create_session_button,
                   ),
                 ])
               ],

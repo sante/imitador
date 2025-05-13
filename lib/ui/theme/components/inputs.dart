@@ -34,7 +34,7 @@ class MotionDropDown<T> extends StatelessWidget {
               label,
               style: context.theme.textTheme.bodySmall,
             ),
-            DropdownButton(
+            DropdownButton<T>(
               isExpanded: true,
               icon: PhosphorIcon(
                 PhosphorIcons.caretDown(),
@@ -58,7 +58,7 @@ class MotionDropDown<T> extends StatelessWidget {
               value: value,
               items: items
                   .map(
-                    (e) => DropdownMenuItem(
+                    (e) => DropdownMenuItem<T>(
                       value: e,
                       child: Text(
                         e.toString(),

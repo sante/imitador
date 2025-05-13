@@ -1,0 +1,124 @@
+{
+  "error": "Error: {text}",
+  "@error": {
+    "description": "Gives the user an error explanation",
+    "placeholders": {
+      "text": {
+        "type": "String",
+        "example": "Something went wrong try again"
+      }
+    }
+  },
+  "error_button_ok": "Ok",
+  "error_button_retry": "Retry",
+  "error_no_internet_connection_error_description": "You have no internet connection",
+  "error_no_internet_connection_error_title": "Error",
+  "error_unknown_error_description": "Something went wrong!",
+  "error_unknown_error_title": "Oops!",
+  "log_out": "Log out",
+  "mail": "Mail",
+  "password": "Password",
+  "xmartlabs_projects": "Xmartlabs' projects",
+  "game_title": "Mission: Motion",
+  "play_as_guest": "Play as guest",
+  "sign_in": "Sign in",
+  "welcome_message_user": "Hello, {userName}!",
+  "@welcome_message_user": {
+    "placeholders": {
+      "userName": {
+        "type": "String"
+      }
+    }
+  },
+  "welcome_message_guest": "Hello, guest!",
+  "mission": "Mission: ",
+  "motion": "MOTION",
+  "no_account_yet": "Don't have an account yet?",
+  "register": "Register",
+  "game_session": "Game Session",
+  "create": "CREATE",
+  "join": "JOIN",
+  "free_play": "Free Play",
+  "free_movement_practice": "Free Movement (practice)",
+  "level_easy": "Easy level",
+  "level_medium": "Medium level",
+  "level_hard": "Hard level",
+  "in_class_games": "In-Class Games",
+  "play": "Play",
+  "level_free_movement_practice_name": "Free Movement (practice)",
+  "level_easy_name": "Easy",
+  "level_medium_name": "Medium",
+  "level_hard_name": "Hard",
+  "choose_account_type": "Choose your account type",
+  "student": "Student",
+  "teacher": "Teacher",
+  "already_have_account": "Already have an account?",
+  "log_in_button": "Log in",
+  "welcome_student": "Welcome, Student!",
+  "welcome_teacher": "Welcome, Teacher!",
+  "full_name": "Full name",
+  "code": "Code",
+  "create_account": "Create account",
+  "send_code": "Send code",
+  "waiting_for_more_players": "Waiting for more players...",
+  "waiting_for_session_data": "Waiting for session data...",
+  "copied_snackbar": "Copied!",
+  "copy_error_snackbar": "Error copying.",
+  "session_code": "Session code: {code}",
+  "@session_code": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "end_session": "End session",
+  "start_game": "Start game",
+  "final_results": "Final Results",
+  "no_results_available": "No results available",
+  "choose_game_for_session": "Choose the game for the class session",
+  "create_session_button": "Create session",
+  "hello_again": "Hello again!",
+  "score_message_0_1_star": "Try again",
+  "score_message_2_stars": "You can do better!",
+  "score_message_3_stars": "Good!",
+  "score_message_4_stars": "Very good!",
+  "score_message_5_stars": "Incredible!",
+  "retry_button": "Retry",
+  "choose_another_level_button": "Choose another level",
+  "next_level_button": "Next level",
+  "graph_label_velocity": "V(m/s)",
+  "graph_label_position": "X(m)",
+  "dummy_level_se_mueve": "It moves it moves",
+  "levels_title": "Levels",
+  "activities_title": "Activities",
+  "join_session_title": "Join the session",
+  "join_session_description": "Enter the 4-digit code provided by your teacher to start playing and competing with your classmates.",
+  "settings_title": "Settings",
+  "language_spanish": "Spanish",
+  "language_english": "English",
+  "language_select_hint": "Select a language",
+  "language_label": "Language",
+  "save_selection_button": "Save selection",
+  "language_preference_saved": "Language preference saved",
+  "sensor_connected": "Sensor connected",
+  "connect_sensor_title": "Connect sensor",
+  "connect_button": "Connect",
+  "microbit_connect_step_1_description": "Connect your micro:bit to the computer as shown in the gif",
+  "next_button": "Next",
+  "microbit_connect_step_2_description": "Pair the micro:bit with your browser by pressing the button.\\n\\nA window will then appear at the top of your browser.\\nSelect the micro:bit device and click \"Connect\".",
+  "pair_button": "Pair",
+  "microbit_connection_error": "Error connecting Microbit, try again",
+  "microbit_connection_success": "micro:bit connected successfully!",
+  "go_play_button": "Go play!",
+  "final_scores": "Final Results",
+  "partial_scores": "Partial Results",
+  "levels_count": "{count} levels",
+  "@levels_count": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
+} 

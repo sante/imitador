@@ -155,7 +155,7 @@ class ActivityCard extends StatelessWidget {
             ),
             if (showLevels)
               Text(
-                "${activity.levels.length} niveles",
+                context.localizations.levels_count(activity.levels.length),
                 style: context.theme.textStyles.bodySmall,
               ),
           ],

@@ -59,7 +59,7 @@ class _LogInContentScreenState extends State<_LogInContentScreen> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Text(
-                  "¡Hola de nuevo!",
+                  context.localizations.hello_again,
                   style: context.theme.textStyles.titleSmall?.copyWith(
                     color: context.theme.colorScheme.onSurface,
                   ),
@@ -73,7 +73,7 @@ class _LogInContentScreenState extends State<_LogInContentScreen> {
                         children: [
                           AppTextField(
                             controller: emailController,
-                            label: "Email",
+                            label: context.localizations.mail,
                             onChanged: (email) {
                               _cubit.setEmail(email);
                             },
@@ -82,7 +82,7 @@ class _LogInContentScreenState extends State<_LogInContentScreen> {
                           if (state.codeSent) ...[
                             AppTextField(
                               controller: codeController,
-                              label: "Código",
+                              label: context.localizations.code,
                               onChanged: (code) {
                                 _cubit.setCode(code);
                               },
@@ -94,7 +94,7 @@ class _LogInContentScreenState extends State<_LogInContentScreen> {
                             Align(
                               alignment: Alignment.centerRight,
                               child: PrimaryButton(
-                                label: "Ingresar",
+                                label: context.localizations.log_in_button,
                                 onPressed: () async {
                                   await _cubit.login();
                                   if (_cubit.state.error == null) {
@@ -116,7 +116,7 @@ class _LogInContentScreenState extends State<_LogInContentScreen> {
                             Align(
                               alignment: Alignment.centerRight,
                               child: PrimaryButton(
-                                label: "Enviar código",
+                                label: context.localizations.send_code,
                                 onPressed: () async {
                                   await _cubit.requestCode();
                                 },
@@ -142,7 +142,7 @@ class _LogInContentScreenState extends State<_LogInContentScreen> {
                   mainAxisSize: MainAxisSize.min,
                   spacing: 36.h,
                   children: [
-                    const Text("¿Todavía no tenés cuenta?"),
+                    Text(context.localizations.no_account_yet),
                     SecondaryButton(
                       onPressed: () {
                         context.router.replaceAll([
@@ -150,7 +150,7 @@ class _LogInContentScreenState extends State<_LogInContentScreen> {
                           const SignUpSectionRoute(),
                         ]);
                       },
-                      label: "Registrate",
+                      label: context.localizations.register,
                     ),
                   ],
                 )
