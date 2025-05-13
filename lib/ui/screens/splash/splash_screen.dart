@@ -28,14 +28,14 @@ class SplashScreen extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        "Mission:",
+                        context.localizations.mission,
                         style: context.theme.textStyles.titleLarge?.copyWith(
                           color: context.theme.colorScheme.onSurface,
                           fontSize: 96.sp,
                         ),
                       ),
                       Text(
-                        "MOTION",
+                        context.localizations.motion,
                         style: context.theme.textStyles.titleLarge?.copyWith(
                           color: context.theme.colorScheme.onSurface,
                           fontSize: 128.sp,
@@ -47,7 +47,7 @@ class SplashScreen extends StatelessWidget {
               ),
               PrimaryButton(
                 customSize: Size(144.w, 48.h),
-                label: "Ingresar",
+                label: context.localizations.log_in_button,
                 trailingIcon: PhosphorIcons.arrowRight(PhosphorIconsStyle.bold),
                 onPressed: () {
                   context.router.replace(const WelcomeRoute());

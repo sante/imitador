@@ -154,7 +154,7 @@ class _ResultsContentScreen extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              scoreMessage(attempt.stars),
+                              scoreMessage(context, attempt.stars),
                               style: context.theme.textStyles.headlineLarge!
                                   .copyWith(
                                 color: context.theme.colorScheme.surface,
@@ -163,11 +163,13 @@ class _ResultsContentScreen extends StatelessWidget {
                             starsImage(attempt.stars.toDouble()),
                             CustomPaint(
                               size: Size(620.w, 442.h),
-                              painter: GraphPainter(attempt: attempt),
+                              painter: GraphPainter(
+                                  context: context, attempt: attempt),
                             ),
                             CustomPaint(
                               size: Size(620.w, 442.h),
                               painter: GraphPainter(
+                                context: context,
                                 attempt: attempt,
                                 speed: true,
                               ),
@@ -192,7 +194,7 @@ class _ResultsContentScreen extends StatelessWidget {
                         });
                       },
                       trailingIcon: PhosphorIcons.arrowsClockwise(),
-                      label: "Reintentar",
+                      label: context.localizations.retry_button,
                     ),
                     if (canSelectLevel)
                       SecondaryButton(
@@ -206,13 +208,14 @@ class _ResultsContentScreen extends StatelessWidget {
                             _ => throw UnimplementedError(),
                           });
                         },
-                        label: "Elegir otro nivel",
+                        label:
+                            context.localizations.choose_another_level_button,
                       ),
                     if (onNextLevel != null)
                       PrimaryButton(
                         onPressed: onNextLevel,
                         trailingIcon: PhosphorIcons.arrowRight(),
-                        label: "Siguiente nivel",
+                        label: context.localizations.next_level_button,
                       ),
                   ],
                 ),
@@ -223,12 +226,12 @@ class _ResultsContentScreen extends StatelessWidget {
       );
 }
 
-String scoreMessage(int stars) => switch (stars) {
-      0 || 1 => "Intentalo de nuevo",
-      2 => "Podés hacerlo mejor!",
-      3 => "Bien!",
-      4 => "Muy bien!",
-      5 => "Increíble!",
+String scoreMessage(BuildContext context, int stars) => switch (stars) {
+      0 || 1 => context.localizations.score_message_0_1_star,
+      2 => context.localizations.score_message_2_stars,
+      3 => context.localizations.score_message_3_stars,
+      4 => context.localizations.score_message_4_stars,
+      5 => context.localizations.score_message_5_stars,
       _ => "",
     }; // TODO review with Vale
 
@@ -257,8 +260,10 @@ class GraphPainter extends CustomPainter {
   final Attempt attempt;
   final mathContext = ContextModel();
   final bool speed;
+  final BuildContext context;
 
   GraphPainter({
+    required this.context,
     required this.attempt,
     this.speed = false,
   });
@@ -304,7 +309,9 @@ class GraphPainter extends CustomPainter {
       range: range,
       mathContext: mathContext,
       fontColor: Colors.black,
-      yAxisLabel: speed ? "V(m/s)" : "X(m)",
+      yAxisLabel: speed
+          ? context.localizations.graph_label_velocity
+          : context.localizations.graph_label_position,
     );
   }
 

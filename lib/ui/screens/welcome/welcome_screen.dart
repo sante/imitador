@@ -25,49 +25,49 @@ class WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) => _WelcomeContentScreen();
 }
 
-final freeMovementLevel = Level(
-  id: "freeMovement",
-  name: "Movimiento Libre (práctica)",
-  difficulty: null,
-  minPosition: 0,
-  maxPosition: 10,
-  secondsDuration: 10,
-  positionExpressions: [],
-  speedExpressions: [],
-);
+Level _buildFreeMovementLevel(BuildContext context) => Level(
+      id: "freeMovement",
+      name: context.localizations.level_free_movement_practice_name,
+      difficulty: null,
+      minPosition: 0,
+      maxPosition: 10,
+      secondsDuration: 10,
+      positionExpressions: [],
+      speedExpressions: [],
+    );
 
-final easyLevel = Level(
-  id: "easy",
-  name: "Fácil",
-  difficulty: Difficulty.easy,
-  minPosition: 0,
-  maxPosition: 10,
-  secondsDuration: 10,
-  positionExpressions: [],
-  speedExpressions: [],
-);
+Level _buildEasyLevel(BuildContext context) => Level(
+      id: "easy",
+      name: context.localizations.level_easy_name,
+      difficulty: Difficulty.easy,
+      minPosition: 0,
+      maxPosition: 10,
+      secondsDuration: 10,
+      positionExpressions: [],
+      speedExpressions: [],
+    );
 
-final mediumLevel = Level(
-  id: "medium",
-  name: "Medio",
-  difficulty: Difficulty.medium,
-  minPosition: 0,
-  maxPosition: 10,
-  secondsDuration: 10,
-  positionExpressions: [],
-  speedExpressions: [],
-);
+Level _buildMediumLevel(BuildContext context) => Level(
+      id: "medium",
+      name: context.localizations.level_medium_name,
+      difficulty: Difficulty.medium,
+      minPosition: 0,
+      maxPosition: 10,
+      secondsDuration: 10,
+      positionExpressions: [],
+      speedExpressions: [],
+    );
 
-final hardLevel = Level(
-  id: "hard",
-  name: "Difícil",
-  difficulty: Difficulty.hard,
-  secondsDuration: 10,
-  minPosition: 0,
-  maxPosition: 10,
-  positionExpressions: [],
-  speedExpressions: [],
-);
+Level _buildHardLevel(BuildContext context) => Level(
+      id: "hard",
+      name: context.localizations.level_hard_name,
+      difficulty: Difficulty.hard,
+      secondsDuration: 10,
+      minPosition: 0,
+      maxPosition: 10,
+      positionExpressions: [],
+      speedExpressions: [],
+    );
 
 class _WelcomeContentScreen extends StatefulWidget {
   @override
@@ -83,7 +83,10 @@ class _WelcomeContentScreenState extends State<_WelcomeContentScreen> {
         builder: (context, state) => MotionScaffold(
           actionIcon:
               state.user != null ? PhosphorIcons.user() : PhosphorIcons.gear(),
-          message: "¡Hola, ${state.user?.name ?? "invitado"}!",
+          message: state.user != null
+              ? context.localizations
+                  .welcome_message_user(state.user?.name ?? '')
+              : context.localizations.welcome_message_guest,
           showTitle: false,
           simpleBackground: state.user != null || guestMode,
           action: () {
@@ -110,14 +113,14 @@ class _WelcomeContentScreenState extends State<_WelcomeContentScreen> {
                           children: [
                             RichText(
                               text: TextSpan(
-                                text: "Mission: ",
+                                text: context.localizations.mission,
                                 style: context.theme.textStyles.titleMedium!
                                     .copyWith(
                                   color: context.theme.colorScheme.onSurface,
                                 ),
                                 children: [
                                   TextSpan(
-                                    text: "MOTION",
+                                    text: context.localizations.motion,
                                     style: context.theme.textStyles.titleLarge!
                                         .copyWith(
                                       color:
@@ -144,7 +147,7 @@ class _WelcomeContentScreenState extends State<_WelcomeContentScreen> {
                                 spacing: 36.h,
                                 children: [
                                   Text(
-                                    "¿Todavía no tenés cuenta?",
+                                    context.localizations.no_account_yet,
                                     style: context.theme.textTheme.bodyLarge
                                         ?.copyWith(
                                       fontWeight: FontWeight.bold,
@@ -155,7 +158,7 @@ class _WelcomeContentScreenState extends State<_WelcomeContentScreen> {
                                       context.router
                                           .push(const SignUpSectionRoute());
                                     },
-                                    label: "Registrate",
+                                    label: context.localizations.register,
                                   ),
                                 ],
                               )
@@ -190,7 +193,7 @@ class _AuthenticatedMenu extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Sesión de juego',
+                    context.localizations.game_session,
                     style: context.theme.textStyles.headlineSmall?.copyWith(
                       color: Colors.white,
                     ),
@@ -226,8 +229,8 @@ class _AuthenticatedMenu extends StatelessWidget {
                                 Text(
                                   context.read<GlobalSectionCubit>().state.user
                                           is Teacher
-                                      ? 'CREAR'
-                                      : 'UNIRSE',
+                                      ? context.localizations.create
+                                      : context.localizations.join,
                                   style: context.theme.textStyles.headlineSmall,
                                 ),
                               ],
@@ -248,7 +251,7 @@ class _AuthenticatedMenu extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Juegos libres',
+                    context.localizations.free_play,
                     style: context.theme.textStyles.headlineSmall?.copyWith(
                       color: Colors.white,
                     ),
@@ -260,7 +263,8 @@ class _AuthenticatedMenu extends StatelessWidget {
                           child: InkWell(
                         onTap: () {
                           context.router.push(
-                            LevelSectionRoute(level: freeMovementLevel),
+                            LevelSectionRoute(
+                                level: _buildFreeMovementLevel(context)),
                           );
                         },
                         child: SizedBox(
@@ -280,7 +284,8 @@ class _AuthenticatedMenu extends StatelessWidget {
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 12.w),
                                     child: Text(
-                                      'Movimiento libre\n(práctica)',
+                                      context
+                                          .localizations.free_movement_practice,
                                       textAlign: TextAlign.center,
                                       style: context
                                           .theme.textStyles.headlineSmall,
@@ -304,7 +309,8 @@ class _AuthenticatedMenu extends StatelessWidget {
                                 child: InkWell(
                                   onTap: () {
                                     context.router.push(
-                                      LevelSectionRoute(level: easyLevel),
+                                      LevelSectionRoute(
+                                          level: _buildEasyLevel(context)),
                                     );
                                   },
                                   child: SheetContainer(
@@ -313,7 +319,7 @@ class _AuthenticatedMenu extends StatelessWidget {
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 12.w),
                                         child: Text(
-                                          'Nivel fácil',
+                                          context.localizations.level_easy,
                                           textAlign: TextAlign.center,
                                           style: context
                                               .theme.textStyles.headlineSmall,
@@ -328,7 +334,8 @@ class _AuthenticatedMenu extends StatelessWidget {
                                 child: InkWell(
                                   onTap: () {
                                     context.router.push(
-                                      LevelSectionRoute(level: mediumLevel),
+                                      LevelSectionRoute(
+                                          level: _buildMediumLevel(context)),
                                     );
                                   },
                                   child: SheetContainer(
@@ -337,7 +344,7 @@ class _AuthenticatedMenu extends StatelessWidget {
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 12.w),
                                         child: Text(
-                                          'Nivel medio',
+                                          context.localizations.level_medium,
                                           textAlign: TextAlign.center,
                                           style: context
                                               .theme.textStyles.headlineSmall,
@@ -352,7 +359,8 @@ class _AuthenticatedMenu extends StatelessWidget {
                                 child: InkWell(
                                   onTap: () {
                                     context.router.push(
-                                      LevelSectionRoute(level: hardLevel),
+                                      LevelSectionRoute(
+                                          level: _buildHardLevel(context)),
                                     );
                                   },
                                   child: SheetContainer(
@@ -361,7 +369,7 @@ class _AuthenticatedMenu extends StatelessWidget {
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 12.w),
                                         child: Text(
-                                          'Nivel difícil',
+                                          context.localizations.level_hard,
                                           textAlign: TextAlign.center,
                                           style: context
                                               .theme.textStyles.headlineSmall,
@@ -385,7 +393,7 @@ class _AuthenticatedMenu extends StatelessWidget {
         SizedBox(height: 48.h),
         // Juegos en clase
         Text(
-          'Juegos en clase',
+          context.localizations.in_class_games,
           style: context.theme.textStyles.headlineSmall?.copyWith(
             color: Colors.white,
           ),
@@ -493,13 +501,13 @@ class UserActions extends StatelessWidget {
                 onPressed: () {
                   context.router.push(const LevelSelectorRoute());
                 },
-                label: "Jugar",
+                label: context.localizations.play,
               ),
               PrimaryOutlineButton(
                 onPressed: () {
                   context.router.push(const JoinSessionRoute());
                 },
-                label: "Unirse a una clase",
+                label: context.localizations.join,
               ),
             ],
           ),
@@ -509,7 +517,7 @@ class UserActions extends StatelessWidget {
               onPressed: () {
                 context.router.push(const CreateSessionRoute());
               },
-              label: "Crear una sesión de juego",
+              label: context.localizations.create,
             ),
           ],
         ],

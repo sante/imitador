@@ -58,7 +58,7 @@ class _JoinSessionContentScreenState extends State<_JoinSessionContentScreen> {
                 spacing: 52.h,
                 children: [
                   Text(
-                    "Unite a la sesión",
+                    context.localizations.join_session_title,
                     style: context.theme.textStyles.titleMedium!.copyWith(
                       fontSize: 40.sp,
                       fontWeight: FontWeight.bold,
@@ -66,7 +66,7 @@ class _JoinSessionContentScreenState extends State<_JoinSessionContentScreen> {
                     textAlign: TextAlign.center,
                   ),
                   Text(
-                    "Ingresá el código de 4 dígitos que te brindó tu profesor para empezar a jugar y competir con tus compañeros.",
+                    context.localizations.join_session_description,
                     textAlign: TextAlign.center,
                     style: context.theme.textTheme.bodyMedium?.copyWith(
                       color: Colors.black,
@@ -82,7 +82,7 @@ class _JoinSessionContentScreenState extends State<_JoinSessionContentScreen> {
                             children: [
                               AppTextField(
                                 controller: codeController,
-                                label: "Código",
+                                label: context.localizations.code,
                                 onChanged: (code) {
                                   _cubit.setCode(code);
                                 },
@@ -98,7 +98,7 @@ class _JoinSessionContentScreenState extends State<_JoinSessionContentScreen> {
                           Align(
                             alignment: Alignment.centerRight,
                             child: PrimaryButton(
-                              label: "Unirse",
+                              label: context.localizations.join,
                               onPressed: state.isLoading || state.code.isEmpty
                                   ? null
                                   : () async {

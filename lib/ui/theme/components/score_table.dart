@@ -20,7 +20,9 @@ class ScoreTable extends StatelessWidget {
         spacing: 40.h,
         children: [
           Text(
-            "Resultados ${finalResults ? "finales" : "parciales"}",
+            finalResults
+                ? context.localizations.final_scores
+                : context.localizations.partial_scores,
             style: context.theme.textTheme.headlineLarge,
           ),
           SingleChildScrollView(

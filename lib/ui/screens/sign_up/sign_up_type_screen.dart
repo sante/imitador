@@ -36,7 +36,7 @@ class _SignUpContentScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             children: [
               Text(
-                "Elegí tu tipo de cuenta",
+                context.localizations.choose_account_type,
                 style: context.theme.textStyles.headlineLarge!.copyWith(
                   color: context.theme.colorScheme.onSurface,
                 ),
@@ -55,7 +55,7 @@ class _SignUpContentScreen extends StatelessWidget {
                           .setUserType(UserType.student);
                       context.router.push(const SignUpDataRoute());
                     },
-                    label: "Estudiante",
+                    label: context.localizations.student,
                   ),
                   UserTypeCard(
                     userType: UserType.teacher,
@@ -65,7 +65,7 @@ class _SignUpContentScreen extends StatelessWidget {
                           .setUserType(UserType.teacher);
                       context.router.push(const SignUpDataRoute());
                     },
-                    label: "Profesor",
+                    label: context.localizations.teacher,
                   ),
                 ],
               ),
@@ -74,7 +74,7 @@ class _SignUpContentScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 spacing: 36.h,
                 children: [
-                  const Text("¿Ya tenés cuenta?"),
+                  Text(context.localizations.already_have_account),
                   SecondaryButton(
                     onPressed: () {
                       context.router.replaceAll([
@@ -82,7 +82,7 @@ class _SignUpContentScreen extends StatelessWidget {
                         const LogInRoute(),
                       ]);
                     },
-                    label: "Ingresar",
+                    label: context.localizations.log_in_button,
                   ),
                 ],
               )

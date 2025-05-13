@@ -50,21 +50,24 @@ class _SettingsContentScreen extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          "Configuración",
+                          context.localizations.settings_title,
                           style: context.theme.textStyles.headlineLarge,
                         ),
                         MotionDropDown(
                           value: null,
-                          items: const ["Español", "Inglés"],
-                          hint: "Seleccione un idioma",
-                          label: "Idioma",
+                          items: [
+                            context.localizations.language_spanish,
+                            context.localizations.language_english
+                          ],
+                          hint: context.localizations.language_select_hint,
+                          label: context.localizations.language_label,
                           onChanged: (_) {},
                         ),
                         Align(
                           alignment: Alignment.centerRight,
                           child: PrimaryButton(
                             onPressed: () {},
-                            label: "Guardar selección",
+                            label: context.localizations.save_selection_button,
                             leadingIcon: PhosphorIcons.floppyDisk(),
                           ),
                         ),
@@ -75,8 +78,8 @@ class _SettingsContentScreen extends StatelessWidget {
                           children: [
                             Text(
                               state.usingMicrobit
-                                  ? "Sensor conectado"
-                                  : "Conectar sensor",
+                                  ? context.localizations.sensor_connected
+                                  : context.localizations.connect_sensor_title,
                               style: context.theme.textStyles.headlineSmall,
                             ),
                             Align(
@@ -88,7 +91,7 @@ class _SettingsContentScreen extends StatelessWidget {
                                         context.router
                                             .push(const MicrobitSetupRoute());
                                       },
-                                label: "Conectar",
+                                label: context.localizations.connect_button,
                                 leadingIcon: PhosphorIcons.usb(),
                               ),
                             ),
@@ -99,7 +102,7 @@ class _SettingsContentScreen extends StatelessWidget {
                           Align(
                             alignment: Alignment.centerRight,
                             child: SecondaryButton(
-                              label: "Cerrar sesión",
+                              label: context.localizations.log_out,
                               onPressed: () async {
                                 await context
                                     .read<GlobalSectionCubit>()
