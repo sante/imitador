@@ -15,6 +15,8 @@ class GameSession with _$GameSession {
     required bool ended,
     String? userId,
     String? userName,
+    String? goToLevel,
+    bool? showResultsButton,
   }) = _GameSession;
 
   factory GameSession.fromJson(Map<String, dynamic> json) =>

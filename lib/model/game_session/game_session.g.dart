@@ -19,6 +19,8 @@ _$GameSessionImpl _$$GameSessionImplFromJson(Map<String, dynamic> json) =>
       ended: json['ended'] as bool,
       userId: json['userId'] as String?,
       userName: json['userName'] as String?,
+      goToLevel: json['goToLevel'] as String?,
+      showResultsButton: json['showResultsButton'] as bool?,
     );
 
 Map<String, dynamic> _$$GameSessionImplToJson(_$GameSessionImpl instance) =>
@@ -32,6 +34,8 @@ Map<String, dynamic> _$$GameSessionImplToJson(_$GameSessionImpl instance) =>
       'ended': instance.ended,
       'userId': instance.userId,
       'userName': instance.userName,
+      'goToLevel': instance.goToLevel,
+      'showResultsButton': instance.showResultsButton,
     };
 
 _$SessionTeacherImpl _$$SessionTeacherImplFromJson(Map<String, dynamic> json) =>
