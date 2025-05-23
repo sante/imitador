@@ -15,6 +15,8 @@ class GameSession with _$GameSession {
     required bool ended,
     String? userId,
     String? userName,
+    String? goToLevel,
+    bool? showResultsButton,
   }) = _GameSession;
 
   factory GameSession.fromJson(Map<String, dynamic> json) =>
@@ -63,6 +65,8 @@ enum ServerGameEvents {
   GAME_ENDED,
   GAME_ERROR,
   GAME_STATE_UPDATED,
+  SEND_TO_LEVEL,
+  SHOW_PLOT_RESULT
 }
 
 extension ServerGameEventsExtension on ServerGameEvents {
@@ -75,6 +79,8 @@ extension ServerGameEventsExtension on ServerGameEvents {
         ServerGameEvents.GAME_ENDED => 'server:game:ended',
         ServerGameEvents.GAME_ERROR => 'server:game:error',
         ServerGameEvents.GAME_STATE_UPDATED => 'server:game:state:updated',
+        ServerGameEvents.SEND_TO_LEVEL => 'server:game:send:to:level',
+        ServerGameEvents.SHOW_PLOT_RESULT => 'server:game:show:plot:result',
       };
 }
 
@@ -82,6 +88,8 @@ enum ClientGameEvents {
   CREATE_GAME,
   JOIN_GAME,
   LEAVE_GAME,
+  TEACHER_SET_NAVIGATION_TARGET,
+  TEACHER_SHOW_PLOT_RESULT,
   START_GAME,
   END_GAME,
   UPDATE_GAME_STATE,
@@ -93,9 +101,13 @@ extension ClientGameEventsExtension on ClientGameEvents {
         ClientGameEvents.CREATE_GAME => 'client:game:create',
         ClientGameEvents.JOIN_GAME => 'client:game:join',
         ClientGameEvents.LEAVE_GAME => 'client:game:leave',
+        ClientGameEvents.TEACHER_SET_NAVIGATION_TARGET =>
+          'client:game:teacher:set:navigation:target',
         ClientGameEvents.START_GAME => 'client:game:start',
         ClientGameEvents.END_GAME => 'client:game:end',
         ClientGameEvents.UPDATE_GAME_STATE => 'client:game:state:update',
         ClientGameEvents.RECONNECT => 'client:game:reconnect',
+        ClientGameEvents.TEACHER_SHOW_PLOT_RESULT =>
+          'client:game:teacher:show:plot:result',
       };
 }

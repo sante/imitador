@@ -29,6 +29,8 @@ mixin _$GameSession {
   bool get ended => throw _privateConstructorUsedError;
   String? get userId => throw _privateConstructorUsedError;
   String? get userName => throw _privateConstructorUsedError;
+  String? get goToLevel => throw _privateConstructorUsedError;
+  bool? get showResultsButton => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -51,7 +53,9 @@ abstract class $GameSessionCopyWith<$Res> {
       bool playing,
       bool ended,
       String? userId,
-      String? userName});
+      String? userName,
+      String? goToLevel,
+      bool? showResultsButton});
 
   $SessionTeacherCopyWith<$Res> get teacher;
 }
@@ -78,6 +82,8 @@ class _$GameSessionCopyWithImpl<$Res, $Val extends GameSession>
     Object? ended = null,
     Object? userId = freezed,
     Object? userName = freezed,
+    Object? goToLevel = freezed,
+    Object? showResultsButton = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -116,6 +122,14 @@ class _$GameSessionCopyWithImpl<$Res, $Val extends GameSession>
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
               as String?,
+      goToLevel: freezed == goToLevel
+          ? _value.goToLevel
+          : goToLevel // ignore: cast_nullable_to_non_nullable
+              as String?,
+      showResultsButton: freezed == showResultsButton
+          ? _value.showResultsButton
+          : showResultsButton // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 
@@ -145,7 +159,9 @@ abstract class _$$GameSessionImplCopyWith<$Res>
       bool playing,
       bool ended,
       String? userId,
-      String? userName});
+      String? userName,
+      String? goToLevel,
+      bool? showResultsButton});
 
   @override
   $SessionTeacherCopyWith<$Res> get teacher;
@@ -171,6 +187,8 @@ class __$$GameSessionImplCopyWithImpl<$Res>
     Object? ended = null,
     Object? userId = freezed,
     Object? userName = freezed,
+    Object? goToLevel = freezed,
+    Object? showResultsButton = freezed,
   }) {
     return _then(_$GameSessionImpl(
       id: null == id
@@ -209,6 +227,14 @@ class __$$GameSessionImplCopyWithImpl<$Res>
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
               as String?,
+      goToLevel: freezed == goToLevel
+          ? _value.goToLevel
+          : goToLevel // ignore: cast_nullable_to_non_nullable
+              as String?,
+      showResultsButton: freezed == showResultsButton
+          ? _value.showResultsButton
+          : showResultsButton // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -225,7 +251,9 @@ class _$GameSessionImpl implements _GameSession {
       required this.playing,
       required this.ended,
       this.userId,
-      this.userName})
+      this.userName,
+      this.goToLevel,
+      this.showResultsButton})
       : _players = players;
 
   factory _$GameSessionImpl.fromJson(Map<String, dynamic> json) =>
@@ -255,10 +283,14 @@ class _$GameSessionImpl implements _GameSession {
   final String? userId;
   @override
   final String? userName;
+  @override
+  final String? goToLevel;
+  @override
+  final bool? showResultsButton;
 
   @override
   String toString() {
-    return 'GameSession(id: $id, code: $code, teacher: $teacher, players: $players, activityId: $activityId, playing: $playing, ended: $ended, userId: $userId, userName: $userName)';
+    return 'GameSession(id: $id, code: $code, teacher: $teacher, players: $players, activityId: $activityId, playing: $playing, ended: $ended, userId: $userId, userName: $userName, goToLevel: $goToLevel, showResultsButton: $showResultsButton)';
   }
 
   @override
@@ -276,7 +308,11 @@ class _$GameSessionImpl implements _GameSession {
             (identical(other.ended, ended) || other.ended == ended) &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.userName, userName) ||
-                other.userName == userName));
+                other.userName == userName) &&
+            (identical(other.goToLevel, goToLevel) ||
+                other.goToLevel == goToLevel) &&
+            (identical(other.showResultsButton, showResultsButton) ||
+                other.showResultsButton == showResultsButton));
   }
 
   @JsonKey(ignore: true)
@@ -291,7 +327,9 @@ class _$GameSessionImpl implements _GameSession {
       playing,
       ended,
       userId,
-      userName);
+      userName,
+      goToLevel,
+      showResultsButton);
 
   @JsonKey(ignore: true)
   @override
@@ -317,7 +355,9 @@ abstract class _GameSession implements GameSession {
       required final bool playing,
       required final bool ended,
       final String? userId,
-      final String? userName}) = _$GameSessionImpl;
+      final String? userName,
+      final String? goToLevel,
+      final bool? showResultsButton}) = _$GameSessionImpl;
 
   factory _GameSession.fromJson(Map<String, dynamic> json) =
       _$GameSessionImpl.fromJson;
@@ -340,6 +380,10 @@ abstract class _GameSession implements GameSession {
   String? get userId;
   @override
   String? get userName;
+  @override
+  String? get goToLevel;
+  @override
+  bool? get showResultsButton;
   @override
   @JsonKey(ignore: true)
   _$$GameSessionImplCopyWith<_$GameSessionImpl> get copyWith =>
