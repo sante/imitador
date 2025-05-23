@@ -26,6 +26,7 @@ mixin _$GameSessionSectionState {
   Activity? get activity => throw _privateConstructorUsedError;
   String? get creatorId => throw _privateConstructorUsedError;
   String? get navigateToLevelId => throw _privateConstructorUsedError;
+  bool get showPlotResult => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
@@ -38,7 +39,8 @@ mixin _$GameSessionSectionState {
             bool isConnected,
             Activity? activity,
             String? creatorId,
-            String? navigateToLevelId)
+            String? navigateToLevelId,
+            bool showPlotResult)
         state,
   }) =>
       throw _privateConstructorUsedError;
@@ -54,7 +56,8 @@ mixin _$GameSessionSectionState {
             bool isConnected,
             Activity? activity,
             String? creatorId,
-            String? navigateToLevelId)?
+            String? navigateToLevelId,
+            bool showPlotResult)?
         state,
   }) =>
       throw _privateConstructorUsedError;
@@ -70,7 +73,8 @@ mixin _$GameSessionSectionState {
             bool isConnected,
             Activity? activity,
             String? creatorId,
-            String? navigateToLevelId)?
+            String? navigateToLevelId,
+            bool showPlotResult)?
         state,
     required TResult orElse(),
   }) =>
@@ -113,7 +117,8 @@ abstract class $GameSessionSectionStateCopyWith<$Res> {
       bool isConnected,
       Activity? activity,
       String? creatorId,
-      String? navigateToLevelId});
+      String? navigateToLevelId,
+      bool showPlotResult});
 
   $GameSessionCopyWith<$Res>? get session;
   $LevelCopyWith<$Res>? get currentLevel;
@@ -145,6 +150,7 @@ class _$GameSessionSectionStateCopyWithImpl<$Res,
     Object? activity = freezed,
     Object? creatorId = freezed,
     Object? navigateToLevelId = freezed,
+    Object? showPlotResult = null,
   }) {
     return _then(_value.copyWith(
       code: freezed == code
@@ -187,6 +193,10 @@ class _$GameSessionSectionStateCopyWithImpl<$Res,
           ? _value.navigateToLevelId
           : navigateToLevelId // ignore: cast_nullable_to_non_nullable
               as String?,
+      showPlotResult: null == showPlotResult
+          ? _value.showPlotResult
+          : showPlotResult // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -258,7 +268,8 @@ abstract class _$$GameSessionSectionStateImplCopyWith<$Res>
       bool isConnected,
       Activity? activity,
       String? creatorId,
-      String? navigateToLevelId});
+      String? navigateToLevelId,
+      bool showPlotResult});
 
   @override
   $GameSessionCopyWith<$Res>? get session;
@@ -293,6 +304,7 @@ class __$$GameSessionSectionStateImplCopyWithImpl<$Res>
     Object? activity = freezed,
     Object? creatorId = freezed,
     Object? navigateToLevelId = freezed,
+    Object? showPlotResult = null,
   }) {
     return _then(_$GameSessionSectionStateImpl(
       code: freezed == code
@@ -335,6 +347,10 @@ class __$$GameSessionSectionStateImplCopyWithImpl<$Res>
           ? _value.navigateToLevelId
           : navigateToLevelId // ignore: cast_nullable_to_non_nullable
               as String?,
+      showPlotResult: null == showPlotResult
+          ? _value.showPlotResult
+          : showPlotResult // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -352,7 +368,8 @@ class _$GameSessionSectionStateImpl implements _GameSessionSectionState {
       this.isConnected = false,
       this.activity = null,
       this.creatorId = null,
-      this.navigateToLevelId = null})
+      this.navigateToLevelId = null,
+      this.showPlotResult = false})
       : _attempts = attempts;
 
   @override
@@ -391,10 +408,13 @@ class _$GameSessionSectionStateImpl implements _GameSessionSectionState {
   @override
   @JsonKey()
   final String? navigateToLevelId;
+  @override
+  @JsonKey()
+  final bool showPlotResult;
 
   @override
   String toString() {
-    return 'GameSessionSectionState.state(code: $code, session: $session, attempts: $attempts, currentLevel: $currentLevel, user: $user, gameId: $gameId, isConnected: $isConnected, activity: $activity, creatorId: $creatorId, navigateToLevelId: $navigateToLevelId)';
+    return 'GameSessionSectionState.state(code: $code, session: $session, attempts: $attempts, currentLevel: $currentLevel, user: $user, gameId: $gameId, isConnected: $isConnected, activity: $activity, creatorId: $creatorId, navigateToLevelId: $navigateToLevelId, showPlotResult: $showPlotResult)';
   }
 
   @override
@@ -416,7 +436,9 @@ class _$GameSessionSectionStateImpl implements _GameSessionSectionState {
             (identical(other.creatorId, creatorId) ||
                 other.creatorId == creatorId) &&
             (identical(other.navigateToLevelId, navigateToLevelId) ||
-                other.navigateToLevelId == navigateToLevelId));
+                other.navigateToLevelId == navigateToLevelId) &&
+            (identical(other.showPlotResult, showPlotResult) ||
+                other.showPlotResult == showPlotResult));
   }
 
   @override
@@ -431,7 +453,8 @@ class _$GameSessionSectionStateImpl implements _GameSessionSectionState {
       isConnected,
       activity,
       creatorId,
-      navigateToLevelId);
+      navigateToLevelId,
+      showPlotResult);
 
   @JsonKey(ignore: true)
   @override
@@ -453,11 +476,12 @@ class _$GameSessionSectionStateImpl implements _GameSessionSectionState {
             bool isConnected,
             Activity? activity,
             String? creatorId,
-            String? navigateToLevelId)
+            String? navigateToLevelId,
+            bool showPlotResult)
         state,
   }) {
     return state(code, session, attempts, currentLevel, user, gameId,
-        isConnected, activity, creatorId, navigateToLevelId);
+        isConnected, activity, creatorId, navigateToLevelId, showPlotResult);
   }
 
   @override
@@ -473,11 +497,12 @@ class _$GameSessionSectionStateImpl implements _GameSessionSectionState {
             bool isConnected,
             Activity? activity,
             String? creatorId,
-            String? navigateToLevelId)?
+            String? navigateToLevelId,
+            bool showPlotResult)?
         state,
   }) {
     return state?.call(code, session, attempts, currentLevel, user, gameId,
-        isConnected, activity, creatorId, navigateToLevelId);
+        isConnected, activity, creatorId, navigateToLevelId, showPlotResult);
   }
 
   @override
@@ -493,13 +518,14 @@ class _$GameSessionSectionStateImpl implements _GameSessionSectionState {
             bool isConnected,
             Activity? activity,
             String? creatorId,
-            String? navigateToLevelId)?
+            String? navigateToLevelId,
+            bool showPlotResult)?
         state,
     required TResult orElse(),
   }) {
     if (state != null) {
       return state(code, session, attempts, currentLevel, user, gameId,
-          isConnected, activity, creatorId, navigateToLevelId);
+          isConnected, activity, creatorId, navigateToLevelId, showPlotResult);
     }
     return orElse();
   }
@@ -544,7 +570,8 @@ abstract class _GameSessionSectionState implements GameSessionSectionState {
       final bool isConnected,
       final Activity? activity,
       final String? creatorId,
-      final String? navigateToLevelId}) = _$GameSessionSectionStateImpl;
+      final String? navigateToLevelId,
+      final bool showPlotResult}) = _$GameSessionSectionStateImpl;
 
   @override
   String? get code;
@@ -566,6 +593,8 @@ abstract class _GameSessionSectionState implements GameSessionSectionState {
   String? get creatorId;
   @override
   String? get navigateToLevelId;
+  @override
+  bool get showPlotResult;
   @override
   @JsonKey(ignore: true)
   _$$GameSessionSectionStateImplCopyWith<_$GameSessionSectionStateImpl>

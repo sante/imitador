@@ -119,7 +119,25 @@ class GameSessionSectionCubit extends Cubit<GameSessionSectionState> {
       _tryJoin();
     });
 
-    for (var event in ServerGameEvents.values) {
+    // Handle SEND_TO_LEVEL event separately
+    socket!.on(ServerGameEvents.SEND_TO_LEVEL.value, (data) {
+      Logger.d('Received SEND_TO_LEVEL event with data: $data');
+      if (data != null && data['levelId'] != null) {
+        String levelId = data['levelId'];
+        emit(state.copyWith(navigateToLevelId: levelId));
+      }
+    });
+
+    // Handle SHOW_PLOT_RESULT event separately
+    socket!.on(ServerGameEvents.SHOW_PLOT_RESULT.value, (data) {
+      Logger.d('Received SHOW_PLOT_RESULT event with data: $data');
+      emit(state.copyWith(showPlotResult: true));
+    });
+
+    // Handle all other events
+    for (var event in ServerGameEvents.values.where((e) =>
+        e != ServerGameEvents.SEND_TO_LEVEL &&
+        e != ServerGameEvents.SHOW_PLOT_RESULT)) {
       socket!.on(event.value, (data) {
         Logger.d('Received event: ${event.value}');
         handleGameSessionUpdate(data);
@@ -208,5 +226,36 @@ class GameSessionSectionCubit extends Cubit<GameSessionSectionState> {
     _attemptRepository.saveAttempt(attempt);
 
     emit(state.copyWith(attempts: [...state.attempts, attempt]));
+  }
+
+  void sendNavigationTarget(String levelId) {
+    if (state.user is Teacher && state.gameId != null) {
+      socket!.emit(ClientGameEvents.TEACHER_SET_NAVIGATION_TARGET.value, {
+        'id': state.gameId,
+        'levelId': levelId,
+      });
+    } else {
+      Logger.e(
+          'Cannot send navigation target: User is not a teacher or gameId is null');
+    }
+  }
+
+  void sendShowPlotResult() {
+    if (state.user is Teacher && state.gameId != null) {
+      socket!.emit(ClientGameEvents.TEACHER_SHOW_PLOT_RESULT.value, {
+        'id': state.gameId,
+      });
+    } else {
+      Logger.e(
+          'Cannot send show plot result: User is not a teacher or gameId is null');
+    }
+  }
+
+  void resetShowPlotResult() {
+    emit(state.copyWith(showPlotResult: false));
+  }
+
+  void resetNavigateToLevelId() {
+    emit(state.copyWith(navigateToLevelId: null));
   }
 }
