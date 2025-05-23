@@ -102,7 +102,7 @@ extension ClientGameEventsExtension on ClientGameEvents {
         ClientGameEvents.JOIN_GAME => 'client:game:join',
         ClientGameEvents.LEAVE_GAME => 'client:game:leave',
         ClientGameEvents.TEACHER_SET_NAVIGATION_TARGET =>
-          'client:game:teacher:set_navigation_target',
+          'client:game:teacher:set:navigation:target',
         ClientGameEvents.START_GAME => 'client:game:start',
         ClientGameEvents.END_GAME => 'client:game:end',
         ClientGameEvents.UPDATE_GAME_STATE => 'client:game:state:update',
