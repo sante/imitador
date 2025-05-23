@@ -122,7 +122,7 @@ class GameSessionSectionCubit extends Cubit<GameSessionSectionState> {
     // Handle SEND_TO_LEVEL event separately
     socket!.on(ServerGameEvents.SEND_TO_LEVEL.value, (data) {
       Logger.d('Received SEND_TO_LEVEL event with data: $data');
-      if (data != null && data['goToLevel'] != null) {
+      if (data != null && data['goToLevel'] != null && state.user is Student) {
         String levelId = data['goToLevel'];
         emit(state.copyWith(navigateToLevelId: levelId));
       }
