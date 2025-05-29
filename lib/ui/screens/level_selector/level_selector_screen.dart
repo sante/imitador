@@ -77,7 +77,7 @@ class LevelSelectorScreen extends StatelessWidget {
               id: "freeMovement",
               name: "Movimiento Libre (práctica)",
               difficulty: null,
-              minPosition: 0,
+              minPosition: -10,
               maxPosition: 10,
               secondsDuration: 10,
               positionExpressions: [],
