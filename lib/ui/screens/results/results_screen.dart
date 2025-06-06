@@ -278,13 +278,13 @@ class GraphPainter extends CustomPainter {
       LevelType.speed => speed ? rawSamples : deriveSamples(rawSamples, 50),
     };
 
-    late final double maxSpeed;
-    late final double minSpeed;
+    const double maxSpeed = 5.0;
+    const double minSpeed = -5.0;
 
-    if (speed) {
-      maxSpeed = samples.map((it) => it.second).max()?.ceilToDouble() ?? 2;
-      minSpeed = samples.map((it) => it.second).min()?.floorToDouble() ?? -2;
-    }
+    // if (speed) {
+    //   maxSpeed = samples.map((it) => it.second).max()?.ceilToDouble() ?? 2;
+    //   minSpeed = samples.map((it) => it.second).min()?.floorToDouble() ?? -2;
+    // }
 
     final range = Pair(
       speed ? minSpeed : attempt.level.minPosition,

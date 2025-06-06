@@ -15,6 +15,12 @@ class PaperBall extends SpriteComponent with HasGameRef<SimonGame> {
   }
 
   @override
+  void onGameResize(Vector2 size) {
+    size = Vector2.all(Constants.trackingSpriteSize);
+    super.onGameResize(size);
+  }
+
+  @override
   void update(double dt) {
     super.update(dt);
     final currentPosition = Vector2(position.x, position.y);

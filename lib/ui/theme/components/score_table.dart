@@ -30,7 +30,9 @@ class ScoreTable extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               spacing: 12.h,
               children: [
-                ...scores.entries.sortedBy((it) => it.value).mapIndexed(
+                ...scores.entries
+                    .sortedByDescending((it) => it.value)
+                    .mapIndexed(
                       (index, entry) => Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         spacing: 12.w,

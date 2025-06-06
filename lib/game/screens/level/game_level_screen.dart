@@ -141,7 +141,9 @@ class GameLevelPage extends Component
   }
 
   void addPositionValue(Vector2 position) {
-    _graph.addDataPoint(toScaledPosition(position.x));
+    final scaledPosition = toScaledPosition(position.x);
+    _graph.addDataPoint(scaledPosition);
+    _graph.updateCurrentPosition(scaledPosition);
   }
 
   double toScaledPosition(double position) {
@@ -157,7 +159,6 @@ class GameLevelPage extends Component
       final newX = (event.localPosition.x)
           .clamp(_paperBall.size.x / 2, game.size.x - _paperBall.size.x / 2);
       _paperBall.position = Vector2(newX, _paperBall.position.y);
-      _graph.updateCurrentPosition(toScaledPosition(newX));
     }
   }
 
