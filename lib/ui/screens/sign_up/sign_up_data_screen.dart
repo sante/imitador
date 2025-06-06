@@ -62,7 +62,9 @@ class _SignUpContentScreenState extends State<_SignUpContentScreen> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Text(
-                    "¡Bienvenido, ${state.userType == UserType.student ? "Estudiante" : "Profe"}!",
+                    state.userType == UserType.student
+                        ? context.localizations.welcome_student
+                        : context.localizations.welcome_teacher,
                     style: context.theme.textStyles.headlineLarge!.copyWith(
                       color: context.theme.colorScheme.onSurface,
                     ),
@@ -75,7 +77,7 @@ class _SignUpContentScreenState extends State<_SignUpContentScreen> {
                       children: [
                         AppTextField(
                           controller: emailController,
-                          label: "Email",
+                          label: context.localizations.mail,
                           onChanged: (email) {
                             _cubit.setEmail(email);
                           },
@@ -83,7 +85,7 @@ class _SignUpContentScreenState extends State<_SignUpContentScreen> {
                         ),
                         AppTextField(
                           controller: nameController,
-                          label: "Nombre completo",
+                          label: context.localizations.full_name,
                           onChanged: (email) {
                             _cubit.setName(email);
                           },
@@ -92,7 +94,7 @@ class _SignUpContentScreenState extends State<_SignUpContentScreen> {
                         if (state.codeSent) ...[
                           AppTextField(
                             controller: codeController,
-                            label: "Código",
+                            label: context.localizations.code,
                             onChanged: (code) {
                               _cubit.setCode(code);
                             },
@@ -128,7 +130,7 @@ class _SignUpContentScreenState extends State<_SignUpContentScreen> {
                                       color:
                                           context.theme.colorScheme.onPrimary,
                                     )
-                                  : const Text("Crear cuenta"),
+                                  : Text(context.localizations.create_account),
                             ),
                           ),
                         ] else
@@ -154,7 +156,7 @@ class _SignUpContentScreenState extends State<_SignUpContentScreen> {
                                       color:
                                           context.theme.colorScheme.onPrimary,
                                     )
-                                  : const Text("Enviar código"),
+                                  : Text(context.localizations.send_code),
                             ),
                           ),
                       ],
@@ -165,12 +167,12 @@ class _SignUpContentScreenState extends State<_SignUpContentScreen> {
                     mainAxisSize: MainAxisSize.min,
                     spacing: 36.h,
                     children: [
-                      const Text("¿Ya tenés cuenta?"),
+                      Text(context.localizations.already_have_account),
                       SecondaryButton(
                         onPressed: () {
                           context.router.replace(const LogInRoute());
                         },
-                        label: "Ingresar",
+                        label: context.localizations.log_in_button,
                       ),
                     ],
                   )

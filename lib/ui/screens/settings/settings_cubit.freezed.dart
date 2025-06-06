@@ -16,19 +16,21 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SettingsState {
+  String? get selectedLanguage => throw _privateConstructorUsedError;
+  bool get saveSuccess => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() state,
+    required TResult Function(String? selectedLanguage, bool saveSuccess) state,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? state,
+    TResult? Function(String? selectedLanguage, bool saveSuccess)? state,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? state,
+    TResult Function(String? selectedLanguage, bool saveSuccess)? state,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -48,6 +50,10 @@ mixin _$SettingsState {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $SettingsStateCopyWith<SettingsState> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -55,6 +61,8 @@ abstract class $SettingsStateCopyWith<$Res> {
   factory $SettingsStateCopyWith(
           SettingsState value, $Res Function(SettingsState) then) =
       _$SettingsStateCopyWithImpl<$Res, SettingsState>;
+  @useResult
+  $Res call({String? selectedLanguage, bool saveSuccess});
 }
 
 /// @nodoc
@@ -66,13 +74,35 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? selectedLanguage = freezed,
+    Object? saveSuccess = null,
+  }) {
+    return _then(_value.copyWith(
+      selectedLanguage: freezed == selectedLanguage
+          ? _value.selectedLanguage
+          : selectedLanguage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      saveSuccess: null == saveSuccess
+          ? _value.saveSuccess
+          : saveSuccess // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$SettingsStateImplCopyWith<$Res> {
+abstract class _$$SettingsStateImplCopyWith<$Res>
+    implements $SettingsStateCopyWith<$Res> {
   factory _$$SettingsStateImplCopyWith(
           _$SettingsStateImpl value, $Res Function(_$SettingsStateImpl) then) =
       __$$SettingsStateImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? selectedLanguage, bool saveSuccess});
 }
 
 /// @nodoc
@@ -82,51 +112,86 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
   __$$SettingsStateImplCopyWithImpl(
       _$SettingsStateImpl _value, $Res Function(_$SettingsStateImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? selectedLanguage = freezed,
+    Object? saveSuccess = null,
+  }) {
+    return _then(_$SettingsStateImpl(
+      selectedLanguage: freezed == selectedLanguage
+          ? _value.selectedLanguage
+          : selectedLanguage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      saveSuccess: null == saveSuccess
+          ? _value.saveSuccess
+          : saveSuccess // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$SettingsStateImpl implements _SettingsState {
-  const _$SettingsStateImpl();
+  const _$SettingsStateImpl({this.selectedLanguage, this.saveSuccess = false});
+
+  @override
+  final String? selectedLanguage;
+  @override
+  @JsonKey()
+  final bool saveSuccess;
 
   @override
   String toString() {
-    return 'SettingsState.state()';
+    return 'SettingsState.state(selectedLanguage: $selectedLanguage, saveSuccess: $saveSuccess)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SettingsStateImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$SettingsStateImpl &&
+            (identical(other.selectedLanguage, selectedLanguage) ||
+                other.selectedLanguage == selectedLanguage) &&
+            (identical(other.saveSuccess, saveSuccess) ||
+                other.saveSuccess == saveSuccess));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, selectedLanguage, saveSuccess);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SettingsStateImplCopyWith<_$SettingsStateImpl> get copyWith =>
+      __$$SettingsStateImplCopyWithImpl<_$SettingsStateImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() state,
+    required TResult Function(String? selectedLanguage, bool saveSuccess) state,
   }) {
-    return state();
+    return state(selectedLanguage, saveSuccess);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? state,
+    TResult? Function(String? selectedLanguage, bool saveSuccess)? state,
   }) {
-    return state?.call();
+    return state?.call(selectedLanguage, saveSuccess);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? state,
+    TResult Function(String? selectedLanguage, bool saveSuccess)? state,
     required TResult orElse(),
   }) {
     if (state != null) {
-      return state();
+      return state(selectedLanguage, saveSuccess);
     }
     return orElse();
   }
@@ -161,5 +226,16 @@ class _$SettingsStateImpl implements _SettingsState {
 }
 
 abstract class _SettingsState implements SettingsState {
-  const factory _SettingsState() = _$SettingsStateImpl;
+  const factory _SettingsState(
+      {final String? selectedLanguage,
+      final bool saveSuccess}) = _$SettingsStateImpl;
+
+  @override
+  String? get selectedLanguage;
+  @override
+  bool get saveSuccess;
+  @override
+  @JsonKey(ignore: true)
+  _$$SettingsStateImplCopyWith<_$SettingsStateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

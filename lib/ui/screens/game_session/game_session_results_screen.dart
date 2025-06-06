@@ -53,7 +53,7 @@ class TeacherResults extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        "Resultados finales",
+                        context.localizations.final_results,
                         style: context.theme.textTheme.headlineLarge,
                       ),
                       SizedBox(height: 40.h),
@@ -71,8 +71,9 @@ class TeacherResults extends StatelessWidget {
 
                           // Only show loading if we have no players but know session exists
                           if (players.isEmpty) {
-                            return const Center(
-                              child: Text("No hay resultados disponibles"),
+                            return Center(
+                              child: Text(
+                                  context.localizations.no_results_available),
                             );
                           }
 

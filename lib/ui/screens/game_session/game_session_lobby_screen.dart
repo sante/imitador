@@ -56,7 +56,7 @@ class PlayerLobby extends StatelessWidget {
                           maxWidth: 604.w,
                         ),
                         child: PulsingText(
-                          text: 'Esperando por más jugadores...',
+                          text: context.localizations.waiting_for_more_players,
                           style: context.theme.textTheme.titleLarge?.copyWith(
                             color: context.theme.colorScheme.onSurface,
                           ),
@@ -81,7 +81,7 @@ class PlayerLobby extends StatelessWidget {
                       ),
                     ] else ...[
                       Text(
-                        'Esperando por datos de la sesión...',
+                        context.localizations.waiting_for_session_data,
                         style: context.theme.textTheme.titleMedium?.copyWith(
                           color: context.theme.colorScheme.onSurface,
                         ),
@@ -157,12 +157,15 @@ class HostLobby extends StatelessWidget {
                         ),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Copiado!')),
+                        SnackBar(
+                            content:
+                                Text(context.localizations.copied_snackbar)),
                       );
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Error al copiar.'),
+                        SnackBar(
+                          content:
+                              Text(context.localizations.copy_error_snackbar),
                         ),
                       );
                     }
@@ -180,7 +183,8 @@ class HostLobby extends StatelessWidget {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Text(
-                            'Código de sesión: ${state.code}',
+                            context.localizations
+                                .session_code(state.code ?? ""),
                             style: context.theme.textTheme.headlineMedium
                                 ?.copyWith(
                               color: context.theme.colorScheme.surface,
@@ -205,7 +209,7 @@ class HostLobby extends StatelessWidget {
                       maxWidth: 604.w,
                     ),
                     child: PulsingText(
-                      text: 'Esperando por más jugadores...',
+                      text: context.localizations.waiting_for_more_players,
                       style: context.theme.textTheme.titleLarge?.copyWith(
                         color: context.theme.colorScheme.onSurface,
                       ),
@@ -262,8 +266,8 @@ class HostLobby extends StatelessWidget {
                 ),
                 PrimaryButton(
                   label: (state.session?.playing ?? false)
-                      ? "Terminar sesión"
-                      : "Empezar juego",
+                      ? context.localizations.end_session
+                      : context.localizations.start_game,
                   onPressed: () {
                     if (!(state.session?.playing ?? false)) {
                       context.read<GameSessionSectionCubit>().startGame();
