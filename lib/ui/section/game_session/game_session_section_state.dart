@@ -12,5 +12,7 @@ class GameSessionSectionState with _$GameSessionSectionState {
     @Default(false) bool isConnected,
     @Default(null) Activity? activity,
     @Default(null) String? creatorId,
+    @Default(null) String? navigateToLevelId,
+    @Default(false) bool showPlotResult,
   }) = _GameSessionSectionState;
 }
