@@ -4,13 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:imitador/core/common/constants.dart';
 import 'package:imitador/core/common/extension/context_extensions.dart';
 import 'package:imitador/core/common/logger.dart';
 import 'package:imitador/gen/assets.gen.dart';
+import 'package:imitador/model/activity/activity.dart';
 import 'package:imitador/model/game_session/game_session.dart';
+import 'package:imitador/model/level/level.dart';
 import 'package:imitador/ui/router/app_router.dart';
 import 'package:imitador/ui/section/game_session/game_session_section_cubit.dart';
 import 'package:imitador/ui/theme/components/buttons.dart';
+import 'package:imitador/ui/theme/components/inputs.dart';
 import 'package:imitador/ui/theme/components/scaffold.dart';
 import 'package:imitador/ui/theme/components/score_table.dart';
 import 'package:imitador/ui/theme/components/sheet_container.dart';
@@ -242,7 +246,7 @@ class HostLobby extends StatelessWidget {
                     padding: EdgeInsets.only(top: 32.h),
                     child: SheetContainer(
                       maxWidth: 604.w,
-                      maxHeight: 607.h,
+                      maxHeight: 420.h,
                       child: Padding(
                         padding: EdgeInsets.symmetric(
                           vertical: 40.h,
@@ -262,7 +266,15 @@ class HostLobby extends StatelessWidget {
                     ),
                   ),
                 SizedBox(
-                  height: 45.h,
+                  height: 32.h,
+                ),
+                if (state.session?.playing ?? false)
+                  TeacherGameControl(
+                    activity: state.activity,
+                    currentLevel: state.currentLevel,
+                  ),
+                SizedBox(
+                  height: 25.h,
                 ),
                 PrimaryButton(
                   label: (state.session?.playing ?? false)
@@ -275,6 +287,9 @@ class HostLobby extends StatelessWidget {
                       context.read<GameSessionSectionCubit>().stopGame();
                     }
                   },
+                ),
+                SizedBox(
+                  height: 25.h,
                 ),
               ],
             ],
@@ -338,6 +353,83 @@ class _PulsingTextState extends State<PulsingText> {
         widget.text,
         style: widget.style,
         textAlign: TextAlign.center,
+      ),
+    );
+  }
+}
+
+class TeacherGameControl extends StatelessWidget {
+  final Activity? activity;
+  final Level? currentLevel;
+
+  const TeacherGameControl({
+    required this.activity,
+    this.currentLevel,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (activity == null) {
+      return const SizedBox.shrink();
+    }
+
+    final hasMultipleLevels = activity!.levels.length > 1;
+    final hasPlotButton = activity!.id == Constants.elCruceId;
+
+    if (!hasMultipleLevels && !hasPlotButton) {
+      return const SizedBox.shrink();
+    }
+
+    return SheetContainer(
+      maxWidth: 604.w,
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: 32.w,
+          vertical: 24.h,
+        ),
+        child: Column(
+          spacing: 20.h,
+          children: [
+            if (hasMultipleLevels)
+              MotionDropDown<Level>(
+                value: currentLevel,
+                items: activity!.levels,
+                label: "Enviar estudiantes a nivel",
+                hint: "Seleccione un nivel",
+                itemDisplayBuilder: (level) => level.name,
+                onChanged: (Level? selectedLevel) {
+                  if (selectedLevel != null) {
+                    context
+                        .read<GameSessionSectionCubit>()
+                        .sendNavigationTarget(selectedLevel.id);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                            'Enviando estudiantes al nivel: ${selectedLevel.name}'),
+                        duration: const Duration(seconds: 2),
+                      ),
+                    );
+                  }
+                },
+                light: false,
+              ),
+            if (hasPlotButton)
+              SecondaryButton(
+                label: "Mostrar resultado del gráfico",
+                onPressed: () {
+                  context.read<GameSessionSectionCubit>().sendShowPlotResult();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content:
+                          Text('Mostrando resultado del gráfico a estudiantes'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                },
+              ),
+          ],
+        ),
       ),
     );
   }

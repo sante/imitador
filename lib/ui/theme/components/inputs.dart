@@ -11,6 +11,7 @@ class MotionDropDown<T> extends StatelessWidget {
   final String hint;
   final void Function(T?)? onChanged;
   final bool light;
+  final String Function(T)? itemDisplayBuilder;
 
   const MotionDropDown({
     super.key,
@@ -20,6 +21,7 @@ class MotionDropDown<T> extends StatelessWidget {
     required this.hint,
     this.onChanged,
     this.light = true,
+    this.itemDisplayBuilder,
   });
 
   @override
@@ -45,14 +47,14 @@ class MotionDropDown<T> extends StatelessWidget {
               style: context.theme.textStyles.bodyLarge?.copyWith(
                 color: light
                     ? context.theme.colorScheme.surface
-                    : context.theme.colorScheme.onSurface,
+                    : context.theme.colorScheme.surface,
               ),
               hint: Text(
                 hint,
                 style: context.theme.textStyles.bodyLarge?.copyWith(
                   color: light
                       ? context.theme.colorScheme.surface
-                      : context.theme.colorScheme.onSurface,
+                      : context.theme.colorScheme.surface,
                 ),
               ),
               value: value,
@@ -61,7 +63,7 @@ class MotionDropDown<T> extends StatelessWidget {
                     (e) => DropdownMenuItem<T>(
                       value: e,
                       child: Text(
-                        e.toString(),
+                        itemDisplayBuilder?.call(e) ?? e.toString(),
                         style: context.theme.textStyles.bodyLarge?.copyWith(
                           color: context.theme.colorScheme.onSurface,
                         ),

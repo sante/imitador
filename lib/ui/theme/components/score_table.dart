@@ -17,7 +17,7 @@ class ScoreTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        spacing: 40.h,
+        spacing: 30.h,
         children: [
           Text(
             finalResults
