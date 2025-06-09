@@ -116,13 +116,10 @@ class SessionLevelSelectorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AttemptRepository attemptRepository = DiProvider.get();
     return BlocBuilder<GameSessionSectionCubit, GameSessionSectionState>(
-      builder: (context, state) => StreamBuilder<List<Attempt>?>(
-        stream: attemptRepository.getAttempts(),
-        builder: (context, snapshot) {
-          final allAttempts = snapshot.data ?? [];
-          final filteredAttempts = state.gameId == null
+      builder: (context, state) {
+          final allAttempts = state.attempts;
+          final List<Attempt> filteredAttempts = state.gameId == null
               ? []
               : allAttempts
                   .where((a) => a.gameSessionId == state.gameId)
@@ -133,10 +130,9 @@ class SessionLevelSelectorScreen extends StatelessWidget {
             activity: state.activity,
             sessionType: PlaySessionType.gameSession,
             isLoading: state.activity == null,
-            attempts: filteredAttempts.cast<Attempt>(),
+            attempts: filteredAttempts,
           );
         },
-      ),
     );
   }
 }

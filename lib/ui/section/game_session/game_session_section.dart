@@ -13,10 +13,8 @@ class GameSessionSectionRouter extends SectionRouter {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = GameSessionSectionCubit();
-
     return BlocProvider(
-      create: (BuildContext context) => cubit,
+      create: (BuildContext context) => GameSessionSectionCubit(),
       child: BlocListener<GameSessionSectionCubit, GameSessionSectionState>(
         listenWhen: (previous, current) =>
             previous.session?.ended != current.session?.ended &&
