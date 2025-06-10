@@ -48,17 +48,7 @@ class ActivitySectionCubit extends Cubit<ActivitySectionState> {
   }
 
   void setCurrentLevel(Level level) {
-    if (level.speedExpressions.isEmpty) {
-      emit(state.copyWith(
-        currentLevel: level.copyWith(
-          speedExpressions: level.positionExpressions
-              .map((it) => parseExpression(it).derive("t").simplify())
-              .mapToString,
-        ),
-      ));
-    } else {
-      emit(state.copyWith(currentLevel: level));
-    }
+    emit(state.copyWith(currentLevel: level));
   }
 
   void addAttemptFromSamples(

@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imitador/core/common/extension/context_extensions.dart';
+import 'package:imitador/core/common/extension/string_extensions.dart';
+import 'package:imitador/core/common/helper/expressions_helper.dart';
 import 'package:imitador/core/common/helper/transformer_helper.dart';
 import 'package:imitador/game/components/graph/graph_component.dart';
 import 'package:imitador/gen/assets.gen.dart';
@@ -300,7 +302,11 @@ class GraphPainter extends CustomPainter {
       samples: samples,
       secondsDuration: attempt.level.secondsDuration,
       fixedExpressions: (speed
-              ? attempt.level.speedExpressions
+              ? (attempt.level.speedExpressions.isEmpty
+                  ? attempt.level.positionExpressions
+                      .map((it) => parseExpression(it).derive("t").simplify())
+                      .mapToString
+                  : attempt.level.speedExpressions)
               : attempt.level.positionExpressions)
           .map((it) => Parser().parse(it))
           .toList(),

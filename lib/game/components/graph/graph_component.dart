@@ -336,7 +336,6 @@ void drawGraph({
     axisLinePaint,
   );
 
-
   for (int i = range.first.ceil(); i <= range.second.floor(); i++) {
     if (i != 0) {
       drawYTickAt(
